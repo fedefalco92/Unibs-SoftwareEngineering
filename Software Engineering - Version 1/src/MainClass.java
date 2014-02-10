@@ -7,6 +7,7 @@ public class MainClass {
 		System.out.println("Mi ritrovai in una selva oscura");
 		TestClass.stampaNumero(10);
 		
+		
 	}
 
 }
