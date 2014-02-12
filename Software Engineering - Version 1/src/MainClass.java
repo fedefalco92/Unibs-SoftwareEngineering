@@ -6,6 +6,7 @@ public class MainClass {
 		System.out.println("Mi ritrovai in una selva oscura");
 		System.out.println("It works");
 		System.out.println("Ciao");
+		System.out.println("Vediamo se sincronizza");
 	}
 
 }
