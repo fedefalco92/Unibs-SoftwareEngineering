@@ -7,6 +7,7 @@ public class MainClass {
 		System.out.println("It works");
 		System.out.println("Ciao");
 		System.out.println("Vediamo se sincronizza");
+		System.out.println("Tra poco andiamo a pranzo");
 	}
 
 }
