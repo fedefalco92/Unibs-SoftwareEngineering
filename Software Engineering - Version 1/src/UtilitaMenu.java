@@ -32,7 +32,7 @@ public class UtilitaMenu {
 	/*Metodo Void: altro tipo per creare un menu*/
 	public static void menuPrincipale2(){
 		boolean fine = false;
-		final String TITOLO = "MENU PRINCIPALE 1";
+		final String TITOLO = "MENU PRINCIPALE 2";
 		final String [] VOCI = {"SOTTOMENU 1", "SOTTOMENU 2", "SOTTOMENU 3"};
 		MyMenu menuPrincipale = new MyMenu (TITOLO, VOCI);
 		
