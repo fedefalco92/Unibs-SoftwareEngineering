@@ -1,6 +1,6 @@
 import it.unibs.fp.mylib.*;
 
-public class UtilitaMenu {
+public class MenuClass {
 
 	/*Metodo Boolean: un tipo di possibilita' per creare un menu. Il ciclo deve essere fatto da un metodo esterno*/
 	public static boolean menuPrincipale(){
