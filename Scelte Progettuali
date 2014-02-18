@@ -10,7 +10,7 @@ Ecco cosa è emerso lunedì.
  - Caricare un modello e controllare se esso è effettivamente corretto
  - Effettuare test (probabilità e altro, non ne abbiamo ancora parlato)
  
-4) La creazione della classe astratta Elemento dalla quale derivano le classi Azione, Branch, Merge, Fork, Join, Nodo Iniziale, Nodo Finale.
+4) La creazione della classe astratta Elemento dalla quale derivano le classi Azione, Branch, Merge, Fork, Join, NodoIniziale, NodoFinale.
  Questa classe contiene:
  - attributi: nome (ID) , terminali in entrata (vector), terminali in uscita (vector)
  - il metodo abstract crea che DEVE essere riscritto per ogni classe (ogni classe viene creata in diversi modi).
