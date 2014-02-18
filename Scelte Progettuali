@@ -28,6 +28,8 @@ Ecco cosa è emerso lunedì.
   
   Nodo Iniziale: nome, Elemento out, (Struttura riferimento)?
   Nodo Finale: nome, Elemento in, (Struttura riferimento)?
+  
+  Ps. Aggiungiamo un riferimento alla struttura madre ad ogni elemento? (si farebbe sfruttando la classe Elemento)
 
 6) La classe Struttura rappresenta la (inizio, elementi, fine). 
  Esso può coincidere con il Modello (se non contiene Join o Fork).
