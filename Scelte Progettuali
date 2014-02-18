@@ -1,0 +1,62 @@
+Dobbiamo fare alcune scelte progettuali.
+Ecco cosa è emerso lunedì.
+
+1) Definire un Package
+
+2) Creare una classe MainClass, questa sarà la classe Main da dove far partire il progetto: deve essere molto snella, quasi vuota, che richiama una seconda classe per gestire le scelte dell'utente (MenuClass).
+
+3) Nella classe MenuClass verranno gestite le scelte dell'utente. Esso potrà:
+ - Creare un nuovo modello (con interazione manuale seguita passo passo) e salvarlo una volta completo.
+ - Caricare un modello e controllare se esso è effettivamente corretto
+ - Effettuare test (probabilità e altro, non ne abbiamo ancora parlato)
+ 
+4) La creazione della classe astratta Elemento dalla quale derivano le classi Azione, Branch, Merge, Fork, Join, Nodo Iniziale, Nodo Finale.
+ Questa classe contiene:
+ - attributi: nome (ID) , terminali in entrata (vector), terminali in uscita (vector)
+ - il metodo abstract crea che DEVE essere riscritto per ogni classe (ogni classe viene creata in diversi modi).
+ - altri ed eventuali
+ 
+5) Sostanzialmente abbiamo deciso che le classi siano composte da questi attributi
+
+  Azione: nome, Elemento in, Elemento out
+  
+  Branch: nome, Elemento in, Vector Elementi out
+  Merge: nome, Vector Elementi in, Elemento out
+  
+  Fork: nome, Elemento in, Vector Struttura out, Join di riferimento
+  Join: nome, Vector Struttura in, Elemento out, Fork di riferimento
+  
+  Nodo Iniziale: nome, Elemento out, (Struttura riferimento)?
+  Nodo Finale: nome, Elemento in, (Struttura riferimento)?
+
+6) La classe Struttura rappresenta la (inizio, elementi, fine). 
+ Esso può coincidere con il Modello (se non contiene Join o Fork).
+ Come attributi ha l'elemento inziale (Nodo o fork) e l'elemento finale (Nodo o join), oltre al nome
+ e direi un vector degli elementi al suo interno (differenziati serve veramente)?
+ 
+7) Classe Modello è l'insieme di Strutture. 
+
+8) Una volta creato un modello (in seguito parlerò delle scelte di creazione), occorre salvare questo modello. 
+  A me è venuto in mente un meta linguaggio che è possibile salvarlo su un file di testo (senza xml o roba simile) e ha questa struttura:
+ 
+  NodoIniziale: ID -> IDElementoout
+  Azione: ID -> IDElementoin, IDElementoout
+  Branch: ID -> IDElementoin, IDElementoout1, IDElementoout2, ...
+  Merge: ID -> IDElementoout, IDElementoin1, IDElementoin2, ...
+  
+  Struttura: ID -> IDNodoin, IDNodoout
+  Fork: ID -> IDStrutturaRiferimento, IDElementoin, IDElementoout1, IDElementoout2, ...
+  ...
+  Join: ID -> IDStrutturaRiferimento, IDElementoout, IDElementoin1, IDElementoin2, ...
+  
+  NodoFinale: ID -> IDElementoin
+  
+  Con questo mi sembra abbastanza fattibile la ricostruzione del modello una volta avente il file.
+  L'algoritmo non l'ho ancora pensato, ma basta vedere che cos'è, creare un nuovo elemento con quei valori ed è fatto.
+  Anche per il controllo dei test mi sembra più semplice (basta seguire un percorso).
+  
+9) Per quanto riguarda la creazione guidata si possono usare i menu e fare finire l'utente l'inserimento di un ciclo chiuso, 
+ oppure si possono salvare gli elementi pendenti in un vector e pian piano eliminarli una volta completi.
+  
+  
+  
