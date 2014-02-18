@@ -1,13 +1,18 @@
 Dobbiamo fare alcune scelte progettuali.
 Ecco cosa è emerso lunedì.
 
+Attenzione! (--> commento) = pensiero di Maffi.
+            [commento] = aggiunta di Maffi.
+
+
 1) Definire un Package
 
 2) Creare una classe MainClass, questa sarà la classe Main da dove far partire il progetto: deve essere molto snella, quasi vuota, che richiama una seconda classe per gestire le scelte dell'utente (MenuClass).
 
 3) Nella classe MenuClass verranno gestite le scelte dell'utente. Esso potrà:
- - Creare un nuovo modello (con interazione manuale seguita passo passo) e salvarlo una volta completo.
- - Caricare un modello e controllare se esso è effettivamente corretto
+ - Creare un nuovo modello (con interazione manuale seguita passo passo) e salvarlo una volta completo. (--> correttezza implicita?)
+ - Caricare un modello [salvato in precedenza (quindi è già corretto) ed eventualmente modificarlo]
+ [- Importare modello da parser e controllare se esso è corretto]
  - Effettuare test (probabilità e altro, non ne abbiamo ancora parlato)
  
 4) La creazione della classe astratta Elemento dalla quale derivano le classi Azione, Branch, Merge, Fork, Join, NodoIniziale, NodoFinale.
@@ -15,6 +20,13 @@ Ecco cosa è emerso lunedì.
  - attributi: nome (ID) , terminali in entrata (vector), terminali in uscita (vector)
  - il metodo abstract crea che DEVE essere riscritto per ogni classe (ogni classe viene creata in diversi modi).
  - altri ed eventuali
+ 
+ (--> tutta la parte di creazione del modello potrebbe essere delegata a una classe "più alta" che aggiunge cose al modello.
+ infatti se ogni classe avesse al suo interno un metodo "crea" questo vorrebbe dire inserire menu all'interno del metodo...
+ quindi verrebbe meno l'idea di Falcon di separare la parte stampata dalle classi...)
+ (-->in altre parole il modello potrebbe essere semplicemente un insieme di elementi
+ ognuno dei quali contiene le relazioni con gli altri elementi e sta alla classe in cui viene creato il modello gestire
+ queste relazioni interrogando tutti gli elementi)
  
 5) Sostanzialmente abbiamo deciso che le classi siano composte da questi attributi
 
@@ -30,19 +42,28 @@ Ecco cosa è emerso lunedì.
   Nodo Finale: nome, Elemento in, (Struttura riferimento)?
   
   Ps. Aggiungiamo un riferimento alla struttura madre ad ogni elemento? (si farebbe sfruttando la classe Elemento)
-
+  
+  (--> appunto...altrimenti a cosa servono i vector creati nella classe Elemento?)
+  (--> non sarebbe meglio aggiungere anche un identificatore di tipo? va be di questo parleremo più avanti..)
+  
 6) La classe Struttura rappresenta la (inizio, elementi, fine). 
- Esso può coincidere con il Modello (se non contiene Join o Fork).
+ Esso può coincidere con il Modello (se non contiene Join o Fork). (--> ????)
  Come attributi ha l'elemento inziale (Nodo o fork) e l'elemento finale (Nodo o join), oltre al nome
  e direi un vector degli elementi al suo interno (differenziati serve veramente)?
  
-7) Classe Modello è l'insieme di Strutture. 
+ 
+ (--> secondo me stiamo facendo confusione...io invece di Struttura userei Diramazione e la utilizzerei
+ solo come diramazione di un Fork...ripeto che l'utilità di questa classe mi sembra così a occhio dubbia...)
+ 
+
+7) Classe Modello è l'insieme di Strutture. (--> non era un insieme di azioni, branch, join, fork, nodo iniziale, nodo finale?)
+
 
 8) Una volta creato un modello (in seguito parlerò delle scelte di creazione), occorre salvare questo modello. 
   A me è venuto in mente un meta linguaggio che è possibile salvarlo su un file di testo (senza xml o roba simile) e ha questa struttura:
  
   NodoIniziale: ID -> IDElementoout
-  Azione: ID -> IDElementoin, IDElementoout
+  Azione: ID -> [in:] IDElementoin, [out:] IDElementoout (-->da ripetere sui passi successivi ...vabbè giusto per non fare confusione)
   Branch: ID -> IDElementoin, IDElementoout1, IDElementoout2, ...
   Merge: ID -> IDElementoout, IDElementoin1, IDElementoin2, ...
   
@@ -57,8 +78,12 @@ Ecco cosa è emerso lunedì.
   L'algoritmo non l'ho ancora pensato, ma basta vedere che cos'è, creare un nuovo elemento con quei valori ed è fatto.
   Anche per il controllo dei test mi sembra più semplice (basta seguire un percorso).
   
+  (-->secondo me per ora possiamo gestire tutto con i metodi toString() )
+  
 9) Per quanto riguarda la creazione guidata si possono usare i menu e fare finire l'utente l'inserimento di un ciclo chiuso, 
  oppure si possono salvare gli elementi pendenti in un vector e pian piano eliminarli una volta completi.
+ 
+
   
   
   
