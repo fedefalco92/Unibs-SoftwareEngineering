@@ -28,6 +28,13 @@ Attenzione! (--> commento) = pensiero di Maffi.
  ognuno dei quali contiene le relazioni con gli altri elementi e sta alla classe in cui viene creato il modello gestire
  queste relazioni interrogando tutti gli elementi)
  
+ 4b) Il modello ha i seguenti attributi
+ Start start;
+ Vector<Azioni> azioni;
+ Vector<Branch> branches;
+ ...
+ End end;
+ 
 5) Sostanzialmente abbiamo deciso che le classi siano composte da questi attributi
 
   Azione: nome, Elemento in, Elemento out
