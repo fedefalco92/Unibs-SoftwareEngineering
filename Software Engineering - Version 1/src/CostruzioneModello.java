@@ -21,9 +21,12 @@ public class CostruzioneModello {
 		//System.out.println(nuovo.getAbsolutePath());
 		
 		try {
+			//Inizializzo l'oggetto
 			fileReader = new FileReader(locFile);
+			
 			//Leggo il file riga per riga
 			leggoFile();
+			
 		} catch (FileNotFoundException e) {
 			//e.printStackTrace();
 			System.out.println("Il file " + nomeFile + " non esiste");
