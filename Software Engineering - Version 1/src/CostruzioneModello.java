@@ -74,7 +74,7 @@ public class CostruzioneModello {
 		Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(riga);
 		if(matcher.matches()){
-			System.out.println("Ok");
+			System.out.println("OK");
 		}
 		else
 			System.out.println("NO");
