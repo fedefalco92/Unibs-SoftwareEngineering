@@ -12,28 +12,33 @@ public class CostruzioneModello {
 	//Metodo che serve per caricare un file dato il nome
 	public static void caricaFile(){
 		System.out.println();
-		mostraFileInDirectory(cartella);
+		boolean fileMostrati = false;
+		fileMostrati = mostraFileInDirectory(cartella);
 		System.out.println();
 		
-		String nomeFile = InputDati.leggiStringaNonVuota("Nome del file che vuoi leggere > ");
-		String locFile = cartella + File.separator + nomeFile; //+ ".txt"; //Viene usato il File.separator per la differenza degli SO
-		
-		//Vedo la location del file
-		//File nuovo = new File (locFile);
-		//System.out.println(nuovo.getAbsolutePath());
-		
-		try {
-			//Inizializzo l'oggetto
-			fileReader = new FileReader(locFile);
+		if(fileMostrati){
+			String nomeFile = InputDati.leggiStringaNonVuota("Nome del file che vuoi leggere > ");
+			String locFile = cartella + File.separator + nomeFile; //+ ".txt"; //Viene usato il File.separator per la differenza degli SO
 			
-			//Leggo il file riga per riga
-			leggoFile();
+			//Vedo la location del file
+			//File nuovo = new File (locFile);
+			//System.out.println(nuovo.getAbsolutePath());
 			
-		} catch (FileNotFoundException e) {
-			//e.printStackTrace();
-			System.out.println("Il file " + nomeFile + " non esiste");
+			try {
+				//Inizializzo l'oggetto
+				fileReader = new FileReader(locFile);
+				
+				//Leggo il file riga per riga
+				leggoFile();
+				
+			} catch (FileNotFoundException e) {
+				//e.printStackTrace();
+				System.out.println("Il file " + nomeFile + " non esiste");
+			}
+		} else{
+			System.out.println("La directory " + cartella + " nel percorso selezionato non esiste" );
+			//Implementare richiesta creazione?!?
 		}
-		
 	}
 	
 	//Metodo che legge riga per riga il file
@@ -59,10 +64,10 @@ public class CostruzioneModello {
 	    }
 	}
 	
-	private static void mostraFileInDirectory(String dir){
+	private static boolean mostraFileInDirectory(String dir){
 		File folder = new File(dir);
 		
-		//Controllo se la cartella esiste. Da migliorare (metodo boolean)
+		//Controllo se la cartella esiste.
 		if(folder.exists()){ 
 			System.out.println("Elenco file presenti nella cartella");
 			File[] listOfFiles = folder.listFiles();
@@ -74,9 +79,9 @@ public class CostruzioneModello {
 	//				System.out.println("Directory " + listOfFiles[i].getName());
 	//			}
 			}
-		} else{
-			System.out.println("La directory " + dir + " nel percorso selezionato non esiste" );
-			//Introdurre creazione cartella
+			return true;
 		}
+		
+		return false;
 	}
 }
