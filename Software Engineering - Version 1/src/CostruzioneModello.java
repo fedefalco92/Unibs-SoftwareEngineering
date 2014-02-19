@@ -76,6 +76,7 @@ public class CostruzioneModello {
 			}
 		} else{
 			System.out.println("La directory " + dir + " nel percorso selezionato non esiste" );
+			//Introdurre creazione cartella
 		}
 	}
 }
