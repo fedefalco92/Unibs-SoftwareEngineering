@@ -70,14 +70,24 @@ public class CostruzioneModello {
 	
 	//Regular Expression. Ciao
 	private static void interpretoRiga(String riga){
-		String patternString = "^\\w*:.*";
-		Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+		
+		String patternRegex = "^.*[\\w]*.*:";
+		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(riga);
+		
+		while (matcher.find()){
+			String elem = matcher.group().replaceAll(":", ""); //Elimino due punti
+			elem = elem.trim(); //Tolgo eventuali spazi
+			System.out.println("#" + elem);
+		}
+			
+		/*
 		if(matcher.matches()){
 			System.out.println("OK");
 		}
 		else
 			System.out.println("NO");
+		*/
 	}
 	
 	private static boolean mostraFileInDirectory(String dir){
