@@ -1,20 +1,24 @@
 import it.unibs.fp.mylib.InputDati;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 
 public class CostruzioneModello {
 
 	private static FileReader fileReader;
 	private static BufferedReader bufferedReader;
-	private final static String cartella = "Modelli/"; //La cartella dove risiederanno i file modelli salvati
+	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati.
 	
+	//Metodo che serve per caricare un file dato il nome
 	public static void caricaFile(){
+		
+		System.out.println();
+		System.out.println("Elenco file presenti nella cartella");
+		mostraFileInDirectory(cartella);
+		System.out.println();
+		
 		String nomeFile = InputDati.leggiStringaNonVuota("Nome del file che vuoi leggere > ");
-		String locFile = cartella + nomeFile + ".txt";
+		String locFile = cartella + File.separator + nomeFile; //+ ".txt"; //Viene usato il File.separator per la differenza degli SO
 		
 		//Vedo la location del file
 		//File nuovo = new File (locFile);
@@ -34,6 +38,7 @@ public class CostruzioneModello {
 		
 	}
 	
+	//Metodo che legge riga per riga il file
 	public static void leggoFile(){
 		
 		bufferedReader = new BufferedReader(fileReader);
@@ -54,5 +59,18 @@ public class CostruzioneModello {
 	    	//Mostro la riga che ho letto
 	    	System.out.println(riga);
 	    }
+	}
+	
+	private static void mostraFileInDirectory(String dir){
+		File folder = new File(dir);
+		File[] listOfFiles = folder.listFiles();
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				System.out.println(listOfFiles[i].getName());
+			} 
+//			else if (listOfFiles[i].isDirectory()) {
+//				System.out.println("Directory " + listOfFiles[i].getName());
+//			}
+		}
 	}
 }
