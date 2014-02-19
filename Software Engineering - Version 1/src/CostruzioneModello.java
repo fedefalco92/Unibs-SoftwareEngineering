@@ -11,9 +11,7 @@ public class CostruzioneModello {
 	
 	//Metodo che serve per caricare un file dato il nome
 	public static void caricaFile(){
-		
 		System.out.println();
-		System.out.println("Elenco file presenti nella cartella");
 		mostraFileInDirectory(cartella);
 		System.out.println();
 		
@@ -63,14 +61,21 @@ public class CostruzioneModello {
 	
 	private static void mostraFileInDirectory(String dir){
 		File folder = new File(dir);
-		File[] listOfFiles = folder.listFiles();
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				System.out.println(listOfFiles[i].getName());
-			} 
-//			else if (listOfFiles[i].isDirectory()) {
-//				System.out.println("Directory " + listOfFiles[i].getName());
-//			}
+		
+		//Controllo se la cartella esiste. Da migliorare (metodo boolean)
+		if(folder.exists()){ 
+			System.out.println("Elenco file presenti nella cartella");
+			File[] listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile()) {
+					System.out.println(listOfFiles[i].getName());
+				} 
+	//			else if (listOfFiles[i].isDirectory()) {
+	//				System.out.println("Directory " + listOfFiles[i].getName());
+	//			}
+			}
+		} else{
+			System.out.println("La directory " + dir + " nel percorso selezionato non esiste" );
 		}
 	}
 }
