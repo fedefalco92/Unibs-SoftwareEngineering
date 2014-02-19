@@ -1,6 +1,8 @@
 import it.unibs.fp.mylib.InputDati;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CostruzioneModello {
@@ -42,7 +44,7 @@ public class CostruzioneModello {
 	}
 	
 	//Metodo che legge riga per riga il file
-	public static void leggoFile(){
+	private static void leggoFile(){
 		
 		bufferedReader = new BufferedReader(fileReader);
 		
@@ -61,7 +63,21 @@ public class CostruzioneModello {
 	    	
 	    	//Mostro la riga che ho letto
 	    	System.out.println(riga);
+	    	interpretoRiga(riga);
+	    	
 	    }
+	}
+	
+	//Regular Expression. Ciao
+	private static void interpretoRiga(String riga){
+		String patternString = "^\\w*:.*";
+		Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(riga);
+		if(matcher.matches()){
+			System.out.println("Ok");
+		}
+		else
+			System.out.println("NO");
 	}
 	
 	private static boolean mostraFileInDirectory(String dir){
