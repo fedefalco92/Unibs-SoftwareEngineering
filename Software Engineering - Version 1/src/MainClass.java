@@ -3,7 +3,14 @@ import it.unibs.fp.mylib.*;
 public class MainClass {
 
 	public static void main(String[] args) {
-		System.out.println("Ho aggiunto la buon vecchia Utility Classes di Baroni");
+		System.out.println("Unibs Software Engineering");
+		boolean fineProgramma = false;
+		
+		do {
+			fineProgramma = MenuClass.menuPrincipale();
+		} while (!fineProgramma);
+		
+		System.out.println("Arrivederci!");
 	}
 
 }
