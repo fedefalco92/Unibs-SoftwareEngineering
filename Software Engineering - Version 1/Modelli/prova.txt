@@ -4,3 +4,15 @@ Branch:ciao
 Cucu:cucuc2:cucu3
 Prova3 : funziona?
  vediamo : cosi
+ 
+[AZIONE] nome : in([AZIONE] nome) - out([AZIONE] nome)
+[BRANCH] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
+[MERGE] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+
+[NODOINIT] nome : out([AZIONE] nome)
+[NODOEND] nome : in([AZIONE] nome)
+
+//Fork e Join collegati
+[FORK] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
+[JOIN] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+ 
