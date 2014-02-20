@@ -6,6 +6,7 @@ public class Azione extends Elemento{
 		private Elemento uscita;
 		
 		public Azione (String nome, Elemento ingresso, Elemento uscita){
+			super("AZIONE");
 			this.nome = nome;
 			this.ingresso = ingresso;
 			this.uscita = uscita;
@@ -14,8 +15,8 @@ public class Azione extends Elemento{
 		@Override
 		public String toString() {
 			StringBuffer output=new StringBuffer();
+			output.append("[" + super.getID() + "] " + nome + " :");
 			
-			output.append("Nome: " + nome + "\n");
 		return super.toString();
 		}
 }
