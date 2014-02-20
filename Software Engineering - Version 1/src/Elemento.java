@@ -5,9 +5,11 @@
 public abstract class Elemento {
 	
 	private String ID;
+	//private String nome;
 	
 	public Elemento(String ID){
 		this.ID = ID;
+		//this.nome = nome;
 	}
 	
 	public String getID() {
