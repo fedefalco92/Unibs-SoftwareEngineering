@@ -17,6 +17,6 @@ public class Azione extends Elemento{
 			StringBuffer output=new StringBuffer();
 			output.append("[" + super.getID() + "] " + nome + " :");
 			
-		return super.toString();
+		return output.toString();
 		}
 }
