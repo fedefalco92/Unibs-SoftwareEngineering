@@ -85,7 +85,7 @@ public class CostruzioneModello {
 		StringTokenizer oggetto = new StringTokenizer(riga, ":");
 		oggetto.hasMoreTokens();
 		oggetto.countTokens();
-		*/
+		*/ 
 	}
 	
 	private static FileReader aprifile() throws FileNotFoundException{
