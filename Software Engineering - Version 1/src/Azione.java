@@ -15,7 +15,7 @@ public class Azione extends Elemento{
 		public String toString() {
 			StringBuffer output=new StringBuffer();
 			
-			output.appen("Nome: " + nome + "\n");
+			output.append("Nome: " + nome + "\n");
 		return super.toString();
 		}
 }
