@@ -53,6 +53,20 @@ Attenzione! (--> commento) = pensiero di Maffi.
   (--> appunto...altrimenti a cosa servono i vector creati nella classe Elemento?)
   (--> non sarebbe meglio aggiungere anche un identificatore di tipo? va be di questo parleremo più avanti..)
   
+  //Esempio modello
+  
+[AZIONE] nome : in([AZIONE] nome) - out([AZIONE] nome)
+[BRANCH] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
+[MERGE] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+
+[NODOINIT] nome : out([AZIONE] nome)
+[NODOEND] nome : in([AZIONE] nome)
+
+//Fork e Join collegati
+[FORK] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
+[JOIN] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+
+  
 6) La classe Struttura rappresenta la (inizio, elementi, fine). 
  Esso può coincidere con il Modello (se non contiene Join o Fork). (--> ????)
  Come attributi ha l'elemento inziale (Nodo o fork) e l'elemento finale (Nodo o join), oltre al nome
