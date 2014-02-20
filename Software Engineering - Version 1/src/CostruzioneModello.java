@@ -21,17 +21,17 @@ public class CostruzioneModello {
 	public static void caricaFile(){
 		try {
 			fileReader = aprifile();
-			//if(fileReader != null){
+			if(fileReader != null){
 				leggoFile();
-			//}
+			}else{
+				System.out.println("Non hai selezionato nessun file");
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
 	}
-	
-	
 	
 	//Metodo che legge riga per riga il file
 	private static void leggoFile(){
@@ -90,13 +90,12 @@ public class CostruzioneModello {
 	
 	private static FileReader aprifile() throws FileNotFoundException{
 		JFileChooser chooser = new JFileChooser(new File( cartella + File.separator));
-	    int returnVal;
-	    do{
-	    	returnVal = chooser.showOpenDialog(null);
-	    } while(!(returnVal == JFileChooser.APPROVE_OPTION));
-	    
-	    return (new FileReader (chooser.getSelectedFile()));
-
+	    int returnVal = chooser.showOpenDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION){
+	    	return (new FileReader (chooser.getSelectedFile()));
+	    }
+	    else 
+	    	return null;
 	}
 	
 	//INUTILE
