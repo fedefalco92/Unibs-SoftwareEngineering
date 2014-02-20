@@ -3,6 +3,7 @@ import java.util.Vector;
 
 public class Modello {
 	
+	private String nome;
 	private Start start;
 	private Vector<Azione> azioni;
 	private Vector<Branch> branch;
@@ -11,7 +12,8 @@ public class Modello {
 	private Vector<Join> join;
 	private End end;
 	
-	public Modello(){
+	public Modello(String nome){
+		this.nome = nome;
 		start = new Start("Start"); //Come vogliamo gestire i costruttori?
 		azioni = new Vector<Azione>();
 		branch = new Vector<Branch>();
