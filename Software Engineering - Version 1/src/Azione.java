@@ -18,6 +18,14 @@ public class Azione extends Elemento{
 		this.uscita = uscita;
 	}
 	
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	public Elemento getUscita() {
+		return uscita;
+	}
+	
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
