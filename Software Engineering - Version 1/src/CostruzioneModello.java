@@ -84,7 +84,7 @@ public class CostruzioneModello {
 		/*
 		StringTokenizer oggetto = new StringTokenizer(riga, ":");
 		oggetto.hasMoreTokens();
-		oggetto.countTokens();
+		oggetto.countTokens(); 
 		*/ 
 	}
 	
