@@ -1,7 +1,7 @@
-#Unibs Software Engineering
+Unibs Software Engineering
 Progetto Software per il corso di Ingegneria del Software presso l'Università degli Studi di Brescia.
 
-L'elaborato è stato creato e modificato dagli studenti:
+#L'elaborato è stato creato e modificato dagli studenti:
 - Federico Falcone <br>
 - Massimiliano Garda <br>
 - Alessandro Maffi <br>
