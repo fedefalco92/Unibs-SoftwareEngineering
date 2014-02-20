@@ -4,8 +4,14 @@ public class Start extends Elemento{
 	private String nome;
 	private Elemento uscita;
 	
+	//Due costruttori in base a quello che ci serve?
+	public Start (String nome){
+		super("START");
+		this.nome  = nome;
+	}
+		
 	public Start (String nome, Elemento uscita){
-		super("AZIONE");
+		super("START");
 		this.nome = nome;
 		this.uscita = uscita;
 	}

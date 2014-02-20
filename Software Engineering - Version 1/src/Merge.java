@@ -7,6 +7,11 @@ public class Merge extends Elemento{
 	private Vector <Elemento> ingresso = new Vector <Elemento>();
 	private Elemento uscita;
 	
+	//Due costruttori in base a quello che ci serve?
+	public Merge (String nome){
+		super("MERGE");
+		this.nome  = nome;
+	}
 	public Merge (String nome, Elemento uscita){
 		super("MERGE");
 		this.nome = nome;

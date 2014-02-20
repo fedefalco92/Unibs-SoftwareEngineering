@@ -12,13 +12,13 @@ public class Modello {
 	private End end;
 	
 	public Modello(){
-		start = new Start("Start", null); //Come vogliamo gestire i costruttori?
+		start = new Start("Start"); //Come vogliamo gestire i costruttori?
 		azioni = new Vector<Azione>();
 		branch = new Vector<Branch>();
 		merge = new Vector<Merge>();
 		fork = new Vector<Fork>();
 		join = new Vector<Join>();
-		end = new End("End", null );
+		end = new End("End");
 	}
 	
 	public void setStart(Start start){

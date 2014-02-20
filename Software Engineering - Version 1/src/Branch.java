@@ -6,6 +6,12 @@ public class Branch extends Elemento{
 	private Elemento ingresso;
 	private Vector <Elemento> uscita = new Vector <Elemento>();
 	
+	//Due costruttori in base a quello che ci serve?
+	public Branch (String nome){
+		super("BRANCH");
+		this.nome  = nome;
+	}
+	
 	public Branch (String nome, Elemento ingresso){
 		super("BRANCH");
 		this.nome = nome;

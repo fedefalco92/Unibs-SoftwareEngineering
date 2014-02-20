@@ -3,8 +3,14 @@ public class End extends Elemento {
 	private String nome;
 	private Elemento ingresso;
 	
+	//Due costruttori in base a quello che ci serve?
+	public End (String nome){
+		super("END");
+		this.nome  = nome;
+	}
+	
 	public End (String nome, Elemento ingresso){
-		super("AZIONE");
+		super("END");
 		this.nome = nome;
 		this.ingresso = ingresso;
 	}
