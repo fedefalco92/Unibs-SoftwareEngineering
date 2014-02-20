@@ -12,21 +12,21 @@ public class Modello {
 	private End end;
 	
 	public Modello(){
-		start = new Start();
+		start = new Start("Start", null); //Come vogliamo gestire i costruttori?
 		azioni = new Vector<Azione>();
 		branch = new Vector<Branch>();
 		merge = new Vector<Merge>();
 		fork = new Vector<Fork>();
 		join = new Vector<Join>();
-		end = new End();
+		end = new End("End", null );
 	}
 	
-	public void setStart(Start _start){
-		start = _start;
+	public void setStart(Start start){
+		this.start = start;
 	}
 	
-	public void setEnd(End _end){
-		end = _end;
+	public void setEnd(End end){
+		this.end = end;
 	}
 	
 	public void aggiungiAzione(Azione azione){
