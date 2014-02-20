@@ -1,12 +1,14 @@
-import it.unibs.fp.mylib.InputDati;
-
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.JFileChooser;
 
+/**
+ * Classe con metodi static che permette la costruzione del modello, 
+ * partendo dall'apertura di un file e arrivando al caricamento completo.
+ *
+ */
 
 public class CostruzioneModello {
 
@@ -15,9 +17,11 @@ public class CostruzioneModello {
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati.
 	
 	
-	//JFileChooser
-	
-	//Uso finestra per caricare il file
+	/**
+	 * Metodo che carica un file. 
+	 * Esso invoca un altro metodo per aprire il file attraverso una interfaccia grafica.
+	 * Se il file &egrave; stato aperto correttamente invoca un altro metodo per leggere il file.
+	 */
 	public static void caricaFile(){
 		try {
 			fileReader = aprifile();
@@ -33,33 +37,51 @@ public class CostruzioneModello {
 		}
 	}
 	
-	//Metodo che legge riga per riga il file
+	/**
+	 * Metodo che legge le righe di un file.
+	 * Attraverso un BufferedReader viene letto il file riga per riga.
+	 * Ogni riga viene analizzata attraverso un altro metodo che si occupa di fare analisi
+	 * sulle stringhe. 
+	 * La lettura finisce alla fine del file, ovvero quando viene letta la stringa null.
+	 */
 	private static void leggoFile(){
 		
+		//Preparo il BufferReader del file aperto
 		bufferedReader = new BufferedReader(fileReader);
 		
-		String riga = null; //Inizializzo come null
+		//Inizializzo la riga letta come null
+		String riga = null;
 		
+		//Eseguo un ciclo infinito che termina solamente alla fine del file,
+		//ovvero quando la riga e' null.
 	    while(true) {
 	    	
-	    	//Leggo la riga del file
+	    	//Leggo riga per riga gestendo le IOException
 	    	try {
 				riga = bufferedReader.readLine();
 			} catch (IOException e) { e.printStackTrace(); }
 	    	
-	    	//Quando arrivo in fondo (riga == null) esco dal ciclo
+	    	//Controllo se la riga e' null e in caso esco. 
+	    	//Se null significa che sono arrivato in fondo al file.
 	    	if(riga == null)
 	    		break;
 	    	
 	    	//Mostro la riga che ho letto
-	    	System.out.println(riga);
-	    	interpretoRiga(riga);
+	    	//System.out.println(riga);
+	    	
+	    	//Passo la riga che ho letto ad un metodo che analizza la riga.
+	    	analisiRiga(riga);
 	    	
 	    }
 	}
 	
-	//Regular Expression.
-	private static void interpretoRiga(String riga){
+	/**
+	 * Questo metodo permette di analizzare una stringa attraverso l'utilizzo delle espressioni
+	 * regolari. 
+	 * Creo un Pattern e un Matcher per fare in modo che di estrarre i nomi e gli ID che mi servono.
+	 * @param riga
+	 */
+	private static void analisiRiga(String riga){
 		
 		String patternRegex = "^.*[\\w]*.*:";
 		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
@@ -88,6 +110,12 @@ public class CostruzioneModello {
 		*/ 
 	}
 	
+	/**
+	 * Metodo che permette di aprire un file attraverso un JFileChooser.
+	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
+	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto nessun file.
+	 * @throws FileNotFoundException
+	 */
 	private static FileReader aprifile() throws FileNotFoundException{
 		JFileChooser chooser = new JFileChooser(new File( cartella + File.separator));
 	    int returnVal = chooser.showOpenDialog(null);
@@ -98,6 +126,8 @@ public class CostruzioneModello {
 	    	return null;
 	}
 	
+	//Metodi che servono per la carica del file tramite console.
+	/*
 	//INUTILE
 	private static boolean mostraFileInDirectory(String dir){
 		File folder = new File(dir);
@@ -151,4 +181,5 @@ public class CostruzioneModello {
 			//Implementare richiesta creazione?!?
 		}
 	}
+	*/
 }
