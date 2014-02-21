@@ -12,8 +12,7 @@ import javax.swing.JFileChooser;
 
 public class CostruzioneModello {
 
-	private static FileReader fileReader;
-	private static BufferedReader bufferedReader;
+	private static File file;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati.
 	
 	
@@ -23,18 +22,32 @@ public class CostruzioneModello {
 	 * Se il file &egrave; stato aperto correttamente invoca un altro metodo per leggere il file.
 	 */
 	public static void caricaFile(){
+		String loc = cartella + File.separator; //Location del file
 		try {
-			fileReader = aprifile();
-			if(fileReader != null){
-				leggoFile();
+			file = aprifile(loc);
+			if(file != null){
+				leggoFile(new FileReader(file));
 			}else{
 				System.out.println("Non hai selezionato nessun file");
 			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
+		} catch (FileNotFoundException e) { e.printStackTrace(); }
+	}
+	
+	/**
+	 * Metodo che permette di aprire un file attraverso un JFileChooser.
+	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
+	 * @param Stringa con la location del file.
+	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto alcun file.
+	 * @throws FileNotFoundException
+	 */
+	private static File aprifile(String loc) throws FileNotFoundException{
+		JFileChooser chooser = new JFileChooser(new File(loc));
+	    int returnVal = chooser.showOpenDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION){
+	    	return chooser.getSelectedFile();
+	    }
+	    else 
+	    	return null;
 	}
 	
 	/**
@@ -43,11 +56,12 @@ public class CostruzioneModello {
 	 * Ogni riga viene analizzata attraverso un altro metodo che si occupa di fare analisi
 	 * sulle stringhe. 
 	 * La lettura finisce alla fine del file, ovvero quando viene letta la stringa null.
+	 * @param FileReader. Il file da leggere.
 	 */
-	private static void leggoFile(){
+	private static void leggoFile(FileReader fileReader){
 		
 		//Preparo il BufferReader del file aperto
-		bufferedReader = new BufferedReader(fileReader);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
 		//Inizializzo la riga letta come null
 		String riga = null;
@@ -82,7 +96,6 @@ public class CostruzioneModello {
 	 * @param riga
 	 */
 	private static void analisiRiga(String riga){
-		
 		String patternRegex = "^.*[\\w]*.*:";
 		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(riga);
@@ -90,7 +103,12 @@ public class CostruzioneModello {
 		while (matcher.find()){
 			String elem = matcher.group().replaceAll(":", ""); //Elimino due punti
 			elem = elem.trim(); //Tolgo eventuali spazi
-			System.out.println("#" + elem);
+			if(restituisciID(elem) != null && restituisciNome(elem) != null){
+				System.out.println("#" + elem);
+				System.out.println("ID:" + restituisciID(elem) + "#");
+				System.out.println("Nome:" + restituisciNome(elem) + "#");
+				System.out.println();
+			}
 		}
 			
 		/*
@@ -102,29 +120,46 @@ public class CostruzioneModello {
 		*/
 	}
 	
-	private static void metodo(){
-		/*
-		StringTokenizer oggetto = new StringTokenizer(riga, ":");
-		oggetto.hasMoreTokens();
-		oggetto.countTokens(); 
-		*/ 
+	/**
+	 * Metodo che data una stringa dal pattern "[ID] nome" restituisce l'ID.
+	 * @param stringa
+	 * @return ID
+	 */
+	private static String restituisciID(String stringa){
+		String ID = null;
+		
+		String patternRegex = "\\[.*\\]";
+		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(stringa);
+		
+		if(matcher.find()){
+			ID = matcher.group();
+			ID = ID.replace("[", "").replace("]", "");
+		}
+		
+		return ID;
 	}
 	
 	/**
-	 * Metodo che permette di aprire un file attraverso un JFileChooser.
-	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
-	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto nessun file.
-	 * @throws FileNotFoundException
+	 * Metodo che data una stringa dal pattern "[ID] nome" restituisce il nome.
+	 * @param stringa
+	 * @return
 	 */
-	private static FileReader aprifile() throws FileNotFoundException{
-		JFileChooser chooser = new JFileChooser(new File( cartella + File.separator));
-	    int returnVal = chooser.showOpenDialog(null);
-	    if(returnVal == JFileChooser.APPROVE_OPTION){
-	    	return (new FileReader (chooser.getSelectedFile()));
-	    }
-	    else 
-	    	return null;
+	private static String restituisciNome(String stringa){
+		String nome = null;
+		
+		String patternRegex = "\\].*";
+		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(stringa);
+		
+		if(matcher.find()){
+			nome = matcher.group();
+			nome = nome.replace("]", "").trim();
+		}
+		
+		return nome;
 	}
+	
 	
 	//Metodi che servono per la carica del file tramite console.
 	/*
