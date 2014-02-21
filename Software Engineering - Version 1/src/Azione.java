@@ -29,8 +29,8 @@ public class Azione extends Elemento{
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append(super.toString());
-		//Aggiungi formattazione altri elementi
+		output.append(super.toString() + " : ");
+		output.append("in(" + ingresso + ") - out(" + uscita + ")");
 		return output.toString();
 	}
 }

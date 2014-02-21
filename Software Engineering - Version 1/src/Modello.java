@@ -24,6 +24,10 @@ public class Modello {
 		end = new End("End");
 	}
 	
+	public void setNome(String _nome){
+		nome=_nome;
+	}
+	
 	public void setStart(Start start){
 		this.start = start;
 	}
@@ -52,4 +56,33 @@ public class Modello {
 		join.add(_join);
 	}
 
+	@Override
+	
+	//PRIMA VERSIONE...quando saremo riusciti a creare un modello vedremo come migliorarla!
+	public String toString() {
+		StringBuffer output=new StringBuffer();
+		
+		output.append(start + "\n");
+		for(Azione azione: azioni)
+			output.append(azione + "\n");
+		for(Branch br: branch)
+			output.append(br + "\n");
+		for(Merge mr: merge)
+			output.append(mr + "\n");
+		//fork
+		
+		//join
+		
+		output.append(end);
+		
+
+		return output.toString();
+	}
+	
+	//AGGIUNGIAMO QUA UN METODO CHE DICE DA SOLO SE IL MODELLO E' CORRETTO?
+	//public boolean corretto(){
+	//	//todo
+	//}
+
+	
 }
