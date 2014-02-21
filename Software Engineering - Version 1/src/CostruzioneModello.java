@@ -15,7 +15,6 @@ public class CostruzioneModello {
 	private static File file;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati.
 	
-	
 	/**
 	 * Metodo che carica un file. 
 	 * Esso invoca un altro metodo per aprire il file attraverso una interfaccia grafica.
