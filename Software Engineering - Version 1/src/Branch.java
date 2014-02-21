@@ -3,24 +3,24 @@ import java.util.Vector;
 public class Branch extends Elemento{
 
 	private Elemento ingresso;
-	private Vector <Elemento> uscita;
+	private Vector <Elemento> uscite;
 	
 	public Branch (String nome){
 		super("BRANCH", nome);
 		this.ingresso = null;
-		this.uscita = new Vector <Elemento>();
+		this.uscite = new Vector <Elemento>();
 	}
 	
 	public Elemento getIngresso() {
 		return ingresso;
 	}
 	
-	public Vector<Elemento> getUscita() {
-		return uscita;
+	public Vector<Elemento> getUscite() {
+		return uscite;
 	}
 	
 	public void aggiungiUscita(Elemento elem){
-		uscita.add(elem);
+		uscite.add(elem);
 	}
 	
 	public void setIngresso(Elemento ingresso) {
@@ -32,7 +32,7 @@ public class Branch extends Elemento{
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
 		output.append("in(" + ingresso + ") - out(");
-		for(Elemento elemento:uscita)
+		for(Elemento elemento:uscite)
 			output.append(elemento+ ", ");
 		output.append(")");
 		return output.toString();
