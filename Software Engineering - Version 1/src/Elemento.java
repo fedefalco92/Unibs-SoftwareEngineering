@@ -23,7 +23,7 @@ public abstract class Elemento {
 	@Override
 	public String toString() {
 		StringBuffer output = new StringBuffer();
-		output.append("[" + ID + "] " + nome + " :");
+		output.append("[" + ID + "] " + nome);
 		return output.toString();
 	}
 }
