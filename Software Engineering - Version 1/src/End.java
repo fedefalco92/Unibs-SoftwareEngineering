@@ -19,8 +19,8 @@ public class End extends Elemento {
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append(super.toString());
-		//Aggiungi formattazione altri elementi
+		output.append(super.toString() + " : ");
+		output.append("in(" + ingresso + ")");
 		return output.toString();
 	}
 }
