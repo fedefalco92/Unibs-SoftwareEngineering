@@ -2,21 +2,21 @@ import java.util.Vector;
 
 public class Branch extends Elemento{
 
-	private String nome;
 	private Elemento ingresso;
-	private Vector <Elemento> uscita = new Vector <Elemento>();
+	private Vector <Elemento> uscita;
 	
-	//Due costruttori in base a quello che ci serve?
 	public Branch (String nome){
-		super("BRANCH");
-		this.nome  = nome;
+		super("BRANCH", nome);
+		this.ingresso = null;
+		this.uscita = new Vector <Elemento>();
 	}
 	
-	public Branch (String nome, Elemento ingresso){
-		super("BRANCH");
-		this.nome = nome;
-		this.ingresso = ingresso;
-		//Aggiungere vector?
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	public Vector<Elemento> getUscita() {
+		return uscita;
 	}
 	
 	public void aggiungiUscita(Elemento elem){
@@ -30,8 +30,8 @@ public class Branch extends Elemento{
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append("[" + super.getID() + "] " + nome + " :");
-		
+		output.append(super.toString());
+		//Aggiungi formattazione altri elementi
 		return output.toString();
 	}
 }

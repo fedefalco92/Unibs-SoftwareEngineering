@@ -1,26 +1,26 @@
 
 public class End extends Elemento {
-	private String nome;
+	
 	private Elemento ingresso;
 	
-	//Due costruttori in base a quello che ci serve?
 	public End (String nome){
-		super("END");
-		this.nome  = nome;
+		super("END", nome);
+		this.ingresso = null;
 	}
 	
-	public End (String nome, Elemento ingresso){
-		super("END");
-		this.nome = nome;
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
-	
 	
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append("[" + super.getID() + "] " + nome + " :");
-		
+		output.append(super.toString());
+		//Aggiungi formattazione altri elementi
 		return output.toString();
 	}
 }

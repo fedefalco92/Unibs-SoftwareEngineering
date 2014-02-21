@@ -3,23 +3,24 @@ import java.util.Vector;
 
 public class Merge extends Elemento{
 
-	private String nome;
-	private Vector <Elemento> ingresso = new Vector <Elemento>();
+	private Vector <Elemento> ingresso;
 	private Elemento uscita;
 	
-	//Due costruttori in base a quello che ci serve?
 	public Merge (String nome){
-		super("MERGE");
-		this.nome  = nome;
-	}
-	public Merge (String nome, Elemento uscita){
-		super("MERGE");
-		this.nome = nome;
-		this.uscita = uscita;
-		//Aggiungere vector?
+		super("MERGE", nome);
+		this.ingresso = new Vector <Elemento>();
+		this.uscita = null;
 	}
 	
-	public void aggiungiIngress(Elemento elem){
+	public Vector<Elemento> getIngresso() {
+		return ingresso;
+	}
+	
+	public Elemento getUscita() {
+		return uscita;
+	}
+	
+	public void aggiungiIngresso(Elemento elem){
 		ingresso.add(elem);
 	}
 	
@@ -30,8 +31,8 @@ public class Merge extends Elemento{
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append("[" + super.getID() + "] " + nome + " :");
-		
+		output.append(super.toString());
+		//Aggiungi formattazione altri elementi
 		return output.toString();
 	}
 }

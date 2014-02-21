@@ -1,21 +1,13 @@
 
 public class Azione extends Elemento{
-
-	private String nome;
+	
 	private Elemento ingresso;
 	private Elemento uscita;
 	
-	//Due costruttori in base a quello che ci serve?
 	public Azione (String nome){
-		super("AZIONE");
-		this.nome  = nome;
-	}
-	
-	public Azione (String nome, Elemento ingresso, Elemento uscita){
-		super("AZIONE");
-		this.nome = nome;
-		this.ingresso = ingresso;
-		this.uscita = uscita;
+		super("AZIONE", nome);
+		this.ingresso = null;
+		this.uscita = null;
 	}
 	
 	public Elemento getIngresso() {
@@ -37,8 +29,8 @@ public class Azione extends Elemento{
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
-		output.append("[" + super.getID() + "] " + nome + " :");
-		
+		output.append(super.toString());
+		//Aggiungi formattazione altri elementi
 		return output.toString();
 	}
 }
