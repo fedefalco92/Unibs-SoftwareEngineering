@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
 public class CostruzioneModello {
 
 	private static File file;
-	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati.
+	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
 	 * Metodo che carica un file. 
