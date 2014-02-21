@@ -4,6 +4,7 @@ import java.util.Vector;
 public class Modello {
 	
 	private String nome;
+	
 	private Start start;
 	private Vector<Azione> azioni;
 	private Vector<Branch> branch;
