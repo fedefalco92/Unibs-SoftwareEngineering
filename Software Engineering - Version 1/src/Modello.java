@@ -48,6 +48,10 @@ public class Modello {
 		start.setUscita(azione);
 	}
 	
+	public void setUltimoElemento(Elemento e){
+		end.setIngresso(e);
+	}
+	
 	public Vector<Azione> getAzioni() {
 		return azioni;
 	}
