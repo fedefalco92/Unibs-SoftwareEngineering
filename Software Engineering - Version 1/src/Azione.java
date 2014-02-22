@@ -29,11 +29,14 @@ public class Azione extends Elemento{
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
+		
 		output.append(super.toString() + " : ");
 		output.append("in(" );
-		output.append(ingresso.getElementoString());
+		if(ingresso!=null) output.append(ingresso.getElementoString());
+		else output.append("null)");
 		output.append(") - out(");
-		output.append(uscita.getElementoString());
+		if(uscita!=null) output.append(uscita.getElementoString());
+		else output.append("null)");
 		output.append(")");
 		
 		/*

@@ -33,6 +33,7 @@ public class Merge extends Elemento{
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
 		
+		/*
 		output.append("in(" );
 		for(Elemento elemento:ingressi){
 			output.append(elemento.getElementoString());
@@ -42,15 +43,15 @@ public class Merge extends Elemento{
 		output.append(") - out(");
 		output.append(uscita.getElementoString());
 		output.append(")");
+		*/
 		
-		/*
 		if (!ingressi.isEmpty() && uscita!=null){
 			output.append("in(");
 			for(Elemento elemento:ingressi)
-				output.append(elemento+ ", ");
-			output.append(") - out(" + uscita +")");
+				output.append(elemento.getElementoString()+  ", ");
+			output.append(") - out(" + uscita.getElementoString() +")");
 		}
-		*/
+		
 		return output.toString();
 	}
 }

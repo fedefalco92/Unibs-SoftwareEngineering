@@ -29,26 +29,28 @@ public class Branch extends Elemento{
 	
 	@Override
 	public String toString() {
+		
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
-		
+		/*
 		output.append("in(" );
 		output.append(ingresso.getElementoString());
 		output.append(") - out(");
 		for(Elemento elemento:uscite){
 			output.append(elemento.getElementoString());
 			output.append(", ");
-		}	
-		output.append(")");
+		}
 		
-		/*
+		output.append(")");
+		*/
+		
 		if(ingresso !=null && !uscite.isEmpty()){
-			output.append("in(" + "[" + ingresso.getID() + "] " + ingresso.getNome() +  ") - out(");
+			output.append("in(" +ingresso.getElementoString() +  ") - out(");
 			for(Elemento elemento:uscite)
-				output.append( "[" + elemento.getID() + "] " + elemento.getNome() +", ");
+				output.append( "[" + elemento.getElementoString() +", ");
 			output.append(")");
 		}
-		*/
+		
 		return output.toString();
 	}
 }

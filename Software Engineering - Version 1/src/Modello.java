@@ -118,6 +118,7 @@ public class Modello {
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		
+		output.append("NOME MODELLO: " + nome);
 		output.append(start + "\n");
 		for(Azione azione: azioni)
 			output.append(azione + "\n");
