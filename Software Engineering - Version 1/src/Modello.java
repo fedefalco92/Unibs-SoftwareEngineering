@@ -14,8 +14,9 @@ public class Modello {
 	private End end;
 	
 	private Elemento ultimaModifica;
+	private Vector<Merge> mergeIncompleti;
 	
-	public Modello(String nome){
+		public Modello(String nome){
 		this.nome = nome;
 		start = new Start("Start"); //Come vogliamo gestire i costruttori?
 		azioni = new Vector<Azione>();
@@ -24,6 +25,7 @@ public class Modello {
 		fork = new Vector<Fork>();
 		join = new Vector<Join>();
 		end = new End("End");
+		mergeIncompleti = new Vector<Merge>();
 	}
 	
 	public void setUltimaModifica(Elemento e){
@@ -33,6 +35,15 @@ public class Modello {
 	public Elemento getUltimaModifica(){
 		return ultimaModifica;
 	}
+	
+	public Vector<Merge> getMergeIncompleti() {
+		return mergeIncompleti;
+	}
+	
+	public void aggiungiMergeIncompleto(Merge m){
+		mergeIncompleti.add(m);
+	}
+	
 	public Vector<Azione> getAzioni() {
 		return azioni;
 	}
