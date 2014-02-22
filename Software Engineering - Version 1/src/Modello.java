@@ -13,6 +13,8 @@ public class Modello {
 	private Vector<Join> join;
 	private End end;
 	
+	private Elemento ultimaModifica;
+	
 	public Modello(String nome){
 		this.nome = nome;
 		start = new Start("Start"); //Come vogliamo gestire i costruttori?
