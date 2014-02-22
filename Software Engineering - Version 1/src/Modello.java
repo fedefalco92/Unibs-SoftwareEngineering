@@ -44,6 +44,10 @@ public class Modello {
 		mergeIncompleti.add(m);
 	}
 	
+	public void setPrimaAzione(Azione azione){
+		start.setUscita(azione);
+	}
+	
 	public Vector<Azione> getAzioni() {
 		return azioni;
 	}
