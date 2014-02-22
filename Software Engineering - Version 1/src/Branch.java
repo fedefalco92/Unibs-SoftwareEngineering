@@ -31,10 +31,12 @@ public class Branch extends Elemento{
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
+		
 		output.append("in(" + ingresso + ") - out(");
 		for(Elemento elemento:uscite)
-			output.append(elemento+ ", ");
+		output.append(elemento+ ", ");
 		output.append(")");
+		
 		return output.toString();
 	}
 }
