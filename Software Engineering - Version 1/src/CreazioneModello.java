@@ -19,10 +19,13 @@ public class CreazioneModello {
 	public static void creaModello(String nomeModello){
 		modello = new Modello(nomeModello);
 		
+		//da creare
+		System.out.println(modello);
 		
 	}
 	
-	/*
+	/* io (maffi) preferirei fare una cosa meno static e più istanziata
+	 * 
 	public CreazioneModello(String nomemodello){
 		modello = new Modello(nomemodello);
 	}
