@@ -19,11 +19,15 @@ public abstract class Elemento {
 	public String getID() {
 		return ID;
 	}
-
-	@Override
-	public String toString() {
+	
+	public String getElementoString(){
 		StringBuffer output = new StringBuffer();
 		output.append("[" + ID + "] " + nome);
 		return output.toString();
+	}
+
+	@Override
+	public String toString() {
+		return getElementoString();
 	}
 }

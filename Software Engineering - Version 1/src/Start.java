@@ -20,7 +20,10 @@ public class Start extends Elemento{
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
-		output.append("out(" + "[" + uscita.getID() + "] " + uscita.getNome() + ")");
+		
+		output.append("out(");
+		output.append(uscita.getElementoString());		
+		output.append(")");
 		return output.toString();
 	}
 }

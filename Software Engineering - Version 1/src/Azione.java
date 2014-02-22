@@ -31,10 +31,17 @@ public class Azione extends Elemento{
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
 		output.append("in(" );
+		output.append(ingresso.getElementoString());
+		output.append(") - out(");
+		output.append(uscita.getElementoString());
+		output.append(")");
+		
+		/*
 		if (ingresso == null ) output.append("null)");
 		else output.append("[" +ingresso.getID() + "] " + ingresso.getNome() +  ") - out(" );
 		if (uscita==null) output.append("null)");
 		else output.append("[" + uscita.getID() + "] " + uscita.getNome() + ")");
+		*/
 		return output.toString();
 	}
 }

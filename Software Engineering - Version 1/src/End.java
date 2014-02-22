@@ -20,7 +20,10 @@ public class End extends Elemento {
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
-		output.append("in(" + ingresso + ")");
+		
+		output.append("in(" );
+		output.append(ingresso.getElementoString());
+		output.append(")");
 		return output.toString();
 	}
 }
