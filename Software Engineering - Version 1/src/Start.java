@@ -1,7 +1,7 @@
 
 public class Start extends Elemento{
 	
-	private Elemento uscita;
+	private Azione uscita;
 	
 	public Start (String nome){
 		super("START", nome);
@@ -12,7 +12,7 @@ public class Start extends Elemento{
 		return uscita;
 	}
 	
-	public void setUscita(Elemento uscita) {
+	public void setUscita(Azione uscita) {
 		this.uscita = uscita;
 	}
 	
