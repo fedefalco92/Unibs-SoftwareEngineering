@@ -146,20 +146,20 @@ public class Modello {
 	 */
 	public boolean nomeOK(String nome) {
 		for(Azione azione:azioni){
-			if(nome==azione.getNome()) return false;
+			if(nome.equals(azione.getNome())) return false;
 		}
 		for(Branch b:branch){
-			if(nome==b.getNome()) return false;
+			if(nome.equals(b.getNome())) return false;
 		}
 		for(Merge m:merge){
-			if(nome==m.getNome()) return false;
+			if(nome.equals(m.getNome())) return false;
 		}
 		/* uso futuro (le classi Fork e Join sono vuote al momento)
 		for(Fork f:fork){
-			if(nome==f.getNome()) return false;
+			if((nome.equals(f.getNome())) return false;
 		}
 		for(Join j:join){
-			if(nome==j.getNome()) return false;
+			if((nome.equals(j.getNome())) return false;
 		} */
 		
 		return true;
