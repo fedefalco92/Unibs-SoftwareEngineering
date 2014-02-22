@@ -136,6 +136,35 @@ public class Modello {
 		return output.toString();
 	}
 	
+	/**
+	 * Questo metodo restituisce falso se un nome &egrave gi&agrave stato utilizzato per un qualsiasi elemento del modello, 
+	 * vero altrimenti
+	 * 
+	 * il metodo non fa confronto con il nome del modello stesso, il nome del nodo iniziale e quello del nodo finale
+	 * @param nome
+	 * @return
+	 */
+	public boolean nomeOK(String nome) {
+		for(Azione azione:azioni){
+			if(nome==azione.getNome()) return false;
+		}
+		for(Branch b:branch){
+			if(nome==b.getNome()) return false;
+		}
+		for(Merge m:merge){
+			if(nome==m.getNome()) return false;
+		}
+		/* uso futuro (le classi Fork e Join sono vuote al momento)
+		for(Fork f:fork){
+			if(nome==f.getNome()) return false;
+		}
+		for(Join j:join){
+			if(nome==j.getNome()) return false;
+		} */
+		
+		return true;
+	}
+	
 	//AGGIUNGIAMO QUA UN METODO CHE DICE DA SOLO SE IL MODELLO E' CORRETTO?
 	//public boolean corretto(){
 	//	//todo
