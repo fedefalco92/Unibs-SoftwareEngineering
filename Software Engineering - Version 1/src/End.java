@@ -22,7 +22,8 @@ public class End extends Elemento {
 		output.append(super.toString() + " : ");
 		
 		output.append("in(" );
-		output.append(ingresso.getElementoString());
+		if(ingresso!=null) output.append(ingresso.getElementoString());
+		else output.append("null");
 		output.append(")");
 		return output.toString();
 	}

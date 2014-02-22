@@ -32,17 +32,21 @@ public class Branch extends Elemento{
 		
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
-		/*
+		
 		output.append("in(" );
-		output.append(ingresso.getElementoString());
+		if(ingresso!=null) output.append(ingresso.getElementoString());
+		else output.append("null");
 		output.append(") - out(");
-		for(Elemento elemento:uscite){
-			output.append(elemento.getElementoString());
-			output.append(", ");
-		}
+		if(!uscite.isEmpty())
+			for(Elemento elemento:uscite){
+				output.append(elemento.getElementoString());
+				output.append(", ");
+			}
+		else output.append("empty");
 		
 		output.append(")");
-		*/
+		
+		/*
 		
 		if(ingresso !=null && !uscite.isEmpty()){
 			output.append("in(" +ingresso.getElementoString() +  ") - out(");
@@ -50,7 +54,7 @@ public class Branch extends Elemento{
 				output.append( "[" + elemento.getElementoString() +", ");
 			output.append(")");
 		}
-		
+		*/
 		return output.toString();
 	}
 }

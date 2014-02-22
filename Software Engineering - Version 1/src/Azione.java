@@ -33,10 +33,10 @@ public class Azione extends Elemento{
 		output.append(super.toString() + " : ");
 		output.append("in(" );
 		if(ingresso!=null) output.append(ingresso.getElementoString());
-		else output.append("null)");
+		else output.append("null");
 		output.append(") - out(");
 		if(uscita!=null) output.append(uscita.getElementoString());
-		else output.append("null)");
+		else output.append("null");
 		output.append(")");
 		
 		/*

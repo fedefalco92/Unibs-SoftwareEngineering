@@ -22,7 +22,8 @@ public class Start extends Elemento{
 		output.append(super.toString() + " : ");
 		
 		output.append("out(");
-		output.append(uscita.getElementoString());		
+		if(uscita!=null) output.append(uscita.getElementoString());		
+		else output.append("null");
 		output.append(")");
 		return output.toString();
 	}
