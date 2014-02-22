@@ -5,11 +5,13 @@ public class Merge extends Elemento{
 
 	private Vector <Elemento> ingressi;
 	private Elemento uscita;
+	private boolean incompleto;
 	
 	public Merge (String nome){
 		super("MERGE", nome);
 		this.ingressi = new Vector <Elemento>();
 		this.uscita = null;
+		this.incompleto=true;
 	}
 	
 	public Vector<Elemento> getIngressi() {
@@ -22,6 +24,12 @@ public class Merge extends Elemento{
 	
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);
+		if(ingressi.size()>=2)
+			incompleto=false;
+	}
+	
+	public boolean incompleto(){
+		return incompleto;
 	}
 	
 	public void setUscita(Elemento uscita) {
@@ -35,11 +43,14 @@ public class Merge extends Elemento{
 		
 		
 		output.append("in(" );
-		if(!ingressi.isEmpty())
+		if(!ingressi.isEmpty()){
 			for(Elemento elemento:ingressi){
 				output.append(elemento.getElementoString());
 				output.append(", ");
 			}
+			if(incompleto)
+				output.append("incompleto");
+		}
 		else output.append("empty");
 		output.append(") - out(");
 		if(uscita!=null) output.append(uscita.getElementoString());
