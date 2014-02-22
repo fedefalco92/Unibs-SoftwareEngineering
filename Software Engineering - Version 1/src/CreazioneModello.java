@@ -4,6 +4,7 @@
  * permettera' di
  * -iniziare la creazione
  * -->ci vorra' un sottomenu per scegliere cosa aggiungere..
+ * -visualizzare il modello inqualsiasi momento
  * -terminare la creazione e quindi salvare il modello
  * --come testo
  * --come oggetto
@@ -17,6 +18,8 @@ public class CreazioneModello {
 	
 	public static void creaModello(String nomeModello){
 		modello = new Modello(nomeModello);
+		
+		
 	}
 	
 	/*
