@@ -30,7 +30,11 @@ public class Azione extends Elemento{
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
-		output.append("in(" + ingresso.getID() + "] " + ingresso.getNome() +  ") - out(" + "[" + uscita.getID() + "] " + uscita.getNome() + ")");
+		output.append("in(" );
+		if (ingresso == null ) output.append("null)");
+		else output.append("[" +ingresso.getID() + "] " + ingresso.getNome() +  ") - out(" );
+		if (uscita==null) output.append("null)");
+		else output.append("[" + uscita.getID() + "] " + uscita.getNome() + ")");
 		return output.toString();
 	}
 }
