@@ -8,18 +8,22 @@ e sia presentata in fondo al menu
 public class MyMenu
 {
   final private static String CORNICE = "--------------------------------";
-  final private static String VOCE_USCITA = "0\tEsci";
   final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
+  private String VOCE_USCITA = "0\tEsci";
   private String titolo;
   private String [] voci;
 
-	
+
   public MyMenu (String titolo, String [] voci)
   {
 	this.titolo = titolo;
 	this.voci = voci;
   }
+  
+  public void setVoceUscita(String voceUscita){
+		VOCE_USCITA = voceUscita;
+	}
 
   public int scegli ()
   {
