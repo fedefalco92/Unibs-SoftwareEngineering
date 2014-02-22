@@ -26,6 +26,13 @@ public class Modello {
 		end = new End("End");
 	}
 	
+	public void setUltimaModifica(Elemento e){
+		ultimaModifica=e;
+	}
+	
+	public Elemento getUltimaModifica(){
+		return ultimaModifica;
+	}
 	public Vector<Azione> getAzioni() {
 		return azioni;
 	}
