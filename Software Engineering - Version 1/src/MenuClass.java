@@ -16,7 +16,7 @@ public class MenuClass {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
-				//Scelta creazione guidata modello
+				creaModello();
 				break;
 			case 2:
 				CostruzioneModello.caricaFile();
@@ -31,6 +31,13 @@ public class MenuClass {
 		}
 		
 		return false;
+	}
+
+	//per ora provo a fare tutto static come dice Falcon...
+	private static void creaModello() {
+		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
+		CreazioneModello.creaModello(nomeModello);
+		
 	}
 	
 	
