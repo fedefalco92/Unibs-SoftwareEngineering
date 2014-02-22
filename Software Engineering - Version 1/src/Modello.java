@@ -24,6 +24,38 @@ public class Modello {
 		end = new End("End");
 	}
 	
+	public Vector<Azione> getAzioni() {
+		return azioni;
+	}
+
+	public Vector<Branch> getBranch() {
+		return branch;
+	}
+
+	public Vector<Merge> getMerge() {
+		return merge;
+	}
+
+	public Vector<Fork> getFork() {
+		return fork;
+	}
+
+	public Vector<Join> getJoin() {
+		return join;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public Start getStart() {
+		return start;
+	}
+
+	public End getEnd() {
+		return end;
+	}
+
 	public void setNome(String _nome){
 		nome=_nome;
 	}
