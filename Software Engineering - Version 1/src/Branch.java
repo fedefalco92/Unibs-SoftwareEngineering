@@ -32,9 +32,9 @@ public class Branch extends Elemento{
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
 		
-		output.append("in(" + ingresso + ") - out(");
+		output.append("in(" + "[" + ingresso.getID() + "] " + ingresso.getNome() +  ") - out(");
 		for(Elemento elemento:uscite)
-		output.append(elemento+ ", ");
+		output.append( "[" + elemento.getID() + "] " + elemento.getNome() +", ");
 		output.append(")");
 		
 		return output.toString();
