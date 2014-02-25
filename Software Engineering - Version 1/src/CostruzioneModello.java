@@ -1,7 +1,9 @@
 import java.io.*;
 import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import javax.swing.JFileChooser;
 
 /**
@@ -92,31 +94,109 @@ public class CostruzioneModello {
 	 * Questo metodo permette di analizzare una stringa attraverso l'utilizzo delle espressioni
 	 * regolari. 
 	 * Creo un Pattern e un Matcher per fare in modo che di estrarre i nomi e gli ID che mi servono.
-	 * @param riga
+	 * @param stringa
 	 */
-	private static void analisiRiga(String riga){
-		String patternRegex = "^.*[\\w]*.*:";
-		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
-		Matcher matcher = pattern.matcher(riga);
-		
-		while (matcher.find()){
-			String elem = matcher.group().replaceAll(":", ""); //Elimino due punti
-			elem = elem.trim(); //Tolgo eventuali spazi
-			if(restituisciID(elem) != null && restituisciNome(elem) != null){
-				System.out.println("#" + elem);
-				System.out.println("ID:" + restituisciID(elem) + "#");
-				System.out.println("Nome:" + restituisciNome(elem) + "#");
-				System.out.println();
+	private static void analisiRiga(String stringa){
+		String elemento = analisiElemento(stringa);
+		if(elemento != null){
+			String IDElem = restituisciID(elemento);
+			String NomeElem = restituisciNome(elemento);
+			if(IDElem != null && NomeElem != null){
+				System.out.println("ID: " + IDElem + " Nome: " + NomeElem);
 			}
 		}
-			
-		/*
-		if(matcher.matches()){
-			System.out.println("OK");
+		
+		String in = analisiIn(stringa);
+		if(in != null){
+			System.out.println("Analisi in#" + in);
+			Vector <String> stringheIn = analisiSeparatori(",", in);
+			if(stringheIn != null){
+				for(String elem: stringheIn){
+					System.out.println(elem);
+				}
+			}
 		}
-		else
-			System.out.println("NO");
-		*/
+		
+		String out = analisiOut(stringa);
+		if( out != null){
+			System.out.println("Analisi out#" + out);
+			Vector <String> stringheOut = analisiSeparatori(",", out);
+			if(stringheOut != null){
+				for(String elem: stringheOut){
+					System.out.println(elem);
+				}
+			}
+		}
+		System.out.println();
+		
+	}
+	
+	/**
+	 * Analizza una stringa e restituisce l'elemento inziale del pattern.
+	 * @param stringa
+	 * @return elemento
+	 */
+	private static String analisiElemento(String stringa){
+		String elemento = null;
+		String patternRegex = "^.*[\\w]*.*:";
+		Pattern pattern = Pattern.compile(patternRegex, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(stringa);
+		
+		while (matcher.find()){
+			elemento = matcher.group().replaceAll(":", ""); //Elimino due punti
+			elemento = elemento.trim(); //Tolgo eventuali spazi
+		}
+		return elemento;
+	}
+	
+	/**
+	 * Analizza una stringa e restituisce la stringa all'interno di in(..)
+	 * @param riga
+	 * @return inElem
+	 */
+	private static String analisiIn(String stringa){
+		String inElem = null;
+		int index = stringa.indexOf("in(");
+		int end = stringa.indexOf(")", index);
+		if(index != -1 && end != -1){
+			inElem = stringa.substring(index, end);
+			inElem = inElem.replaceAll("in\\(", "");
+			inElem = inElem.trim();
+		}
+		return inElem;
+	}
+	
+	/**
+	 * Analizza una stringa e restituisce la stringa all'interno di out(..)
+	 * @param stringa
+	 * @return outElem
+	 */
+	private static String analisiOut(String stringa){
+		String outElem = null;
+		int index = stringa.indexOf("out(");
+		int end = stringa.indexOf(")", index);
+		if(index != -1 && end != -1){
+			outElem = stringa.substring(index, end);
+			outElem = outElem.replaceAll("out\\(", "");
+			outElem = outElem.trim();
+		}
+		return outElem;
+	}
+	
+	/**
+	 * Riceve in ingresso un separatore e una stringa e restituisce il vector contenente tutte le sottostringhe divise da quel separatore
+	 * @param regSeparator. Un separatore
+	 * @param stringa
+	 * @return Vector di stringhe separate
+	 */
+	private static Vector <String> analisiSeparatori(String regSeparator, String stringa){
+		Vector <String> stringheSeparate = new Vector <String> ();
+		String [] result = stringa.split(regSeparator);
+	     for (int i=0; i < result.length; i++){
+	    	// System.out.println(result[i]);
+	    	 stringheSeparate.add(result[i].trim());
+	     }
+		return stringheSeparate;
 	}
 	
 	/**
