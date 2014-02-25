@@ -55,6 +55,9 @@ public class Branch extends Elemento{
 		this.ingresso = ingresso;
 	}
 	
+	/**
+	 * Metodo toString() per l'elemento.
+	 */
 	@Override
 	public String toString() {
 		
