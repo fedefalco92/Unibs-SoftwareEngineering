@@ -17,7 +17,7 @@ public class CostruzioneModello {
 	//E fare due classi: Analisi File e Costruzione Modello?
 	
 	private static File file;
-	//private static Modello nuovoModello;
+	//private static Modello modelloCaricato;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
@@ -67,8 +67,8 @@ public class CostruzioneModello {
 		//Preparo il BufferReader del file aperto
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
-		//nuovomodello
-		//nuovoModello = new Modello(file.getName());
+		//modelloCaricato
+		//modelloCaricato = new Modello(file.getName());
 		
 		//Inizializzo la riga letta come null
 		String riga = null;
@@ -117,6 +117,7 @@ public class CostruzioneModello {
 				switch(IDElem){
 				case "AZIONE":
 					nuovoElemento = new Azione(NomeElem);
+					
 					break;
 				case "BRANCH":
 					nuovoElemento = new Branch(NomeElem);
@@ -140,8 +141,13 @@ public class CostruzioneModello {
 					
 				}
 				*/
+				
 			}
 		}
+		
+//		if(nuovoElemento != null){
+//			modelloCaricato.aggiungiElemento(nuovoElemento);
+//		}
 		
 		String in = analisiIn(stringa);
 		//String in = restituisciStringa("in(", ")", stringa);
