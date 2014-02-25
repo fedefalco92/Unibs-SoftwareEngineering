@@ -14,7 +14,10 @@ import javax.swing.JFileChooser;
 
 public class CostruzioneModello {
 
+	//E fare due classi: Analisi File e Costruzione Modello?
+	
 	private static File file;
+	//private static Modello nuovoModello;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
@@ -64,6 +67,9 @@ public class CostruzioneModello {
 		//Preparo il BufferReader del file aperto
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		
+		//nuovomodello
+		//nuovoModello = new Modello(file.getName());
+		
 		//Inizializzo la riga letta come null
 		String riga = null;
 		
@@ -97,17 +103,48 @@ public class CostruzioneModello {
 	 * @param stringa
 	 */
 	private static void analisiRiga(String stringa){
+		//Elemento nuovoElemento = null;
+		
 		String elemento = analisiElemento(stringa);
 		if(elemento != null){
 			String IDElem = restituisciID(elemento);
 			String NomeElem = restituisciNome(elemento);
 			if(IDElem != null && NomeElem != null){
 				System.out.println("ID: " + IDElem + " Nome: " + NomeElem);
+				
+				//Da studiare meglio
+				/*
+				switch(IDElem){
+				case "AZIONE":
+					nuovoElemento = new Azione(NomeElem);
+					break;
+				case "BRANCH":
+					nuovoElemento = new Branch(NomeElem);
+					break;
+				case "MERGE":
+					nuovoElemento = new Merge(NomeElem);
+					break;
+				case "START":
+					nuovoElemento = new Start(NomeElem);
+					break;
+				case "END":
+					nuovoElemento = new End(NomeElem);
+					break;
+				case "FORK":
+					//nuovoElemento = new Fork(NomeElem);
+					break;
+				case "JOIN":
+					//nuovoElemento = new Join(NomeElem);
+					break;
+				default:
+					
+				}
+				*/
 			}
 		}
 		
 		String in = analisiIn(stringa);
-		//String in = restituisciStringa("in(", "(", stringa);
+		//String in = restituisciStringa("in(", ")", stringa);
 		if(in != null){
 			System.out.println("Analisi in#" + in);
 			Vector <String> stringheIn = analisiSeparatori(",", in);
@@ -119,7 +156,7 @@ public class CostruzioneModello {
 		}
 		
 		String out = analisiOut(stringa);
-		//String out = restituisciStringa("out(", "(", stringa);
+		//String out = restituisciStringa("out(", ")", stringa);
 		if( out != null){
 			System.out.println("Analisi out#" + out);
 			Vector <String> stringheOut = analisiSeparatori(",", out);
@@ -151,12 +188,16 @@ public class CostruzioneModello {
 		return elemento;
 	}
 	
+	
 	/**
 	 * Analizza una stringa e restituisce la stringa all'interno di in(..)
 	 * @param riga
 	 * @return inElem
 	 */
+	
 	private static String analisiIn(String stringa){
+		return restituisciStringa("in(", ")", stringa);
+		/*
 		String inElem = null;
 		int index = stringa.indexOf("in(");
 		int end = stringa.indexOf(")", index);
@@ -166,14 +207,19 @@ public class CostruzioneModello {
 			inElem = inElem.trim();
 		}
 		return inElem;
+		*/
 	}
+	
 	
 	/**
 	 * Analizza una stringa e restituisce la stringa all'interno di out(..)
 	 * @param stringa
 	 * @return outElem
 	 */
+	
 	private static String analisiOut(String stringa){
+		return restituisciStringa("out(", ")", stringa);
+		/*
 		String outElem = null;
 		int index = stringa.indexOf("out(");
 		int end = stringa.indexOf(")", index);
@@ -183,17 +229,17 @@ public class CostruzioneModello {
 			outElem = outElem.trim();
 		}
 		return outElem;
+		*/
 	}
+	
 	
 	/**
 	 * Passata una stringa e due parametri per l'inizio e la fine restituisce una stringa tra i due parametri.
 	 * @param initRegEx Stringa (espressione regolare) per trovare l'inizio della stringa.
 	 * @param endRegEx Stringa (espressione regolare) per trovare la fine della stringa.
 	 * @param stringa Stringa sulla quale effettuare la ricerca.
-	 * @return stringaFiltrata. Stringa filtrata tra l'initRegEx e l'endRegEx.
+	 * @return Stringa filtrata tra l'initRegEx e l'endRegEx.
 	 */
-	//DA MODIFICARE UN PROBLEMA CON LE REGULAR EXPRESSION
-	/*
 	private static String restituisciStringa(String initRegEx, String endRegEx, String stringa){
 		String stringaFiltrata = null;
 		int index = stringa.indexOf(initRegEx);
@@ -205,7 +251,7 @@ public class CostruzioneModello {
 		}
 		return stringaFiltrata;
 	}
-	*/
+	
 	
 	/**
 	 * Riceve in ingresso un separatore e una stringa e restituisce il vector contenente tutte le sottostringhe divise da quel separatore
