@@ -107,6 +107,7 @@ public class CostruzioneModello {
 		}
 		
 		String in = analisiIn(stringa);
+		//String in = restituisciStringa("in(", "(", stringa);
 		if(in != null){
 			System.out.println("Analisi in#" + in);
 			Vector <String> stringheIn = analisiSeparatori(",", in);
@@ -118,6 +119,7 @@ public class CostruzioneModello {
 		}
 		
 		String out = analisiOut(stringa);
+		//String out = restituisciStringa("out(", "(", stringa);
 		if( out != null){
 			System.out.println("Analisi out#" + out);
 			Vector <String> stringheOut = analisiSeparatori(",", out);
@@ -182,6 +184,28 @@ public class CostruzioneModello {
 		}
 		return outElem;
 	}
+	
+	/**
+	 * Passata una stringa e due parametri per l'inizio e la fine restituisce una stringa tra i due parametri.
+	 * @param initRegEx Stringa (espressione regolare) per trovare l'inizio della stringa.
+	 * @param endRegEx Stringa (espressione regolare) per trovare la fine della stringa.
+	 * @param stringa Stringa sulla quale effettuare la ricerca.
+	 * @return stringaFiltrata. Stringa filtrata tra l'initRegEx e l'endRegEx.
+	 */
+	//DA MODIFICARE UN PROBLEMA CON LE REGULAR EXPRESSION
+	/*
+	private static String restituisciStringa(String initRegEx, String endRegEx, String stringa){
+		String stringaFiltrata = null;
+		int index = stringa.indexOf(initRegEx);
+		int end = stringa.indexOf(endRegEx, index);
+		if(index != -1 && end != -1){
+			stringaFiltrata = stringa.substring(index, end);
+			stringaFiltrata = stringaFiltrata.replace(initRegEx, "");
+			stringaFiltrata = stringaFiltrata.trim();
+		}
+		return stringaFiltrata;
+	}
+	*/
 	
 	/**
 	 * Riceve in ingresso un separatore e una stringa e restituisce il vector contenente tutte le sottostringhe divise da quel separatore
