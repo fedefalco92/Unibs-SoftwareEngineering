@@ -5,36 +5,59 @@ public class Branch extends Elemento{
 	private Elemento ingresso;
 	private Vector <Elemento> uscite;
 	private boolean incompleto;
+	
 	public Branch (String nome){
 		super("BRANCH", nome);
 		this.ingresso = null;
 		this.uscite = new Vector <Elemento>();
 		this.incompleto = true;
-		
 	}
 	
+	/**
+	 * Getter per Ingresso
+	 * @return ingresso
+	 */
 	public Elemento getIngresso() {
 		return ingresso;
 	}
 	
+	/**
+	 * Getter per Uscita
+	 * @return uscite
+	 */
 	public Vector<Elemento> getUscite() {
 		return uscite;
 	}
 	
+	/**
+	 * Aggiunge un elemento al Vector Uscita
+	 * @param elemento
+	 */
 	public void aggiungiUscita(Elemento elem){
 		uscite.add(elem);
 		if(uscite.size()>=2)
 			incompleto=false;
 	}
 	
+	/**
+	 * Getter per l'incompletezza del Branch.
+	 * @return incompleto
+	 */
 	public boolean incompleto(){
 		return incompleto;
 	}
 	
+	/**
+	 * Setter per l'ingresso
+	 * @param ingresso
+	 */
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
 	
+	/**
+	 * Metodo toString() per l'elemento.
+	 */
 	@Override
 	public String toString() {
 		

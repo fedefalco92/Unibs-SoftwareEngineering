@@ -5,6 +5,12 @@ public class Modello {
 	
 	private String nome;
 	
+	/*AGGIUNGO UN VECTOR DI ELEMENTI! CREDO SIA PIU' COMODO PER IL CARICAMENTO 
+	 * Si delega un metodo nella classe modello per riempire tutti gli altri vector partendo da questo
+	 * Per ora e' un'idea che quando maffi finisce di fare le sue modifiche implemento :)
+	 */
+//	private Vector <Elemento> elementi; 
+
 	private Start start;
 	private Vector<Azione> azioni;
 	private Vector<Branch> branch;
@@ -18,7 +24,9 @@ public class Modello {
 	
 		public Modello(String nome){
 		this.nome = nome;
-		start = new Start("Start"); //Come vogliamo gestire i costruttori?
+//		elementi = new Vector<Elemento>();
+		
+		start = new Start("Start");
 		azioni = new Vector<Azione>();
 		branch = new Vector<Branch>();
 		merge = new Vector<Merge>();
@@ -51,6 +59,10 @@ public class Modello {
 	public void setUltimoElemento(Elemento e){
 		end.setIngresso(e);
 	}
+	
+//	public Vector<Elemento> getElementi() {
+//		return elementi;
+//	}
 	
 	public Vector<Azione> getAzioni() {
 		return azioni;
@@ -95,6 +107,10 @@ public class Modello {
 	public void setEnd(End end){
 		this.end = end;
 	}
+	
+//	public void aggiungiElemento(Elemento elem){
+//		elementi.add(elem);
+//	}
 	
 	public void aggiungiAzione(Azione azione){
 		azioni.add(azione);

@@ -7,12 +7,12 @@ Prova3 : funziona?
  
 [AZIONE] nome : in([AZIONE] nome) - out([AZIONE] nome)
 [BRANCH] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
-[MERGE] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+[MERGE] mm: in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
 
 [NODOINIT] nome : out([AZIONE] nome)
 [NODOEND] nome : in([AZIONE] nome)
 
 //Fork e Join collegati
-[FORK] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
-[JOIN] nome : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+[FORK] nome fork : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
+[JOIN] noj : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
  
