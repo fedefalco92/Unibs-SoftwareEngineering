@@ -2,7 +2,7 @@ import it.unibs.fp.mylib.*;
 
 public class MenuClass {
 
-	
+	private static Modello modello;
 	
 	/*Metodo Boolean: un tipo di possibilita' per creare un menu. Il ciclo deve essere fatto da un metodo esterno*/
 	public static boolean menuPrincipale(){
@@ -19,7 +19,7 @@ public class MenuClass {
 				creaModello();
 				break;
 			case 2:
-				CostruzioneModello.caricaFile();
+				modello = CostruzioneModello.caricaModello();
 				break;
 			case 3:
 				//Diagnosi e test

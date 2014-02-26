@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +16,7 @@ public class CostruzioneModello {
 	//E fare due classi: Analisi File e Costruzione Modello?
 	
 	private static File file;
-	//private static Modello modelloCaricato;
+	private static Modello modelloCaricato;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
@@ -25,16 +24,18 @@ public class CostruzioneModello {
 	 * Esso invoca un altro metodo per aprire il file attraverso una interfaccia grafica.
 	 * Se il file &egrave; stato aperto correttamente invoca un altro metodo per leggere il file.
 	 */
-	public static void caricaFile(){
+	public static Modello caricaModello(){
 		String loc = cartella + File.separator; //Location del file
 		try {
 			file = aprifile(loc);
 			if(file != null){
+				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
 				leggoFile(new FileReader(file));
 			}else{
 				System.out.println("Non hai selezionato nessun file");
 			}
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
+		return modelloCaricato;
 	}
 	
 	/**
@@ -64,11 +65,8 @@ public class CostruzioneModello {
 	 */
 	private static void leggoFile(FileReader fileReader){
 		
-		//Preparo il BufferReader del file aperto
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		//modelloCaricato
-		//modelloCaricato = new Modello(file.getName());
+		//String file="";
 		
 		//Inizializzo la riga letta come null
 		String riga = null;
@@ -84,24 +82,75 @@ public class CostruzioneModello {
 	    	
 	    	//Controllo se la riga e' null e in caso esco. 
 	    	//Se null significa che sono arrivato in fondo al file.
-	    	if(riga == null)
+	    	if(riga == null){
 	    		break;
-	    	
-	    	//Mostro la riga che ho letto
-	    	//System.out.println(riga);
-	    	
+	    	}
+	    	//file = file + riga + "\n";
 	    	//Passo la riga che ho letto ad un metodo che analizza la riga.
-	    	analisiRiga(riga);
-	    	
+	    	//analisiRiga(riga);
+	    	aggiungoElementi(riga);
+	    }
+	    //System.out.println(file+"#Fine file");
+	    //analisiRiga(file);
+	    for(Elemento elem: modelloCaricato.getElementi()){
+	    	System.out.println(elem.toString());
 	    }
 	}
 	
-	/**
-	 * Questo metodo permette di analizzare una stringa attraverso l'utilizzo delle espressioni
-	 * regolari. 
-	 * Creo un Pattern e un Matcher per fare in modo che di estrarre i nomi e gli ID che mi servono.
-	 * @param stringa
-	 */
+	private static void aggiungoElementi(String stringa){
+		Elemento nuovoElemento = null;
+		String elemento = analisiElemento(stringa);
+		if(elemento != null){
+			String IDElem = restituisciID(elemento);
+			String NomeElem = restituisciNome(elemento);
+			if(IDElem != null && NomeElem != null){
+				
+				switch(IDElem){
+				case "AZIONE":
+					nuovoElemento = new Azione(NomeElem);
+					break;
+				case "BRANCH":
+					nuovoElemento = new Branch(NomeElem);
+					break;
+				case "MERGE":
+					nuovoElemento = new Merge(NomeElem);
+					break;
+				case "START":
+					nuovoElemento = new Start(NomeElem);
+					break;
+				case "END":
+					nuovoElemento = new End(NomeElem);
+					break;
+				case "FORK":
+					//nuovoElemento = new Fork(NomeElem);
+					break;
+				case "JOIN":
+					//nuovoElemento = new Join(NomeElem);
+					break;
+				default:
+					System.out.println("Elemento non riconosciuto");
+					break;
+				}
+				modelloCaricato.aggiungiElemento(nuovoElemento);
+			}
+		}
+	}
+	
+	private static void aggiungoEntrate(String stringa){
+		String in = analisiIn(stringa);
+		//String in = restituisciStringa("in(", ")", stringa);
+		if(in != null){
+			//System.out.println("Analisi in#" + in);
+			Vector <String> stringheIn = analisiSeparatori(",", in);
+			if(stringheIn != null){
+				for(String elem: stringheIn){
+					System.out.println(elem);
+					//Aggiungi all'elemento
+				}
+			}
+		}
+	}
+	
 	private static void analisiRiga(String stringa){
 		//Elemento nuovoElemento = null;
 		
@@ -194,13 +243,11 @@ public class CostruzioneModello {
 		return elemento;
 	}
 	
-	
 	/**
 	 * Analizza una stringa e restituisce la stringa all'interno di in(..)
 	 * @param riga
 	 * @return inElem
 	 */
-	
 	private static String analisiIn(String stringa){
 		return restituisciStringa("in(", ")", stringa);
 		/*
@@ -216,13 +263,11 @@ public class CostruzioneModello {
 		*/
 	}
 	
-	
 	/**
 	 * Analizza una stringa e restituisce la stringa all'interno di out(..)
 	 * @param stringa
 	 * @return outElem
 	 */
-	
 	private static String analisiOut(String stringa){
 		return restituisciStringa("out(", ")", stringa);
 		/*
@@ -237,7 +282,6 @@ public class CostruzioneModello {
 		return outElem;
 		*/
 	}
-	
 	
 	/**
 	 * Passata una stringa e due parametri per l'inizio e la fine restituisce una stringa tra i due parametri.
@@ -258,7 +302,6 @@ public class CostruzioneModello {
 		return stringaFiltrata;
 	}
 	
-	
 	/**
 	 * Riceve in ingresso un separatore e una stringa e restituisce il vector contenente tutte le sottostringhe divise da quel separatore
 	 * @param regSeparator. Un separatore
@@ -273,6 +316,21 @@ public class CostruzioneModello {
 	    	 stringheSeparate.add(result[i].trim());
 	     }
 		return stringheSeparate;
+	}
+	
+	/**
+	 * Controlla che l'ID sia valido.
+	 * @param id
+	 * @return
+	 */
+	private static boolean checkID(String id){
+		if(id != null){
+			boolean condizioniVerificate = id.equalsIgnoreCase("Azione") || id.equalsIgnoreCase("Branch") || 
+					id.equalsIgnoreCase("Merge") || id.equalsIgnoreCase("Start") || id.equalsIgnoreCase("End"); //Da aggiungere condizioni
+			return condizioniVerificate;
+		}
+		else
+			return false;
 	}
 	
 	/**
@@ -292,7 +350,11 @@ public class CostruzioneModello {
 			ID = ID.replace("[", "").replace("]", "");
 		}
 		
-		return ID;
+		//Aggiunto controllo validita' ID
+		if(checkID(ID))
+			return ID;
+		return null;
+		
 	}
 	
 	/**

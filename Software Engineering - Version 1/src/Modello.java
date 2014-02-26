@@ -9,7 +9,7 @@ public class Modello {
 	 * Si delega un metodo nella classe modello per riempire tutti gli altri vector partendo da questo
 	 * Per ora e' un'idea che quando maffi finisce di fare le sue modifiche implemento :)
 	 */
-//	private Vector <Elemento> elementi; 
+	private Vector <Elemento> elementi; 
 
 	private Start start;
 	private Vector<Azione> azioni;
@@ -24,7 +24,7 @@ public class Modello {
 	
 		public Modello(String nome){
 		this.nome = nome;
-//		elementi = new Vector<Elemento>();
+		elementi = new Vector<Elemento>();
 		
 		start = new Start("Start");
 		azioni = new Vector<Azione>();
@@ -36,20 +36,38 @@ public class Modello {
 		mergeIncompleti = new Vector<Merge>();
 	}
 	
-	public void setUltimaModifica(Elemento e){
-		ultimaModifica=e;
+	//METODI AGGIUNTA A VECTOR//
+	public void aggiungiElemento(Elemento elem){
+		elementi.add(elem);
 	}
 	
-	public Elemento getUltimaModifica(){
-		return ultimaModifica;
+	public void aggiungiAzione(Azione azione){
+		azioni.add(azione);
 	}
 	
-	public Vector<Merge> getMergeIncompleti() {
-		return mergeIncompleti;
+	public void aggiungiBranch(Branch _branch){
+		branch.add(_branch);
+	}
+	
+	public void aggiungiMerge(Merge _merge){
+		merge.add(_merge);
+	}
+	
+	public void aggiungiFork(Fork _fork){
+		fork.add(_fork);
+	}
+	
+	public void aggiungiJoin(Join _join){
+		join.add(_join);
 	}
 	
 	public void aggiungiMergeIncompleto(Merge m){
 		mergeIncompleti.add(m);
+	}
+	
+	//METODI SETTER//
+	public void setUltimaModifica(Elemento e){
+		ultimaModifica=e;
 	}
 	
 	public void setPrimaAzione(Azione azione){
@@ -59,10 +77,31 @@ public class Modello {
 	public void setUltimoElemento(Elemento e){
 		end.setIngresso(e);
 	}
+
+	public void setNome(String _nome){
+		nome=_nome;
+	}
 	
-//	public Vector<Elemento> getElementi() {
-//		return elementi;
-//	}
+	public void setStart(Start start){
+		this.start = start;
+	}
+	
+	public void setEnd(End end){
+		this.end = end;
+	}
+	
+	//METODI GETTER//
+	public Elemento getUltimaModifica(){
+		return ultimaModifica;
+	}
+	
+	public Vector<Merge> getMergeIncompleti() {
+		return mergeIncompleti;
+	}
+	
+	public Vector<Elemento> getElementi() {
+		return elementi;
+	}
 	
 	public Vector<Azione> getAzioni() {
 		return azioni;
@@ -96,44 +135,18 @@ public class Modello {
 		return end;
 	}
 
-	public void setNome(String _nome){
-		nome=_nome;
-	}
+	//METODI SUL MODELLO//
 	
-	public void setStart(Start start){
-		this.start = start;
+	//METODO DI RICERCA NEL VECTOR DI ELEMENTI//
+	public Elemento ricercaElementoInModello(String ID, String nome){
+		for(Elemento elem: elementi){
+			if(elem.getID().equalsIgnoreCase(ID) && elem.getNome().equalsIgnoreCase(nome)){
+				return elem;
+			}
+		}
+		return null;
 	}
-	
-	public void setEnd(End end){
-		this.end = end;
-	}
-	
-//	public void aggiungiElemento(Elemento elem){
-//		elementi.add(elem);
-//	}
-	
-	public void aggiungiAzione(Azione azione){
-		azioni.add(azione);
-	}
-	
-	public void aggiungiBranch(Branch _branch){
-		branch.add(_branch);
-	}
-	
-	public void aggiungiMerge(Merge _merge){
-		merge.add(_merge);
-	}
-	
-	public void aggiungiFork(Fork _fork){
-		fork.add(_fork);
-	}
-	
-	public void aggiungiJoin(Join _join){
-		join.add(_join);
-	}
-
 	@Override
-	
 	//PRIMA VERSIONE...quando saremo riusciti a creare un modello vedremo come migliorarla!
 	public String toString() {
 		StringBuffer output=new StringBuffer();
