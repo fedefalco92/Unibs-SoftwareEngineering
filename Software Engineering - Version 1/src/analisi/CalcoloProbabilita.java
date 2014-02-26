@@ -42,7 +42,7 @@ public class CalcoloProbabilita {
 		p3.addCammino(new Percorso("A1,A3,A4",false));
 		Prova p4 = new Prova("4");
 		p4.addCammino(new Percorso("A1,A2,A3,A4,A6",false));
-		p4.addCammino(new Percorso("A1",false));
+		p4.addCammino(new Percorso("A1",true));
 		p4.addCammino(new Percorso("A1,A2,A3",true));
 		
 		//aggiunta ad un test suite 
@@ -65,15 +65,17 @@ public class CalcoloProbabilita {
 		ts1.addNuovaClasseEquivalenza(cl3);
 		
 		 DiagnosiClasse diagC1 = new DiagnosiClasse(cl1,attivitaTotali);	 
-		 diagC1.generaDiagnosiMinimali();
+		 diagC1.generaDiagnosi();
 		 DiagnosiClasse diagC2 = new DiagnosiClasse(cl2,attivitaTotali);	 
-		 diagC2.generaDiagnosiMinimali();
+		 diagC2.generaDiagnosi();
 		 DiagnosiClasse diagC3 = new DiagnosiClasse(cl3,attivitaTotali);	 
-		 diagC3.generaDiagnosiMinimali();	
+		 diagC3.generaDiagnosi();
 		 
+		 diagC1.settaIdentificatorePosizione();		
+		 diagC2.settaIdentificatorePosizione();		 
+		 diagC3.settaIdentificatorePosizione();			 
 	
 		 
 	}
 	*/
-
 }

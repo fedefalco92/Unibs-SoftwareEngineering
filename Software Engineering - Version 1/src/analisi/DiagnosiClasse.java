@@ -3,6 +3,7 @@
  */
 package analisi;
 
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
@@ -19,23 +20,23 @@ public class DiagnosiClasse {
 	private Vector<String> insiemeAttivita;
 	private ClasseEquivalenza classe;
 	private Vector<Vector<String>> diagnosiMinimali;
-	private int[] probabilita;
+	private Vector<Vector<Integer>> probabilita;
 	
 	public DiagnosiClasse(Vector<String> insiemeAttivita){
 		classe = null;
 		diagnosiMinimali = new Vector<Vector<String>>();
 		this.insiemeAttivita = insiemeAttivita;
-		probabilita = new int[insiemeAttivita.size()];
+		probabilita = new Vector<Vector<Integer>>();
 	}
 	
 	public DiagnosiClasse(ClasseEquivalenza classe,Vector<String> insiemeAttivita){
 		this.classe = classe;	
 		this.insiemeAttivita = insiemeAttivita;
 		diagnosiMinimali = new Vector<Vector<String>>();		
-		probabilita = new int[insiemeAttivita.size()];		
+		probabilita = new Vector<Vector<Integer>>();		
 	}
 	
-	public /*private Vector<Vector<String>>*/ void generaDiagnosiMinimali(){
+	private Vector<Vector<String>> generaInsiemePartenza(){
 		//algoritmo per generare degli HS minimali
 		Vector<Vector<String>> minimalHS = new Vector<Vector<String>>();
 		Prova provaEquivalenza = classe.getProva();
@@ -56,7 +57,7 @@ public class DiagnosiClasse {
 			 }				 				 				
 		 }						
 		
-		// System.out.println(elementiDaRimuovere.toString());
+		 //System.out.println(elementiDaRimuovere.toString()+"\n\n");
 		 
 		//ora che ho ricercato in tutte le prove posso eliminare gli elementi OK dalle rilevazioni KO
 		
@@ -79,20 +80,112 @@ public class DiagnosiClasse {
 				insiemiBase.add(elementiAttivita);
 		}
 		
+		//System.out.println("Insieme di partenza :" + insiemiBase.toString() + "\n\n");
+		
+		return insiemiBase;
+		
 		//--> fino a qui calcola l'insieme di partenza da cui ricavare gli MHS
 		
-		//TO DO 
-		//TO DO
-		//creazione e preparazione ID per ricavare i MHS
-			
-		
-		//genero MHS partendo dal nuovo insieme creato utilizzando solo KO e privati degli elementi OK interni a questi
-		
-		
-		/*return minimalHS;*/
+	
 	}
 	
+	/**
+	 * Generazione delle diagnosi minimali relative alla classe di equivalenza considerata
+	 */
 	
+	public void generaDiagnosi(){
+		
+		//Applicazione dei metodi creati per trovare l'insieme di diagnosi minimali		
+		
+		System.out.println("Insieme Attivita' : " + insiemeAttivita);
+		
+		System.out.println("Insieme base di partenza: " + generaInsiemePartenza().toString());
+	
+		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
+		
+		System.out.println("Corrispondenze per calcolo MHS: " + corrispondenze); 
+		
+		diagnosiMinimali = UtilitaGenerazioneMHS.generaMHS(corrispondenze,insiemeAttivita);
+		
+		System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
+	}
+	
+	/**
+	 * Questo metodo costruisce la tabella binaria delle corrispondenze
+	 * valida per qualsiasi vettore in generale
+	 * @return 
+	 */
+	
+	//Spostarlo in un'altra classe (e' un metodo che, in teoria e' di validita' generale)
+	
+	private Vector<Vector<Integer>> generazioneCorrispondenze(){
+		//ampiezza della colonna
+		int numeroColonne = insiemeAttivita.size();
+		
+		Vector<Vector<Integer>> tabellaCorrispondenze = new Vector<Vector<Integer>>();
+		
+		//Parto dal vettore esterno
+				
+		Vector<Vector<String>> insiemiPartenza = generaInsiemePartenza();
+		for(Vector<String> sottoinsieme : insiemiPartenza){
+			//inizializzazione della riga nella matrice delle corrispondenze
+			
+			Vector<Integer> rigaCorrispondenza = new Vector<Integer>();
+			for(int i=0;i<numeroColonne;i++){
+				rigaCorrispondenza.add(0);
+			}
+			
+			//analisi di ciascun sottoinsieme per verificare dove mettere a "1" la posizione
+			for(String elemento : sottoinsieme){
+				//recupero la posizione dell'attivita' nell'elenco(vector) presente nello stato dell'oggetto
+				
+				int posizioneInElencoGenerale = insiemeAttivita.indexOf(elemento);
+				
+				//System.out.println("Posizione in elenco: " + posizioneInElencoGenerale);
+				
+				//se lo trovo allora setto a 1 la sua posizione, altrimenti no
+				
+				if(posizioneInElencoGenerale != -1){
+					rigaCorrispondenza.setElementAt(1, posizioneInElencoGenerale);					
+				}
+			/*	else{
+					rigaCorrispondenza.setElementAt(0, posizioneInElencoGenerale);		
+				}*/
+			}
+			tabellaCorrispondenze.add(rigaCorrispondenza);
+		}
+		
+		return tabellaCorrispondenze;
+		
+		//System.out.println("Tabella delle corrispondenze: " + tabellaCorrispondenze.toString() );
+
+	}
+	
+	public void settaIdentificatorePosizione(){
+		/*
+		 N.B.: Da fare dopo aver generato le diagnosi minimali
+		 1 = probabilita' pari a 1
+		 -1 = probabilita' ignota
+		 0 = probabilita' nulla
+		 */
+		
+		//ricavo solo gli esiti OK della prova inerente alla classe di equivalenza
+		
+		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
+		
+		Vector<Percorso> percorsiOK = classe.getProva().getEsitoOK();
+		for(Percorso percorso : percorsiOK){
+			Vector<String> elemPercorso = percorso.estraiElementi();
+			for(String elemento : elemPercorso){				
+				int posizioneRelativa = insiemeAttivita.indexOf(elemento);
+				for(Vector<Integer> rigaCorrispondenza : corrispondenze){
+					rigaCorrispondenza.setElementAt(-1, posizioneRelativa);
+				}
+			}
+		}
+		
+		System.out.println("Corrispondenze modificate : " + corrispondenze + "\n");
+	}
 	
 	
 	

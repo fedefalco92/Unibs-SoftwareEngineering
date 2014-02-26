@@ -13,14 +13,29 @@ import java.util.Vector;
  */
 public class UtilitaGenerazioneMHS {
 	
+	private static final int DELIM = 1; //Per estensioni future, ma e' da rivedere
+	
+	/**
+	 * Generazione effettiva MHS, implementando l'algoritmo visto nei lucidi
+	 * e ritornando l'insieme con i rispettivi identificatori testuali,
+	 * passati come parametro in ingresso
+	 * @param corrispondenze
+	 * @param idTestuali
+	 * @return
+	 */
+	
 	public static Vector<Vector<String>> generaMHS (Vector<Vector<Integer>> corrispondenze,Vector<String> idTestuali){	    
-	    //estraggo tutti i singoletti dall'insieme dei sottoinsiemi e verifico chi fra loro � un hitting set
+	    
+		//estraggo tutti i singoletti dall'insieme dei sottoinsiemi e verifico chi fra loro e' un hitting set
+		
 	   Vector <Integer> elementiNuovi = new Vector<Integer>();
 	   Vector singoletti = generaSingoletti2(idTestuali);
 	   Vector hittingSet = new Vector();	
 	   Vector singolettiHS = new Vector();
 	   Iterator itSing = singoletti.iterator();	 
+	   
 	   //salvo i singoletti HS in un elenco a parte
+	   
 	   while(itSing.hasNext()){
 		   Vector <Integer> singoletto = (Vector<Integer>)itSing.next();
 		   int numsingoletto = singoletto.firstElement();
@@ -33,33 +48,39 @@ public class UtilitaGenerazioneMHS {
 			   elementiNuovi.add(numsingoletto);
 		   }		   
 	   }
-	   for(int i=0;i<singolettiHS.size();i++){
-		   Vector <Integer> singoletto = (Vector<Integer>)singolettiHS.get(i);
-		   int numsingoletto = singoletto.firstElement();
-		   //UtilitaMHS.rimuoviColonna(corrispondenze, numsingoletto-1); (superfluo perch� tanto la colonna non viene utilizzata!)
-	   }
-	   //ciclo sui singoletti trovati per rimuovere dalla mappatura delle corrispondenze
-	   Vector sottoinsiemi = traformaId(generaSubsets(elementiNuovi,corrispondenze),elementiNuovi);	  
+	   
+	   //recupero tutti i sottoinsiemi, dopo aver eliminato i singoletti che sono HS e dopo aver
+	   //rimpiazzato gli 0 e 1 con i rispettivi elementi(corrispondenza posizionale)
+	   
+	   Vector sottoinsiemi = recuperaElementi(generaSubsets(elementiNuovi,corrispondenze),elementiNuovi,DELIM);	  
+	   
 	   Iterator itSottoinsiemi = sottoinsiemi.iterator();
+	   
 	   while(itSottoinsiemi.hasNext()){
 		   Vector <Integer> itemSet = (Vector <Integer>)itSottoinsiemi.next();
-			//Controllo se il sottoinsieme considerato � candidato ad essere un HS
+		   
+			//Controllo se il sottoinsieme considerato e' candidato ad essere un HS
 			//Estrazione colonne suggertite dal sottoinsieme
+		   
 			Vector  colonne = new Vector();
 			Iterator itSubset = itemSet.iterator();
 			while(itSubset.hasNext()){
 				Integer numCol = (Integer)itSubset.next();
-				//System.out.println(numCol);
-				Vector <Integer> colonnaEstr = estraiColonna(corrispondenze, numCol);				
+				Vector <Integer> colonnaEstr = estraiColonna(corrispondenze, numCol);
+				
 				//Aggiunta delle colonne ad un insieme temporaneo per effettuarne la somma
+				
 				colonne.add(colonnaEstr);
 			}
+			
 			//Verifica di candidatura a potenziale HS e verifica delle successive condizioni
+			
 			boolean isHS = isHittingSet(colonne);		
 			if(isHS){
-				//se sono qui allora itemSet � un hitting set(ma deve verificare effettuare altri controlli)
+				//se sono qui allora itemSet e' un hitting set(ma devo verificare effettuare altri controlli)
 				//navigazione nell'elenco degli hitting set
 				//creo una collezione dei possibili candidati per vedere chi potrebbe diventare HS
+				
 				Vector testPositivo = new Vector();
 				Iterator hsIter = hittingSet.iterator();
 				while(hsIter.hasNext()){
@@ -70,19 +91,44 @@ public class UtilitaGenerazioneMHS {
 					}
 				}
 				if(testPositivo.isEmpty()){
-					//se non � rispettata la condizione precedente (esistenza di un h che � sottoinsieme di s_i) allora sono
+					//se non e' rispettata la condizione precedente (esistenza di un h che e' sottoinsieme di s_i) allora sono
 					//autorizzato ad aggiungere il sottoinsieme all'elenco degli hitting set
+					
 					hittingSet.add(itemSet);
 				}
 			}
 	   }
+	   
 	   //Infine, aggiungo agli hitting set trovati anche i singoletti(se esistono) calcolati in precedenza
+	   
 	   for(int i=0;i<singolettiHS.size();i++){
 		   hittingSet.add(singolettiHS.get(i));
 	   }	   
+	   
 	   return sostituisciConTesto(hittingSet, idTestuali);
-	}		
+	}	
 
+	/*
+	public static Vector<String> estraiIdentificatori(Vector<Vector<String>> insieme){
+		Vector<String> identificatori = new Vector<String>();
+		for(Vector<String> sottoinsieme : insieme){
+			for(String elem : sottoinsieme){
+				if(!member(elem,identificatori)){
+					identificatori.add(elem);
+				}
+			}
+		}
+		return identificatori;
+	}	
+	 */
+
+	/**
+	 * Mette un numero adeguato di "0" in testa alla stringa, per 
+	 * permettere una adeguata elaborazione successiva
+	 * @param numero
+	 * @param bits
+	 * @return
+	 */
 	
 	private static String trimZeros(String numero,int bits){
 		String modificato = new String(numero);
@@ -92,7 +138,16 @@ public class UtilitaGenerazioneMHS {
 		return modificato;
 	}
 	
-	
+	/**
+	 * Sostituisce con gli identificatori di tipo String passati in ingresso
+	 * i valori numerici(interi) contenuti in ciascun vettore/insieme
+	 * facente parte dell'hitting-set(la computazione di tale insieme NON
+	 * e' imputata a questo metodo)
+	 * @param hittingSet
+	 * @param ids
+	 * @return
+	 */
+	 
 	private static Vector sostituisciConTesto(Vector hittingSet, Vector<String> ids){
 		Vector copiaHittingSet = new Vector();
 		Iterator itOnHS = hittingSet.iterator();
@@ -108,11 +163,19 @@ public class UtilitaGenerazioneMHS {
 		return copiaHittingSet;
 	}
 	
-	
+	/**
+	 * Genera tutti i possibili sottoinsiemi di un insieme a partire da un insieme di corrispondenze
+	 * (0 e 1 per stabilire la presenza o meno di un elemento) e dagli identifcatori associati ad
+	 * ogni elemento dell'insieme di cui si vogliono generare i sottoinsiemi(ritornando i sottoinsiemi
+	 * in ordine crescente di numero di "1")
+	 * @param identificatori
+	 * @param corrispondenze
+	 * @return
+	 */
 	
 	private static Vector generaSubsets(Vector<Integer> identificatori,Vector corrispondenze){
 		//creazione di tutti i possibili sottoinsiemi dell'insieme di identificatori
-		//� opportuno generarli in numero di '1' crescente
+		//e' opportuno generarli in numero di '1' crescente
 		//utilizzo di un metodo di ordinamento ad hoc
 		int cardinalitaCorrispondenze = corrispondenze.size();
 		Vector sottoinsiemiNum = new Vector();
@@ -135,13 +198,23 @@ public class UtilitaGenerazioneMHS {
 		return ordinaPerDimensione(sottoinsiemiNum);
 	}	
 	
-	private static Vector traformaId (Vector sottoinsiemi,Vector <Integer> identificatori){
+	/**
+	 * Datto un insieme di vettori binari, ritorna l'insieme di vettori
+	 * costituito da tutti gli elementi effettivamente presenti in ogni sottoinsieme
+	 * "1" significa presenza elemento, "0" assenza elemento.
+	 * 
+	 * @param sottoinsiemi
+	 * @param identificatori
+	 * @return
+	 */
+	
+	private static Vector recuperaElementi (Vector sottoinsiemi,Vector <Integer> identificatori, int delim){
 		Vector sottoinsiemiMod = new Vector();
 		for(int i=0;i<sottoinsiemi.size();i++){
 			Vector <Integer> item = (Vector <Integer>)sottoinsiemi.get(i);
 			Vector <Integer> itemInt = new Vector<Integer>();
 			for(int j=0;j<item.size();j++){				
-				if(item.get(j)==1){
+				if(item.get(j)==delim){
 					itemInt.add(identificatori.get(j));
 				}			  
 			}	
@@ -150,9 +223,20 @@ public class UtilitaGenerazioneMHS {
 		return sottoinsiemiMod;
 	}	
 	
+	/**
+	 * Provvede ad ordinare i sottoinsiemi dell'insieme potenza
+	 * in ordine crescente di "1", al fine di migliorare l'algoritmo
+	 * brute-force per il calcolo degli hitting set (minimali) 
+	 * Evito di fare calcoli inutili se ho una sola riga nel vettore
+	 * delle corrispondenze
+	 * @param subsets
+	 * @return
+	 */
+	
 	private static Vector ordinaPerDimensione(Vector subsets){			
-		Vector subsetsTemp = new Vector();
-		Vector <Integer> first = (Vector <Integer>)subsets.firstElement();	
+		Vector subsetsTemp = new Vector();		
+	 if(subsets.size() > 1){
+		Vector <Integer> first = (Vector <Integer>)subsets.firstElement();			 
 		int dim = first.size();
 		int minimumOnes = 1;
 		 for(int k=0;k<dim;k++){		
@@ -164,9 +248,21 @@ public class UtilitaGenerazioneMHS {
 					}			
 				}
 				minimumOnes++;
-		 }
-		return subsetsTemp;
+		 }		
+	 }
+	 else{
+		 subsetsTemp = (Vector) subsets.clone();
+	 }
+	 	return subsetsTemp;
 	}
+	
+	/**
+	 * Conta il numero di "1" in un vettore di numeri binari(serve
+	 * per effettuare successivamente l'ordinamento crescente per
+	 * numero di 1, cioe' per numero di cardinalita' di elementi dell'insieme)
+	 * @param v
+	 * @return
+	 */
 	
 	private static int countOnes(Vector <Integer> v){
 		int ones = 0;
@@ -177,6 +273,12 @@ public class UtilitaGenerazioneMHS {
 		return ones;
 	}
 	
+	/**
+	 * Conta il numero di "1" in una stringa
+	 * @param str
+	 * @return
+	 */
+	
 	private static int countOnes(String str){
 		int ones = 0;
 		for(int i=0;i<str.length();i++){
@@ -185,6 +287,14 @@ public class UtilitaGenerazioneMHS {
 		}
 		return ones;
 	}	
+	
+	/**
+	 * Estrae la colonna identificata dal numero ricevuto in ingresso, da ogni
+	 * vettore appartenente all'insieme potenza collezioneInsiemi
+	 * @param collezioneInsiemi
+	 * @param numColonna
+	 * @return
+	 */
 	
 	private static Vector<Integer> estraiColonna(Vector collezioneInsiemi,int numColonna){
 		Vector <Integer> colonna = new Vector<Integer>();
@@ -195,6 +305,12 @@ public class UtilitaGenerazioneMHS {
 		return colonna;
 	}
 	
+	/**
+	 * Estrae solamente i singoletti dal superinsieme dei sottoinsiemi(per 
+	 * definizione i singoletti hanno dimensione 1) 
+	 * @param subsets
+	 * @return
+	 */
 	
 	private static Vector estraiSingoletti(Vector subsets){
 		Vector singoletti = new Vector();
@@ -213,7 +329,16 @@ public class UtilitaGenerazioneMHS {
 		while(!escape);
 		return singoletti;
 	}
-
+	
+	/**
+	 * Genera solamente i singoletti , partendo da un insieme di indicatori
+	 * (ne calcola il numero e considera la posizione dell'identificatore come
+	 * elemento su cui agire, cioe' le posizioni verranno utilizzate come elementi
+	 * numerici di un insieme, di cui si calcoleranno tutti i possibili sottoinsiemi) 
+	 * @param idTestuali
+	 * @return
+	 */
+	
 	private static Vector generaSingoletti2(Vector<String> idTestuali){
 		Vector singoletti = new Vector();
 		for(int i=0;i<idTestuali.size();i++){
@@ -225,6 +350,19 @@ public class UtilitaGenerazioneMHS {
 		}
 		return singoletti;
 	}	
+	
+	/**
+	 * Verifica se il sottoinsieme considerato e' un hitting set secondo le regole
+	 * esposte nei lucidi(in realta' questo metodo riceve le colonne corrispondenti
+	 * agli elementi dell'hitting set, cioe' se l'hitting set e' {0,2}, allora
+	 * ricervera' in ingresso le colonne 0 e 2 del vettore binario delle corrispondenze) 
+	 * Effettua inoltre la somma vera e propria fra le colonne per verificare tale principio
+	 * @param colonne
+	 * @return
+	 */
+	
+	//qui devo agire se voglio cambiare l'elemento jolly che mi identifica se una colonna
+	//e' stata selezionata(sarebbe bene modificarlo)
 	
 	private static boolean isHittingSet(Vector colonne){
 		Vector <Integer> sommaColonne = new Vector<Integer>();
@@ -247,9 +385,19 @@ public class UtilitaGenerazioneMHS {
 			if(el == 0){
 				return false;
 			}
+		/*	if(el == 0){
+				return false;
+			}	*/		
 		}		
 		return true;
 	}
+	
+	/**
+	 * Indica se un singoletto e' un hitting set(solo un singoletto,
+	 * cioe' un insieme formato da un singolo elemento)
+	 * @param colonna
+	 * @return
+	 */
 	
 	private static boolean isHittingSetSingle(Vector <Integer> colonna){
 		for(int i=0;i<colonna.size();i++){
@@ -258,7 +406,24 @@ public class UtilitaGenerazioneMHS {
 			}
 		}
 		return true;
+		
+		/*
+			for(Integer elem : colonna){
+				if(elem == 0){
+					return false;
+				}
+			}
+			return true;		 
+		 */
 	}
+	
+	/**
+	 * Verifica che un elemento di tipo intero appartenga ad un
+	 * Vector di integer
+	 * @param elem
+	 * @param v1
+	 * @return
+	 */
 	
 	private static boolean member(int elem,Vector<Integer> v1){
 		for(int i=0;i<v1.size();i++){
@@ -266,7 +431,48 @@ public class UtilitaGenerazioneMHS {
 				return true;
 		}
 		return false;
+		
+		/*
+		 
+			if(v1.indexOf(elem) == -1)
+				return false;	
+			else
+				return true;
+		 */
 	}
+	
+	/**
+	 * Verifica che un elemento di tipo String appartenga ad un
+	 * Vector di String
+	 * @param elem
+	 * @param v1
+	 * @return
+	 */
+	
+	private static boolean member(String elem,Vector<String> v1){
+		for(int i=0;i<v1.size();i++){
+			if(v1.get(i).equalsIgnoreCase(elem))
+				return true;
+		}
+		return false;
+		
+		/*
+		 
+			if(v1.indexOf(elem) == -1)
+				return false;	
+			else
+				return true;
+		 */
+	}	
+	
+	/**
+	 * Verifica il fatto che elemento sia un sottoinsieme di insieme,
+	 * richiamando il metodo member, per la verifica di membership
+	 * di un elemento ad un insieme
+	 * @param elemento
+	 * @param insieme
+	 * @return
+	 */
 	
 	private static boolean isSubset(Vector<Integer> elemento,Vector<Integer> insieme){
 		if(elemento.isEmpty())
@@ -281,6 +487,8 @@ public class UtilitaGenerazioneMHS {
 			return true;
 		}
 	}	
+	
+
 	
 
 }
