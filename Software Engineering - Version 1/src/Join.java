@@ -12,7 +12,7 @@ public class Join extends Elemento {
 	 * il join viene creato prima del fork padre e viene passato
 	 * in ingresso al fork padre come join terminale
 	 */
-	public Join(String ID, String nome) {
+	public Join(String nome) {
 		super("JOIN", nome);
 		flussiIN = new Vector <Flusso>();
 	}
