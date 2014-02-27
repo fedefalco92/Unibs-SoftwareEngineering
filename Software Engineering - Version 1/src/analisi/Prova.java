@@ -26,6 +26,7 @@ public class Prova {
 		return idProva;
 	}
 	
+	//lo chiamiamo addPercorso?
 	public void addCammino(Percorso cammino){
 		insiemeCopertura.add(cammino);
 	}
