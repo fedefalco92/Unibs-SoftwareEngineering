@@ -27,18 +27,19 @@ public class CreazioneModello {
 	 * Crea il modello e lancia il menu creazione.
 	 * 
 	 * @param nomeModello
+	 * @return 
 	 */
-	public static void creaModello(String nomeModello){
+	public static Modello creaModello(String nomeModello){
 		modello = new Modello(nomeModello);
 			
 		boolean fineCreazione = false;
 		do {
 			fineCreazione = menuCreazione(modello);
 		} while (!fineCreazione);
-		
+
+		return modello;
 		//la prossima istruzione sarà da togliere
-		//System.out.println(modello);
-		
+		//System.out.println(modello);	
 	}
 	
 	//PER ORA PER COMODITA' METTO QUA I MENU
@@ -69,22 +70,23 @@ public class CreazioneModello {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
-				//inserimento prima azione obbligatorio
-				//acquisizione nome
-				String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
-				Azione primaAzione = new Azione (nomePrimaAzione);
-				//la prima azione ha come ingresso lo start
-				primaAzione.setIngresso(modello.getStart());
-				//metto la prima azione in coda a start
-				modello.setPrimaAzione(primaAzione);
-				modello.aggiungiAzione(primaAzione);
 				
-				modello.setUltimaModifica(modello.getAzioni().firstElement());
-				//in alternativa: modello.setUltimaModifica(primaAzione);
-				continuaInserimento();
-				//a questo punto ci potrebbero essere ancora dei merge non ultimati
-				//metto un controllo per verificare che il modello sia corrett
-				//TODO
+					//inserimento prima azione obbligatorio
+					//acquisizione nome
+					String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
+					Azione primaAzione = new Azione (nomePrimaAzione);
+					//la prima azione ha come ingresso lo start
+					primaAzione.setIngresso(modello.getStart());
+					//metto la prima azione in coda a start
+					modello.setPrimaAzione(primaAzione);
+					modello.aggiungiAzione(primaAzione);
+					
+					modello.setUltimaModifica(modello.getAzioni().firstElement());
+					//in alternativa: modello.setUltimaModifica(primaAzione);
+					continuaInserimento();
+					//a questo punto ci potrebbero essere ancora dei merge non ultimati
+					//metto un controllo per verificare che il modello sia corrett
+					//TODO
 				
 				break;
 			case 2:
