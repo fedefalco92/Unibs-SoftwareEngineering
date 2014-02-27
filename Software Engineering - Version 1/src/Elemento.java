@@ -12,6 +12,12 @@ public abstract class Elemento {
 		this.nome = nome;
 	}
 	
+	public boolean equals(Elemento elem) {
+		if(ID.equalsIgnoreCase(elem.getID()) && nome.equalsIgnoreCase(elem.getNome()))
+			return true;
+		return false;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
