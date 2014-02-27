@@ -171,6 +171,7 @@ public class Modello {
 	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
 	public boolean controllaModello(){
 		
+		
 		return true;
 	}
 	
