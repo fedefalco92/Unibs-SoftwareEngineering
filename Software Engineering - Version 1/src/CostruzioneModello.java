@@ -66,7 +66,7 @@ public class CostruzioneModello {
 	private static void leggoFile(FileReader fileReader){
 		
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		//String file="";
+		String file="";
 		
 		//Inizializzo la riga letta come null
 		String riga = null;
@@ -85,62 +85,64 @@ public class CostruzioneModello {
 	    	if(riga == null){
 	    		break;
 	    	}
-	    	//file = file + riga + "\n";
-	    	//Passo la riga che ho letto ad un metodo che analizza la riga.
-	    	//analisiRiga(riga);
-	    	aggiungoElementi(riga);
+	    	
+	    	//
+	    	String elemento = analisiElemento(riga);
+	    	Elemento nuovoElemento = restituisciElemento(elemento);
+	    	if(nuovoElemento != null){
+	    		aggiungoElemento(nuovoElemento);
+	    		file = file + riga + "\n";
+	    	};
 	    }
-	    //System.out.println(file+"#Fine file");
-	    //analisiRiga(file);
+	    System.out.println(file);
 	    for(Elemento elem: modelloCaricato.getElementi()){
 	    	System.out.println(elem.toString());
 	    }
 	}
 	
-	private static void aggiungoElementi(String stringa){
-		Elemento nuovoElemento = null;
-		String elemento = analisiElemento(stringa);
+	private static Elemento restituisciElemento(String elemento){
+		Elemento elem = null;
 		if(elemento != null){
 			String IDElem = restituisciID(elemento);
 			String NomeElem = restituisciNome(elemento);
 			if(IDElem != null && NomeElem != null){
-				
 				switch(IDElem){
 				case "AZIONE":
-					nuovoElemento = new Azione(NomeElem);
+					elem = new Azione(NomeElem);
 					break;
 				case "BRANCH":
-					nuovoElemento = new Branch(NomeElem);
+					elem = new Branch(NomeElem);
 					break;
 				case "MERGE":
-					nuovoElemento = new Merge(NomeElem);
+					elem = new Merge(NomeElem);
 					break;
 				case "START":
-					nuovoElemento = new Start(NomeElem);
+					elem = new Start(NomeElem);
 					break;
 				case "END":
-					nuovoElemento = new End(NomeElem);
+					elem = new End(NomeElem);
 					break;
-				case "FORK":
-					//nuovoElemento = new Fork(NomeElem);
-					break;
-				case "JOIN":
-					//nuovoElemento = new Join(NomeElem);
-					break;
+//				case "FORK":
+//					//elem = new Fork(NomeElem);
+//					break;
+//				case "JOIN":
+//					//elem = new Join(NomeElem);
+//					break;
 				default:
 					System.out.println("Elemento non riconosciuto");
-					break;
 				}
-				modelloCaricato.aggiungiElemento(nuovoElemento);
 			}
 		}
+		return elem;
+	}
+	
+	private static void aggiungoElemento(Elemento elem){
+		modelloCaricato.aggiungiElemento(elem);
 	}
 	
 	private static void aggiungoEntrate(String stringa){
 		String in = analisiIn(stringa);
-		//String in = restituisciStringa("in(", ")", stringa);
 		if(in != null){
-			//System.out.println("Analisi in#" + in);
 			Vector <String> stringheIn = analisiSeparatori(",", in);
 			if(stringheIn != null){
 				for(String elem: stringheIn){
@@ -161,42 +163,8 @@ public class CostruzioneModello {
 			if(IDElem != null && NomeElem != null){
 				System.out.println("ID: " + IDElem + " Nome: " + NomeElem);
 				
-				//Da studiare meglio
-				/*
-				switch(IDElem){
-				case "AZIONE":
-					nuovoElemento = new Azione(NomeElem);
-					
-					break;
-				case "BRANCH":
-					nuovoElemento = new Branch(NomeElem);
-					break;
-				case "MERGE":
-					nuovoElemento = new Merge(NomeElem);
-					break;
-				case "START":
-					nuovoElemento = new Start(NomeElem);
-					break;
-				case "END":
-					nuovoElemento = new End(NomeElem);
-					break;
-				case "FORK":
-					//nuovoElemento = new Fork(NomeElem);
-					break;
-				case "JOIN":
-					//nuovoElemento = new Join(NomeElem);
-					break;
-				default:
-					
-				}
-				*/
-				
 			}
 		}
-		
-//		if(nuovoElemento != null){
-//			modelloCaricato.aggiungiElemento(nuovoElemento);
-//		}
 		
 		String in = analisiIn(stringa);
 		//String in = restituisciStringa("in(", ")", stringa);
