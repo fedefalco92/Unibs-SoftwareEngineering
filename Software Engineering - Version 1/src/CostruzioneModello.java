@@ -110,6 +110,7 @@ public class CostruzioneModello {
 	    	System.out.println(elem.toString());
 	    }
 	    modelloCaricato.riempiVectorModello();
+	    test();
 	}
 	
 	private static Elemento restituisciElemento(String elemento){
