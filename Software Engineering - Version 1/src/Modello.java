@@ -137,6 +137,37 @@ public class Modello {
 
 	//METODI SUL MODELLO//
 	
+	//RIEMPI VECTOR SPECIALIZZATI NEL MODELLO
+	public void riempiVectorModello(){
+		for(Elemento elem: elementi){
+			switch (elem.getID()) {
+			case "AZIONE":
+				aggiungiAzione((Azione) elem);
+				break;
+			case "BRANCH":
+				aggiungiBranch((Branch) elem);
+				break;
+			case "MERGE":
+				aggiungiMerge((Merge) elem);
+				break;
+			case "END":
+				end = (End) elem;
+				break;
+			case "START":
+				start = (Start) elem;
+				break;
+			case "FORK":
+				//
+				break;
+			case "JOIN":
+				//
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
 	//METODO DI RICERCA NEL VECTOR DI ELEMENTI//
 	public Elemento ricercaElementoInModello(String ID, String nome){
 		for(Elemento elem: elementi){

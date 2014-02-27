@@ -19,7 +19,7 @@ public class CostruzioneModello {
 	
 	
 	public static void test(){
-		for(Elemento elem: modelloCaricato.getElementi()){
+		for(Azione elem: modelloCaricato.getAzioni()){
 			System.out.println("ID: " + elem.getID() +" Nome: " + elem.getNome());
 		}
 	}
@@ -109,7 +109,7 @@ public class CostruzioneModello {
 	    for(Elemento elem: modelloCaricato.getElementi()){
 	    	System.out.println(elem.toString());
 	    }
-	    test();
+	    modelloCaricato.riempiVectorModello();
 	}
 	
 	private static Elemento restituisciElemento(String elemento){
