@@ -64,6 +64,8 @@ public class CostruzioneModello {
 	private static void leggoFile(FileReader fileReader){
 		
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		Vector <Elemento> entrate = new Vector <Elemento>();
+		Vector <Elemento> uscite = new Vector <Elemento>();
 		String file="";
 		
 		//Inizializzo la riga letta come null
@@ -89,9 +91,12 @@ public class CostruzioneModello {
 	    	Elemento nuovoElemento = restituisciElemento(elemento);
 	    	if(nuovoElemento != null){
 	    		aggiungoElemento(nuovoElemento);
+	    		entrate = restituisciEntrate(riga);
+	    		aggiungoEntrate(nuovoElemento, entrate);
+	    		uscite = restisciUscite(riga);
+	    		aggiungoUscite(nuovoElemento, uscite);
 	    		file = file + riga + "\n";
 	    	};
-
 	    }
 	    System.out.println(file);
 	    for(Elemento elem: modelloCaricato.getElementi()){
@@ -153,39 +158,108 @@ public class CostruzioneModello {
 		return entrate;
 	}
 	
-	private static void aggiungoEntrate(Elemento elemIndex, Vector <Elemento> entrate){
-		Elemento elemFirst = entrate.firstElement();
-		int i;
-		
-		switch (elemIndex.getID()) {
-		case "AZIONE":
-			Azione nuovaAzione = (Azione) elemIndex;
-			if(elemFirst != null)
-				nuovaAzione.setIngresso(elemFirst);
-			i = modelloCaricato.indiceElemento(elemIndex);
-			if(i != -1)
-				modelloCaricato.getElementi().set(i, nuovaAzione);
-			break;
-		case "BRANCH":
-			Branch nuovoBranch = (Branch) elemIndex;
-			if(elemFirst != null)
-				nuovoBranch.setIngresso(elemFirst);
-			i = modelloCaricato.indiceElemento(elemIndex);
-			if(i != -1)
-				modelloCaricato.getElementi().set(i, nuovoBranch);
-			break;
-		case "MERGE":
-			Merge nuovoMerge = (Merge) elemIndex;
-			for(Elemento elemIter: entrate){
-				nuovoMerge.aggiungiIngresso(elemIter);
+	private static Vector <Elemento> restisciUscite(String stringa){
+		Vector <Elemento> uscite = new Vector <Elemento>();
+		String out = analisiOut(stringa);
+		if( out != null){
+			Vector <String> stringheOut = analisiSeparatori(",", out);
+			if(stringheOut != null){
+				for(String elem: stringheOut){
+					uscite.add(restituisciElemento(elem));
+				}
 			}
-			i = modelloCaricato.indiceElemento(elemIndex);
-			if(i != -1)
-				modelloCaricato.getElementi().set(i, nuovoMerge);
-			break;
+		}
+		return uscite;
+	}
+	
+	private static void aggiungoEntrate(Elemento elemIndex, Vector <Elemento> entrate){
+		if(! entrate.isEmpty()){
+			Elemento elemFirst = entrate.firstElement();
+			int i;
 			
-		default:
-			break;
+			switch (elemIndex.getID()) {
+			case "AZIONE":
+				Azione nuovaAzione = (Azione) elemIndex;
+				if(elemFirst != null)
+					nuovaAzione.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovaAzione);
+				break;
+			case "BRANCH":
+				Branch nuovoBranch = (Branch) elemIndex;
+				if(elemFirst != null)
+					nuovoBranch.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoBranch);
+				break;
+			case "MERGE":
+				Merge nuovoMerge = (Merge) elemIndex;
+				for(Elemento elemIter: entrate){
+					nuovoMerge.aggiungiIngresso(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoMerge);
+				break;
+			case "END":
+				End nuovoEnd = (End) elemIndex;
+				if(elemFirst != null)
+					nuovoEnd.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoEnd);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	private static void aggiungoUscite(Elemento elemIndex, Vector <Elemento> uscite){
+		if(! uscite.isEmpty()){
+			Elemento elemFirst = uscite.firstElement();
+			int i;
+			
+			switch (elemIndex.getID()) {
+			case "AZIONE":
+				Azione nuovaAzione = (Azione) elemIndex;
+				if(elemFirst != null)
+					nuovaAzione.setUscita(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovaAzione);
+				break;
+			case "BRANCH":
+				Branch nuovoBranch = (Branch) elemIndex;
+				for(Elemento elemIter: uscite){
+					nuovoBranch.aggiungiUscita(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoBranch);
+				break;
+			case "MERGE":
+				Merge nuovoMerge = (Merge) elemIndex;
+				if(elemFirst != null)
+					nuovoMerge.setUscita(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoMerge);
+				break;
+			case "START":
+				Start nuovoStart = (Start) elemIndex;
+				Azione azioneFirst = (Azione) elemFirst;
+				if(elemFirst != null)
+					nuovoStart.setUscita(azioneFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoStart);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	
