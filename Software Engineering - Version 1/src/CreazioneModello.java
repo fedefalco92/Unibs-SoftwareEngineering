@@ -3,7 +3,8 @@ import java.util.Vector;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 
-/*VERSIONE 1: NO FORK E JOIN
+//VERSIONE 1: NO FORK E JOIN
+/* da mettere in javadoc una volta ultimata la classe
  * 
  * questa classe conterra' un menu per gestire la creazione di un nuovo modello
  * permettera' di
@@ -15,42 +16,49 @@ import it.unibs.fp.mylib.MyMenu;
  * --come oggetto
  * in teoria bisognerebbe poter terminare solo se il modello e' corretto..
  * 
- * 
+ * @author Maffi
  */
 public class CreazioneModello {
 	
 	private static Modello modello;
 	
+	/**
+	 * Metodo principale della classe.
+	 * Crea il modello e lancia il menu creazione.
+	 * 
+	 * @param nomeModello
+	 */
 	public static void creaModello(String nomeModello){
 		modello = new Modello(nomeModello);
-		//inserimento prima azione obbligatorio
-		//acquisizione nome
-		String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
-		Azione primaAzione = new Azione (nomePrimaAzione);
-		//la prima azione ha come ingresso lo start
-		primaAzione.setIngresso(modello.getStart());
-		//metto la prima azione in coda a start
-		modello.setPrimaAzione(primaAzione);
-		modello.aggiungiAzione(primaAzione);
-		
-		modello.setUltimaModifica(modello.getAzioni().firstElement());
-		//in alternativa: modello.setUltimaModifica(primaAzione);
 			
 		boolean fineCreazione = false;
 		do {
-			fineCreazione = menuCreazione();
+			fineCreazione = menuCreazione(modello);
 		} while (!fineCreazione);
 		
 		//la prossima istruzione sarà da togliere
-		System.out.println(modello);
+		//System.out.println(modello);
 		
 	}
 	
 	//PER ORA PER COMODITA' METTO QUA I MENU
 	//SE VOLETE SI POTRANNO SPOSTARE NELLA CLASSE MenuClass
-	public static boolean menuCreazione(){
-		final String TITOLO = "MENU CREAZIONE";
-		final String [] VOCI = {"Continua Inserimento", "Visualizza il modello allo stato attuale", "Termina e salva"};
+	/**
+	 * Menu principale (boolean)
+	 * Permette di
+	 * 1) iniziare la creazione
+	 * 		(si uscir&agrave da questo metodo solo a creazione ultimata)
+	 * 2) visualizzare il modello
+	 * 3) salvare il modello
+	 * 
+	 * oppure uscire senza salvare
+	 * l'opzione 1 e 3 si appoggiano su altri menu void
+	 * 
+	 * @return
+	 */
+	public static boolean menuCreazione(Modello _modello){
+		final String TITOLO = "MENU CREAZIONE MODELLO " + _modello.getNome();;
+		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Termina e salva"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI);
 		//nuova funzione-permette di cambiare VOCE_USCITA 
 		menuCreazione.setVoceUscita("0\tTorna al menu principale (Tutte le modifiche non salvate andranno perse)");
@@ -61,14 +69,26 @@ public class CreazioneModello {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
+				//inserimento prima azione obbligatorio
+				//acquisizione nome
+				String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
+				Azione primaAzione = new Azione (nomePrimaAzione);
+				//la prima azione ha come ingresso lo start
+				primaAzione.setIngresso(modello.getStart());
+				//metto la prima azione in coda a start
+				modello.setPrimaAzione(primaAzione);
+				modello.aggiungiAzione(primaAzione);
+				
+				modello.setUltimaModifica(modello.getAzioni().firstElement());
+				//in alternativa: modello.setUltimaModifica(primaAzione);
 				continuaInserimento();
 				//a questo punto ci potrebbero essere ancora dei merge non ultimati
-				//metto un controllo
+				//metto un controllo per verificare che il modello sia corrett
+				//TODO
 				
 				break;
 			case 2:
-				//si può migliorare
-				System.out.println(modello);
+				visualizzaModello();
 				break;
 			case 3:
 				//a questo punto aprirei un altro menu che chiede di salvare come testo o come oggetto...
@@ -85,6 +105,19 @@ public class CreazioneModello {
 		return false;
 	}
 	
+	/**
+	 * Il metodo mette in output il modello sfruttando il metodo toString
+	 * Si potr&agrave migliorare in futuro.
+	 * 
+	 * per ora &egrave private, sar&agrave public se i menu verranno esportati nella classe menuClass
+	 */
+	private static void visualizzaModello() {
+		
+		System.out.println(modello.stampaModello());
+		//precedentemente era System.out.println(modello);
+		//(Sfruttava il toString())
+	}
+
 	/*
 	public static boolean menuInserimento(){
 		final String TITOLO = "Cosa vuoi inserire in coda?";
@@ -117,7 +150,10 @@ public class CreazioneModello {
 		return false;
 	}
 	*/
-
+	/**
+	 * Permette di riprendere l'inserimento dopo che lo si è interrotto per visualizzare il modello.
+	 * Non permette di riprendere l'inserimento se l'inserimento &egrave gi&agrave stato ultimato.
+	 */
 	private static void continuaInserimento() {
 		//
 		Elemento elementoCorrente = modello.getUltimaModifica();
@@ -152,21 +188,24 @@ public class CreazioneModello {
 		
 	}
 	/**
-	 * si richiede l'inserimento dell'uscita del merge.
+	 * Il metodo offre un menu in cui si richiede l'inserimento dell'uscita di un merge.
 	 * la completezza degli ingressi verrà gestita altrove.
 	 * 
-	 * un merge può terminare sul nodo finale.
+	 * Il menu permette la visualizzazione del modello allo stato attuale
+	 * 
 	 * @param merge
 	 */
 	private static void gestisciMerge(Merge merge) {
 		final String TITOLO = "Cosa vuoi inserire in coda al merge "+ merge.getNome()+ "?";
-		final String [] VOCI = {"Una nuova azione", 
+		final String [] VOCI = {
+				"Una nuova azione", 
 				"Un nuovo branch", 
 				"Un nuovo merge", 
 				"un merge esistente", 
 				"un nuovo fork", 
 				"un nuovo join", 
-				"termina modello (nodo finale)"};
+				"nodo finale",
+				"visualizza modello"};
 		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
 		menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
 		int scelta = menuAzione.scegli();
@@ -233,6 +272,9 @@ public class CreazioneModello {
 				modello.setUltimoElemento(merge);
 				modello.setUltimaModifica(null);
 				break;
+			case 8:
+				visualizzaModello();
+				break;
 			default:
 				/*Non entra mai qui*/
 		}
@@ -240,14 +282,27 @@ public class CreazioneModello {
 	}
 	
 	/**
-	 * un nuovo branch permette l'inserimento di due o più alternative
-	 * all'inizio ogni alternativa richiede l'inserimento di un nuovo elemento.
-	 * inserito questo si continua a inserire le uscite di questo fino a che si termina.
-	 * una volta terminato il primo "filone" si ritorna al menu del branch
-	 * da dove è possibile inserire un'altra alternativa
+	 * Un nuovo branch permette l'inserimento di due o più alternative.
+	 * Le prime due sono obbligatorie. Inserite queste si chiede se si vuole aggiungerne un'altra.
+	 * All'inizio di ogni alternativa si richiede l'inserimento di un nuovo elemento.
+	 * Una volta inserito questo, si continua a inserire le uscite di questo fino a che si termina.
 	 * 
-	 * un branch non può avere come alternativa il nodo finale
+	 * DA DISCUTERE
+	 * Un branch può avere come alternativa il nodo finale? 
+	 * In teoria s&igrave, A PATTO CHE esista almeno un merge su cui sia possibile mandare le altre alternative.
+	 * Il merge deve essere gi&agrave stato creato perch&eacute deve avere come uscita un elemento gi&agrave creato.
+	 * Nel caso non esista nessun merge al quale ci si possa effettivamente collegare
+	 * Non deve essere possibile inserire il nodo finale come alternativa all'interno del branch.
 	 * 
+	 * Il menu permette la visualizzazione del modello allo stato attuale
+	 * 
+	 * NOVITA' 27/02/2014
+	 * UN AZIONE DI UN BRANCH NON PUO' COLLEGARSI A UN MERGE CREATO AL DI FUORI DELL'ALTERNATIVA CORRENTE, 
+	 * ALTRIMENTI SAREBBE COME USARE UN GOTO...VE LO SPIEGHERO' A PAROLE...
+	 * QUINDI PENSO CHE SAREBBE CORRETTO USARE LA CLASSE STRUTTURA
+	 * CHE AVEVAMO PENSATO PER I FORK
+	 * ANCHE PER I BRANCH!
+	 * CHIAMANDOLA ALTERNATIVA PERO'!
 	 * @param branch
 	 */
 	private static void gestisciBranch(Branch branch) {
@@ -257,12 +312,15 @@ public class CreazioneModello {
 		while(!stop){
 			final String TITOLO = "Menu creazione del branch "+ branch.getNome() +" - ALTERNATIVA " + i +
 					"\nCosa vuoi inserire?";
-			final String [] VOCI = {"Una nuova azione", 
+			final String [] VOCI = {
+					"Una nuova azione", 
 					"Un nuovo branch", 
 					"Un nuovo merge", 
 					"Un merge esistente", 
 					"un nuovo fork", 
-					"un nuovo join"};
+					"un nuovo join",
+					"nodo finale",
+					"visualizza modello"};
 			MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
 			menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
 			int scelta = menuAzione.scegli();
@@ -324,6 +382,14 @@ public class CreazioneModello {
 				case 6:
 					//da fare
 					break;
+				case 7:
+					branch.aggiungiUscita(modello.getEnd());
+					modello.setUltimoElemento(branch);
+					modello.setUltimaModifica(null);
+					break;
+				case 8:
+					visualizzaModello();
+					break;
 				default:
 					/*Non entra mai qui*/
 			}
@@ -350,13 +416,15 @@ public class CreazioneModello {
 	 */
 	private static void gestisciAzione(Azione azione) {
 		final String TITOLO = "Cosa vuoi inserire in coda all'azione "+ azione.getNome()+ "?";
-		final String [] VOCI = {"Una nuova azione", 
+		final String [] VOCI = {
+				"Una nuova azione", 
 				"Un nuovo branch", 
 				"Un nuovo merge", 
 				"un merge esistente", 
 				"un nuovo fork", 
 				"un nuovo join",
-				"termina modello (nodo finale)"};
+				"nodo finale",
+				"visualizza modello"};
 		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
 		menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
 		int scelta = menuAzione.scegli();
@@ -423,6 +491,9 @@ public class CreazioneModello {
 				modello.setUltimoElemento(azione);
 				modello.setUltimaModifica(null);
 				break;
+			case 8:
+				visualizzaModello();
+				break;
 			default:
 				/*Non entra mai qui*/
 		}
@@ -435,6 +506,7 @@ public class CreazioneModello {
 		 {
 		  System.out.println( n + "\t" + merge.elementAt(n));
 		 }
+		 System.out.println();
 		int scelta = InputDati.leggiIntero("Digita il numero dell'opzione desiderata > ",0, merge.size());
 		
 		return merge.elementAt(scelta);
@@ -449,7 +521,7 @@ public class CreazioneModello {
 			nome=InputDati.leggiStringa(string);
 			finito=modello.nomeOK(nome);
 			if(!finito)
-				System.out.println("ATTENZIONE! NOME GIA' UTILIZZATO! RIPROVA >\n");
+				System.out.println("ATTENZIONE! NOME GIA' UTILIZZATO! RIPROVA > ");
 		} while (!finito);
 		return nome;
 	}

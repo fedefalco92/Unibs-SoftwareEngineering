@@ -146,13 +146,18 @@ public class Modello {
 		}
 		return null;
 	}
+	
 	@Override
-	//PRIMA VERSIONE...quando saremo riusciti a creare un modello vedremo come migliorarla!
+	/**
+	 * Restituisce l'elenco di azioni, branch, merge, fork, join.
+	 * la stampa completa del modello e' effettuata dal metodo stampaModello()
+	 */
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		
-		output.append("NOME MODELLO: " + nome + "\n\n");
-		output.append(start + "\n");
+		//la righe commentate verranno eseguite nel metodo "stampaModello()"
+		//output.append("NOME MODELLO: " + nome + "\n\n");
+		//output.append(start + "\n");
 		for(Azione azione: azioni)
 			output.append(azione + "\n");
 		for(Branch br: branch)
@@ -163,9 +168,18 @@ public class Modello {
 		
 		//join
 		
-		output.append(end);
+		//output.append(end);
 		
 
+		return output.toString();
+	}
+	
+	public String stampaModello() {
+		StringBuffer output = new StringBuffer();
+		output.append("NOME MODELLO: " + nome + "\n\n");
+		output.append(start + "\n");
+		output.append(this);
+		output.append(end);
 		return output.toString();
 	}
 	
