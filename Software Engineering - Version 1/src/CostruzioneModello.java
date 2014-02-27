@@ -91,6 +91,7 @@ public class CostruzioneModello {
 	    		aggiungoElemento(nuovoElemento);
 	    		file = file + riga + "\n";
 	    	};
+
 	    }
 	    System.out.println(file);
 	    for(Elemento elem: modelloCaricato.getElementi()){
@@ -138,16 +139,53 @@ public class CostruzioneModello {
 		modelloCaricato.aggiungiElemento(elem);
 	}
 	
-	private static void aggiungoEntrate(String stringa){
+	private static Vector <Elemento> restituisciEntrate(String stringa){
+		Vector <Elemento> entrate = new Vector <Elemento>();
 		String in = analisiIn(stringa);
 		if(in != null){
 			Vector <String> stringheIn = analisiSeparatori(",", in);
 			if(stringheIn != null){
 				for(String elem: stringheIn){
-					System.out.println(elem);
-					//Aggiungi all'elemento
+					entrate.add(restituisciElemento(elem));
 				}
 			}
+		}
+		return entrate;
+	}
+	
+	private static void aggiungoEntrate(Elemento elemIndex, Vector <Elemento> entrate){
+		Elemento elemFirst = entrate.firstElement();
+		int i;
+		
+		switch (elemIndex.getID()) {
+		case "AZIONE":
+			Azione nuovaAzione = (Azione) elemIndex;
+			if(elemFirst != null)
+				nuovaAzione.setIngresso(elemFirst);
+			i = modelloCaricato.indiceElemento(elemIndex);
+			if(i != -1)
+				modelloCaricato.getElementi().set(i, nuovaAzione);
+			break;
+		case "BRANCH":
+			Branch nuovoBranch = (Branch) elemIndex;
+			if(elemFirst != null)
+				nuovoBranch.setIngresso(elemFirst);
+			i = modelloCaricato.indiceElemento(elemIndex);
+			if(i != -1)
+				modelloCaricato.getElementi().set(i, nuovoBranch);
+			break;
+		case "MERGE":
+			Merge nuovoMerge = (Merge) elemIndex;
+			for(Elemento elemIter: entrate){
+				nuovoMerge.aggiungiIngresso(elemIter);
+			}
+			i = modelloCaricato.indiceElemento(elemIndex);
+			if(i != -1)
+				modelloCaricato.getElementi().set(i, nuovoMerge);
+			break;
+			
+		default:
+			break;
 		}
 	}
 	
