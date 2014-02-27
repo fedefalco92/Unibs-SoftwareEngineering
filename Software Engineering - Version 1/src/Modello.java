@@ -138,34 +138,51 @@ public class Modello {
 	//METODI SUL MODELLO//
 	
 	//RIEMPI VECTOR SPECIALIZZATI NEL MODELLO
-	public void riempiVectorModello(){
-		for(Elemento elem: elementi){
-			switch (elem.getID()) {
-			case "AZIONE":
-				aggiungiAzione((Azione) elem);
-				break;
-			case "BRANCH":
-				aggiungiBranch((Branch) elem);
-				break;
-			case "MERGE":
-				aggiungiMerge((Merge) elem);
-				break;
-			case "END":
-				end = (End) elem;
-				break;
-			case "START":
-				start = (Start) elem;
-				break;
-			case "FORK":
-				//
-				break;
-			case "JOIN":
-				//
-				break;
-			default:
-				break;
+		public void riempiVectorModello(){
+			for(Elemento elem: elementi){
+				switch (elem.getID()) {
+				case "AZIONE":
+					aggiungiAzione((Azione) elem);
+					break;
+				case "BRANCH":
+					aggiungiBranch((Branch) elem);
+					break;
+				case "MERGE":
+					aggiungiMerge((Merge) elem);
+					break;
+				case "END":
+					end = (End) elem;
+					break;
+				case "START":
+					start = (Start) elem;
+					break;
+				case "FORK":
+					//
+					break;
+				case "JOIN":
+					//
+					break;
+				default:
+					break;
+				}
 			}
 		}
+		
+	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
+	public boolean controllaModello(){
+		
+		return true;
+	}
+	
+	//METODO CHE VERIFICA CHE UN ELEMENTO E' CONTENUTO NEL MODELLO
+	public boolean elementoInModello(Elemento elem){
+		for(Elemento e: elementi){
+			//Se presente restituisco vero
+			if(e.equals(elem))
+				return true;
+		}
+		//Altrimenti restituisco falso
+		return false;
 	}
 	
 	//METODO DI RICERCA NEL VECTOR DI ELEMENTI//
