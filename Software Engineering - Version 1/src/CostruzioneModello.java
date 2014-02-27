@@ -12,8 +12,6 @@ import javax.swing.JFileChooser;
  */
 
 public class CostruzioneModello {
-
-	//E fare due classi: Analisi File e Costruzione Modello?
 	
 	private static File file;
 	private static Modello modelloCaricato;
