@@ -147,6 +147,15 @@ public class Modello {
 		return null;
 	}
 	
+	public int indiceElemento(Elemento elem){
+		int index = -1;
+		for (int i = 0; i < elementi.size(); i++){
+			if (elem.equals(elementi.get(i)))
+				return index;
+		}
+		return index;
+	}
+	
 	@Override
 	/**
 	 * Restituisce l'elenco di azioni, branch, merge, fork, join.
