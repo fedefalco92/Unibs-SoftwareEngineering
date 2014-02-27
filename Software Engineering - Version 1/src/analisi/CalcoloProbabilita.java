@@ -18,7 +18,8 @@ public class CalcoloProbabilita {
 	/**
 	 * @param args
 	 */
-	/*public static void main(String[] args) {
+	/*
+	public static void main(String[] args) {
 		//PRIMO METODO DI CALCOLO DELLE PROBABILITA'
 		//costruzione degli oggetti tipo prova(esempi del PDF relativo)
 		

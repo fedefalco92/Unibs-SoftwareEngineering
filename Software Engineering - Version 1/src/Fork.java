@@ -15,7 +15,7 @@ public class Fork extends Elemento {
 		this.joinTerminale = joinTerminale;
 	}
 
-	public Fork(String ID, String nome, Join _jointerminale) {
+	public Fork(String nome, Join _jointerminale) {
 		super("FORK", nome);
 		this.flussiOUT = new Vector<Flusso>();
 		this.joinTerminale = _jointerminale;

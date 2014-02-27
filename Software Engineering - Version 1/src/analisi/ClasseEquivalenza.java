@@ -44,7 +44,7 @@ public class ClasseEquivalenza {
 		cardinalita = card;
 	}
 	
-	public void setCardinalita(){
+	public void incrementaCardinalita(){
 		cardinalita++;
 	}	
 	
