@@ -71,10 +71,17 @@ public class Branch extends Elemento{
 		else output.append("null");
 		output.append(") - out(");
 		if(!uscite.isEmpty()){
+			for(int i = 0; i < uscite.size(); i++){
+				output.append(uscite.get(i).getElementoString());
+				output.append(", ");
+			}
+			output.append(uscite.lastElement().getElementoString());
+			/* BUG VIRGOLA
 			for(Elemento elemento:uscite){
 				output.append(elemento.getElementoString());
 				output.append(", ");
 			}
+			*/
 			if(incompleto)
 				output.append("incompleto");
 		}

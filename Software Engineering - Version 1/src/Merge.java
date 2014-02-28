@@ -1,6 +1,5 @@
 import java.util.Vector;
 
-
 public class Merge extends Elemento{
 
 	private Vector <Elemento> ingressi;
@@ -46,10 +45,19 @@ public class Merge extends Elemento{
 		
 		output.append("in(" );
 		if(!ingressi.isEmpty()){
+			
+			for(int i = 0; i < ingressi.size(); i++){
+				output.append(ingressi.get(i).getElementoString());
+				output.append(", ");
+			}
+			output.append(ingressi.lastElement().getElementoString());
+			
+			/* BUG VIRGOLA
 			for(Elemento elemento:ingressi){
 				output.append(elemento.getElementoString());
 				output.append(", ");
 			}
+			*/
 			if(incompleto)
 				output.append("incompleto");
 		}
