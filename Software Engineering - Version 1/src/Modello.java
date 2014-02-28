@@ -169,8 +169,9 @@ public class Modello {
 		}
 		
 	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
+	//MANCA CONTROLLO IN E OUT RECIPROCI
 	public boolean controllaModello(){
-		//Controllo immediatamenete che siano impostati il punto iniziale e il punto finale
+		//Controllo immediatamente che siano impostati il punto iniziale e il punto finale
 		if(start == null || end == null)
 			return false;
 		
