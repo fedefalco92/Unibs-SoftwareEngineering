@@ -46,7 +46,7 @@ public class Merge extends Elemento{
 		output.append("in(" );
 		if(!ingressi.isEmpty()){
 			
-			for(int i = 0; i < ingressi.size(); i++){
+			for(int i = 0; i < ingressi.size() - 1; i++){
 				output.append(ingressi.get(i).getElementoString());
 				output.append(", ");
 			}

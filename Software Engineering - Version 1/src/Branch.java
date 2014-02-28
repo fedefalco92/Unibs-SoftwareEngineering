@@ -71,7 +71,7 @@ public class Branch extends Elemento{
 		else output.append("null");
 		output.append(") - out(");
 		if(!uscite.isEmpty()){
-			for(int i = 0; i < uscite.size(); i++){
+			for(int i = 0; i < uscite.size() - 1; i++){
 				output.append(uscite.get(i).getElementoString());
 				output.append(", ");
 			}
