@@ -170,7 +170,67 @@ public class Modello {
 		
 	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
 	public boolean controllaModello(){
-		
+		for(Elemento e: elementi){
+			//Per ogni iterazione controllo che l'ingresso e l'uscita siano presenti nel Vector di Elementi
+			switch (e.getID()) {
+			case "AZIONE":
+				//Un solo ingresso
+				if(!elementoInModello(e.getIngresso()))
+					return false;
+				//Una sola uscita
+				if(!elementoInModello(e.getUscita()))
+					return false;
+				break;
+				
+			case "BRANCH":
+				//INGRESSO
+				//Un solo ingresso
+				if(!elementoInModello(e.getIngresso()))
+					return false;
+				//USCITA
+				//Almeno due uscite
+				if(e.getUscite().size() < 2)
+					return false;
+				//+ uscite
+				for(Elemento eb: e.getUscite()){
+					if(!elementoInModello(eb))
+						return false;
+				}
+				break;
+				
+			case "MERGE":
+				//INGRESSO
+				//Almeno due ingressi
+				if(e.getIngressi().size() < 2)
+					return false;
+				//+ ingressi
+				for(Elemento eb: e.getIngressi()){
+					if(!elementoInModello(eb))
+						return false;
+				}
+				//USCITA
+				//Una sola uscita
+				if(!elementoInModello(e.getUscita()))
+					return false;
+				break;
+				
+			case "START":
+				//USCITA
+				//Una sola uscita
+				if(!elementoInModello(e.getUscita()))
+					return false;
+				break;
+			case "END":
+				//INGRESSO
+				//Un solo ingresso
+				if(!elementoInModello(e.getIngresso()))
+					return false;
+				break;
+				
+			default:
+				break;
+			}
+		}
 		
 		return true;
 	}
@@ -187,6 +247,7 @@ public class Modello {
 	}
 	
 	//METODO DI RICERCA NEL VECTOR DI ELEMENTI//
+	//Restituisce elemento dato l'ID e il nome
 	public Elemento ricercaElementoInModello(String ID, String nome){
 		for(Elemento elem: elementi){
 			if(elem.getID().equalsIgnoreCase(ID) && elem.getNome().equalsIgnoreCase(nome)){
@@ -196,6 +257,7 @@ public class Modello {
 		return null;
 	}
 	
+	//Restituisce l'indice dell'elemento se presente, altrimenti -1.
 	public int indiceElemento(Elemento elem){
 		int index = -1;
 		for (int i = 0; i < elementi.size(); i++){

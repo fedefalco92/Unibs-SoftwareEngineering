@@ -14,10 +14,12 @@ public class Merge extends Elemento{
 		this.incompleto=true;
 	}
 	
+	@Override
 	public Vector<Elemento> getIngressi() {
 		return ingressi;
 	}
 	
+	@Override
 	public Elemento getUscita() {
 		return uscita;
 	}

@@ -8,6 +8,7 @@ public class End extends Elemento {
 		this.ingresso = null;
 	}
 	
+	@Override
 	public Elemento getIngresso() {
 		return ingresso;
 	}

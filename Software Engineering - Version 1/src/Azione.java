@@ -10,10 +10,12 @@ public class Azione extends Elemento{
 		this.uscita = null;
 	}
 	
+	@Override
 	public Elemento getIngresso() {
 		return ingresso;
 	}
 	
+	@Override
 	public Elemento getUscita() {
 		return uscita;
 	}

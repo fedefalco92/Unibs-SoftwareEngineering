@@ -17,6 +17,7 @@ public class Branch extends Elemento{
 	 * Getter per Ingresso
 	 * @return ingresso
 	 */
+	@Override
 	public Elemento getIngresso() {
 		return ingresso;
 	}
@@ -25,6 +26,7 @@ public class Branch extends Elemento{
 	 * Getter per Uscita
 	 * @return uscite
 	 */
+	@Override
 	public Vector<Elemento> getUscite() {
 		return uscite;
 	}

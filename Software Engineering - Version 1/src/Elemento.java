@@ -40,6 +40,23 @@ public abstract class Elemento {
 		return output.toString();
 	}
 
+	//Metodi Getter per favorire il lavoro del controllo delle classi derivate
+	public Elemento getIngresso() {
+		return null;
+	}
+	
+	public Elemento getUscita() {
+		return null;
+	}
+	
+	public Vector<Elemento> getIngressi() {
+		return null;
+	}
+	
+	public Vector<Elemento> getUscite() {
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return getElementoString();

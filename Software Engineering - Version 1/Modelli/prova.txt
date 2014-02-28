@@ -5,14 +5,13 @@ Cucu:cucuc2:cucu3
 Prova3 : funziona?
  vediamo : cosi
  
-[AZIONE] nome : in([AZIONE] nome) - out([AZIONE] nome)
-[BRANCH] nome : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
-[MERGE] mm: in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
+[AZIONE] A1 : in([AZIONE] A2) - out([AZIONE] A3)
+[BRANCH] B1 : in([AZIONE] A4) - out([AZIONE] A5, [AZIONE] A6)
+[MERGE] mm: in([AZIONE] A7, [AZIONE] A8) - out([AZIONE] A9)
 
-[NODOINIT] nome : out([AZIONE] nome)
-[NODOEND] nome : in([AZIONE] nome)
+[START] s : out([AZIONE] A10)
+[END] e : in([AZIONE] A11)
 
 //Fork e Join collegati
 [FORK] nome fork : in([AZIONE] nome) - out([AZIONE] nome, [AZIONE] nome)
 [JOIN] noj : in([AZIONE] nome, [AZIONE] nome) - out([AZIONE] nome)
- 
