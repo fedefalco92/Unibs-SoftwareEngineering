@@ -170,6 +170,11 @@ public class Modello {
 		
 	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
 	public boolean controllaModello(){
+		//Controllo immediatamenete che siano impostati il punto iniziale e il punto finale
+		if(start == null || end == null)
+			return false;
+		
+		//Ciclo sui vari elementi per controllare ingressi e uscite.
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita siano presenti nel Vector di Elementi
 			switch (e.getID()) {
@@ -256,6 +261,8 @@ public class Modello {
 		}
 		return null;
 	}
+	
+	
 	
 	//Restituisce l'indice dell'elemento se presente, altrimenti -1.
 	public int indiceElemento(Elemento elem){
