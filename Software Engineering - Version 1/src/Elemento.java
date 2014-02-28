@@ -9,12 +9,6 @@ public abstract class Elemento {
 	private String ID;
 	private String nome;
 	
-	//E se controlliamo qui anche i vari ingressi? Vi spiego perche' mi e' venuta questa idea...
-//	private Elemento ingresso;
-//	private Elemento uscita;
-//	private Vector <Elemento> ingressi;
-//	private Vector <Elemento> uscite;
-	
 	public Elemento(String ID, String nome){
 		this.ID = ID;
 		this.nome = nome;
@@ -34,13 +28,8 @@ public abstract class Elemento {
 		return ID;
 	}
 	
-	public String getElementoString(){
-		StringBuffer output = new StringBuffer();
-		output.append("[" + ID + "] " + nome);
-		return output.toString();
-	}
-
 	//Metodi Getter per favorire il lavoro del controllo delle classi derivate
+	//LI FACCIAMO ABSTRACT? 
 	public Elemento getIngresso() {
 		return null;
 	}
@@ -55,6 +44,12 @@ public abstract class Elemento {
 	
 	public Vector<Elemento> getUscite() {
 		return null;
+	}
+	
+	public String getElementoString(){
+		StringBuffer output = new StringBuffer();
+		output.append("[" + ID + "] " + nome);
+		return output.toString();
 	}
 	
 	@Override
