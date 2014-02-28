@@ -11,11 +11,11 @@ import java.util.Vector;
  */
 public class Prova {
 	private String idProva;
-	private Vector<Percorso> insiemeCopertura;
+	private Vector<Cammino> insiemeCopertura;
 	
 	public Prova(String nome){
 		idProva = nome;
-		insiemeCopertura = new Vector<Percorso>();
+		insiemeCopertura = new Vector<Cammino>();
 	}
 	
 	public void setNome(String nome){
@@ -27,17 +27,17 @@ public class Prova {
 	}
 	
 	//lo chiamiamo addPercorso?
-	public void addCammino(Percorso cammino){
+	public void addPercorso(Cammino cammino){
 		insiemeCopertura.add(cammino);
 	}
 	
-	public Vector<Percorso> getInsiemeCopertura(){
+	public Vector<Cammino> getInsiemeCopertura(){
 		return insiemeCopertura;
 	}
 	
-	public Vector<Percorso> getEsitoOK(){
-		Vector<Percorso> provaOk = new  Vector<Percorso>();
-		for(Percorso p : insiemeCopertura){
+	public Vector<Cammino> getEsitoOK(){
+		Vector<Cammino> provaOk = new  Vector<Cammino>();
+		for(Cammino p : insiemeCopertura){
 			if(p.getEsito()){
 				provaOk.add(p);
 			}
@@ -45,14 +45,33 @@ public class Prova {
 		return provaOk;
 	}
 	
-	public Vector<Percorso> getEsitoKO(){
-		Vector<Percorso> provaKo = new  Vector<Percorso>();
-		for(Percorso p : insiemeCopertura){
+	public Vector<Cammino> getEsitoKO(){
+		Vector<Cammino> provaKo = new  Vector<Cammino>();
+		for(Cammino p : insiemeCopertura){
 			if(!p.getEsito()){
 				provaKo.add(p);
 			}
 		}
 		return provaKo;
+	}
+	
+	/**
+	 * Ritorna un Vector di String contenente tutte le azioni coinvolte
+	 * in una singola prova
+	 * @return
+	 */
+	
+	public Vector<String> getAzioniCoinvolte(){
+		Vector<String> azioniProva = new Vector<String>();
+		for(Cammino perc : insiemeCopertura){
+			Vector<String> azioniCammino = perc.estraiElementi();
+			for(String elem : azioniCammino){
+				if(azioniProva.indexOf(elem) < 0){
+					azioniProva.add(elem);
+				}
+			}
+		}
+		return azioniProva;
 	}
 	
 	/*
@@ -64,7 +83,7 @@ public class Prova {
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Prova : " + getNome() + "\n");
-		for(Percorso p : insiemeCopertura){
+		for(Cammino p : insiemeCopertura){
 			buffer.append(p.toString());
 		}
 		return buffer.toString();

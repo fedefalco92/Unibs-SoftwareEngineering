@@ -14,11 +14,11 @@ import java.util.Vector;
 //N.B. Il percorso viene gia' fornito in maniera ordinata e validato dall'apposito metodo che 
 //verra' predisposto nella classe Modello
 
-public class Percorso {
+public class Cammino {
 	private String path;
 	private boolean esito;
 	
-	public Percorso(String path,boolean esito){
+	public Cammino(String path,boolean esito){
 		this.path = path;
 		this.esito = esito;
 	}
@@ -37,10 +37,6 @@ public class Percorso {
 	
 	public boolean getEsito(){
 		return esito;
-	}
-	
-	public boolean percorsiUguali(Percorso altroPercorso){
-		return (getPath().equalsIgnoreCase(altroPercorso.getPath())) && (getEsito() == altroPercorso.getEsito());
 	}
 	
 	public Vector<String> estraiElementi(){

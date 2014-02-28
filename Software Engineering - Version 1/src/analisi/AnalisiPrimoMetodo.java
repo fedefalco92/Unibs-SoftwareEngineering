@@ -10,7 +10,8 @@ import java.util.Vector;
  *
  */
 public class AnalisiPrimoMetodo {
-	/*private Vector<ClasseEquivalenza> classiEquivalenza;
+	/*
+	private Vector<ClasseEquivalenza> classiEquivalenza;
 	
 	public AnalisiPrimoMetodo(){
 		classiEquivalenza = new Vector<ClasseEquivalenza>();		
@@ -19,6 +20,6 @@ public class AnalisiPrimoMetodo {
 	public void addClasseEquivalenza(ClasseEquivalenza cl){
 		classiEquivalenza.add(cl);
 	}
-	
 	*/
+	
 }

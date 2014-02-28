@@ -11,6 +11,8 @@ import java.util.Vector;
  *
  */
 public class DiagnosiClasse {
+	
+	
 	/*
 	 A questa classe si dovra' passare l'elenco di tutte le attivita', separate dalla ","
 	 Per ora si assume che sia un elemento noto(come string)
@@ -20,21 +22,30 @@ public class DiagnosiClasse {
 	private Vector<String> insiemeAttivita;
 	private ClasseEquivalenza classe;
 	private Vector<Vector<String>> diagnosiMinimali;
-	private Vector<Vector<Integer>> probabilita;
 	
 	public DiagnosiClasse(Vector<String> insiemeAttivita){
 		classe = null;
 		diagnosiMinimali = new Vector<Vector<String>>();
-		this.insiemeAttivita = insiemeAttivita;
-		probabilita = new Vector<Vector<Integer>>();
+		this.insiemeAttivita = insiemeAttivita;	
 	}
 	
 	public DiagnosiClasse(ClasseEquivalenza classe,Vector<String> insiemeAttivita){
 		this.classe = classe;	
 		this.insiemeAttivita = insiemeAttivita;
-		diagnosiMinimali = new Vector<Vector<String>>();		
-		probabilita = new Vector<Vector<Integer>>();		
+		diagnosiMinimali = new Vector<Vector<String>>();			
 	}
+	
+	public Vector<Vector<String>> getDiagnosiMinimali(){
+		generaDiagnosi();
+		return diagnosiMinimali;
+	}
+	
+	/**
+	 * Genera l'insieme di partenza per il calcolo delle diagnosi minimali:
+	 * analizza tutte le azioni che fanno parte dei vari cammini e "rimuove"
+	 * dalle rilevazioni KO le azioni che sono presenti nelle rilevazioni OK
+	 * @return
+	 */
 	
 	private Vector<Vector<String>> generaInsiemePartenza(){
 		//algoritmo per generare degli HS minimali
@@ -45,9 +56,9 @@ public class DiagnosiClasse {
 			//e per trovare cosi' l'HS di diagnosi minimale
 			 //Vector<String> replicaAttivita = (Vector<String>)insiemeAttivita.clone();
 			
-		 Vector<Percorso> percorsoOK = provaEquivalenza.getEsitoOK();
+		 Vector<Cammino> percorsoOK = provaEquivalenza.getEsitoOK();
 			 
-		 for(Percorso perc : percorsoOK){
+		 for(Cammino perc : percorsoOK){
 			 //preparo gli elementi delle rilevazioni OK che andranno rimossi da ogni K0
 			 Vector<String> elementiPercorso = perc.estraiElementi();
 			 for(String elem : elementiPercorso){
@@ -70,7 +81,7 @@ public class DiagnosiClasse {
 		
 		Vector<Vector<String>> insiemiBase = new Vector<Vector<String>>();
 		
-		Vector<Percorso> percorsoKO = provaEquivalenza.getEsitoKO();
+		Vector<Cammino> percorsoKO = provaEquivalenza.getEsitoKO();
 		for(int i=0;i<percorsoKO.size();i++){
 			Vector<String> elementiAttivita = percorsoKO.get(i).estraiElementi();
 			for(String rim : elementiDaRimuovere){
@@ -93,21 +104,21 @@ public class DiagnosiClasse {
 	 * Generazione delle diagnosi minimali relative alla classe di equivalenza considerata
 	 */
 	
-	public void generaDiagnosi(){
+	private void generaDiagnosi(){
 		
 		//Applicazione dei metodi creati per trovare l'insieme di diagnosi minimali		
 		
-		System.out.println("Insieme Attivita' : " + insiemeAttivita);
+		//System.out.println("Insieme Attivita' : " + insiemeAttivita);
 		
-		System.out.println("Insieme base di partenza: " + generaInsiemePartenza().toString());
+		//System.out.println("Insieme base di partenza: " + generaInsiemePartenza().toString());
 	
 		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
 		
-		System.out.println("Corrispondenze per calcolo MHS: " + corrispondenze); 
+		//System.out.println("Corrispondenze per calcolo MHS: " + corrispondenze); 
 		
 		diagnosiMinimali = UtilitaGenerazioneMHS.generaMHS(corrispondenze,insiemeAttivita);
 		
-		System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
+		//System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
 	}
 	
 	/**
@@ -161,7 +172,11 @@ public class DiagnosiClasse {
 
 	}
 	
-	public void settaIdentificatorePosizione(){
+	/**
+	 * Metodo che genera degli identificatori di posizione(da chiarire la sua effettiva utilita')
+	 */
+	
+	private void settaIdentificatorePosizione(){
 		/*
 		 N.B.: Da fare dopo aver generato le diagnosi minimali
 		 1 = probabilita' pari a 1
@@ -173,8 +188,8 @@ public class DiagnosiClasse {
 		
 		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
 		
-		Vector<Percorso> percorsiOK = classe.getProva().getEsitoOK();
-		for(Percorso percorso : percorsiOK){
+		Vector<Cammino> percorsiOK = classe.getProva().getEsitoOK();
+		for(Cammino percorso : percorsiOK){
 			Vector<String> elemPercorso = percorso.estraiElementi();
 			for(String elemento : elemPercorso){				
 				int posizioneRelativa = insiemeAttivita.indexOf(elemento);
@@ -184,8 +199,10 @@ public class DiagnosiClasse {
 			}
 		}
 		
-		System.out.println("Corrispondenze modificate : " + corrispondenze + "\n");
+		//System.out.println("Corrispondenze modificate : " + corrispondenze + "\n");
 	}
+	
+	
 	
 	
 	
