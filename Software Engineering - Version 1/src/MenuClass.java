@@ -20,6 +20,12 @@ public class MenuClass {
 				break;
 			case 2:
 				modello = CostruzioneModello.caricaModello();
+				if(modello.controllaModello()){
+					System.out.println("Modello corretto");
+				}
+				else{
+					System.out.println("Modello errato");
+				}
 				break;
 			case 3:
 				//Diagnosi e test

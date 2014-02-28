@@ -1,0 +1,4 @@
+[START] s : out([AZIONE] A1)
+[AZIONE] A1 : in([START] s) - out([AZIONE] A2)
+[AZIONE] A2 : in([AZIONE] A1) - out([END] e)
+[END] e : in([AZIONE] A1)
