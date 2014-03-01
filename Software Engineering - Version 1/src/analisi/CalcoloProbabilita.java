@@ -18,8 +18,8 @@ public class CalcoloProbabilita {
 	/**
 	 * @param args
 	 */
-	
 /*	
+	
 	public static void main(String[] args) {
 		//PRIMO METODO DI CALCOLO DELLE PROBABILITA'
 		//costruzione degli oggetti tipo prova(esempi del PDF relativo)
@@ -46,13 +46,10 @@ public class CalcoloProbabilita {
 		p4.addPercorso(new Cammino("A1,A2,A3,A4,A6",false));
 		p4.addPercorso(new Cammino("A1",true));
 		p4.addPercorso(new Cammino("A1,A2,A3",true));
+	
+
+
 		
-		//aggiunta ad un test suite 
-		TestSuite ts1 = new TestSuite();
-		ts1.addProva(p1);
-		ts1.addProva(p2);
-		ts1.addProva(p3);
-		ts1.addProva(p4);
 		
 		//classi di equivalenza
 		//QUESTA PARTE DOVRA' ESSERE ORGANIZZATA PER UN RIEMPIMENTO AUTOMATICO
@@ -66,13 +63,17 @@ public class CalcoloProbabilita {
 		cl3.setIstanzaProva(p4);
 		cl3.setCardinalita(1);		
 		
-		cl1.probabilitaClasse();
-		cl2.probabilitaClasse();
-		cl3.probabilitaClasse();
+		//aggiunta ad un test suite 
+		TestSuite ts1 = new TestSuite(attivitaTotali);
+		ts1.addNuovaClasseEquivalenza(cl1);
+		ts1.addNuovaClasseEquivalenza(cl2);
+		ts1.addNuovaClasseEquivalenza(cl3);	
 		
-		//ts1.addNuovaClasseEquivalenza(cl1);
-		//ts1.addNuovaClasseEquivalenza(cl2);
-		//ts1.addNuovaClasseEquivalenza(cl3);
+		ts1.calcolaProbabilitaM1();
+		System.out.println(ts1);
+		
+		
+
 		
 		 
 	}
