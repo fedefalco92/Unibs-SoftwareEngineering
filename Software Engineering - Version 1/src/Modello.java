@@ -1,7 +1,7 @@
 import java.util.Vector;
 
 
-public class Modello {
+public class Modello extends Elemento {
 	
 	private String nome;
 	
@@ -22,7 +22,28 @@ public class Modello {
 	private Elemento ultimaModifica;
 	private Vector<Merge> mergeIncompleti;
 	
-		public Modello(String nome){
+	public Modello(String nome){
+		super("MODELLO", nome);
+		this.nome = nome;
+		elementi = new Vector<Elemento>();
+		
+		start = new Start("Start");
+		azioni = new Vector<Azione>();
+		branch = new Vector<Branch>();
+		merge = new Vector<Merge>();
+		fork = new Vector<Fork>();
+		join = new Vector<Join>();
+		end = new End("End");
+		mergeIncompleti = new Vector<Merge>();
+	}
+	
+	/**
+	 * Altro costruttore necessario per le classi Flusso ( e Alternativa? )
+	 * @param ID
+	 * @param nome
+	 */
+	public Modello(String ID, String nome){
+		super(ID, nome);
 		this.nome = nome;
 		elementi = new Vector<Elemento>();
 		
@@ -187,7 +208,7 @@ public class Modello {
 				if(!elementoInModello(e.getIngresso()))
 					return false;
 				//Una sola uscita
-				if(!elementoInModello(e.getUscita()))
+				if(!elementoInModello(e.getJoinOUT()))
 					return false;
 				break;
 				
@@ -219,14 +240,14 @@ public class Modello {
 				}
 				//USCITA
 				//Una sola uscita
-				if(!elementoInModello(e.getUscita()))
+				if(!elementoInModello(e.getJoinOUT()))
 					return false;
 				break;
 				
 			case "START":
 				//USCITA
 				//Una sola uscita
-				if(!elementoInModello(e.getUscita()))
+				if(!elementoInModello(e.getJoinOUT()))
 					return false;
 				break;
 			case "END":
@@ -309,9 +330,11 @@ public class Modello {
 			output.append(br + "\n");
 		for(Merge mr: merge)
 			output.append(mr + "\n");
-		//fork
-		
-		//join
+		//AGGIUNTI FORK E JOIN
+		for(Fork fr: fork)
+			output.append(fr + "\n");
+		for(Join j: join)
+			output.append(j + "\n");
 		
 		//output.append(end);
 		
@@ -359,6 +382,29 @@ public class Modello {
 		} */
 		
 		return true;
+	}
+	
+	/**
+	 * Equivale al toString ma ogni riga &egrave preceduta da un \t
+	 * @return
+	 */
+	public Object toStringINDENTATO() {
+		StringBuffer output=new StringBuffer();
+		
+		
+		for(Azione azione: azioni)
+			output.append("\t" + azione + "\n");
+		for(Branch br: branch)
+			output.append("\t" + br + "\n");
+		for(Merge mr: merge)
+			output.append("\t" + mr + "\n");
+		for(Fork fr: fork)
+			output.append("\t" + fr + "\n");
+		for(Join j: join)
+			output.append("\t" + j + "\n");
+
+
+		return output.toString();
 	}
 	
 	//AGGIUNGIAMO QUA UN METODO CHE DICE DA SOLO SE IL MODELLO E' CORRETTO?
