@@ -26,7 +26,7 @@ public class Alternativa extends Modello {
 		this.padre = padre;
 	}
 
-	public Elemento getUscita() {
+	public Elemento getJoinOUT() {
 		return uscita;
 	}
 

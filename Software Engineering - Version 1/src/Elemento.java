@@ -34,7 +34,7 @@ public abstract class Elemento {
 		return null;
 	}
 	
-	public Elemento getUscita() {
+	public Elemento getJoinOUT() {
 		return null;
 	}
 	

@@ -25,7 +25,7 @@ public class Join extends Elemento {
 		this.forkpadre = forkpadre;
 	}
 
-	public Elemento getUscita() {
+	public Elemento getJoinOUT() {
 		return uscita;
 	}
 

@@ -19,7 +19,7 @@ public class Merge extends Elemento{
 	}
 	
 	@Override
-	public Elemento getUscita() {
+	public Elemento getJoinOUT() {
 		return uscita;
 	}
 	

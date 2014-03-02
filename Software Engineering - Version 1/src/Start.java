@@ -9,7 +9,7 @@ public class Start extends Elemento{
 	}
 	
 	@Override
-	public Elemento getUscita() {
+	public Elemento getJoinOUT() {
 		return uscita;
 	}
 	
