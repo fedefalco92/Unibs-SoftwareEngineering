@@ -168,8 +168,11 @@ public class Modello {
 			}
 		}
 		
-	//METODO CHE CONTROLLA LA CORRETTEZZA DEL MODELLO
-	//MANCA CONTROLLO IN E OUT RECIPROCI
+	/**
+	 * Metodo che controlla la correttezza (sintattica ma non semantica) del modello
+	 * Manca controllo IN e OUT reciproco
+	 * @return
+	 */
 	public boolean controllaModello(){
 		//Controllo immediatamente che siano impostati il punto iniziale e il punto finale
 		if(start == null || end == null)
@@ -241,7 +244,11 @@ public class Modello {
 		return true;
 	}
 	
-	//METODO CHE VERIFICA CHE UN ELEMENTO E' CONTENUTO NEL MODELLO
+	/**
+	 * Verifica se un elemento &egrave contenuto nel modello
+	 * @param elem
+	 * @return
+	 */
 	public boolean elementoInModello(Elemento elem){
 		for(Elemento e: elementi){
 			//Se presente restituisco vero
@@ -252,8 +259,15 @@ public class Modello {
 		return false;
 	}
 	
-	//METODO DI RICERCA NEL VECTOR DI ELEMENTI//
-	//Restituisce elemento dato l'ID e il nome
+	/**
+	 * Metodo di ricerca nel vector di elementi.
+	 * Restituisce l'elemento dato l'ID e il nome
+	 * 
+	 * @param ID
+	 * @param nome
+	 * @return
+	 */
+	
 	public Elemento ricercaElementoInModello(String ID, String nome){
 		for(Elemento elem: elementi){
 			if(elem.getID().equalsIgnoreCase(ID) && elem.getNome().equalsIgnoreCase(nome)){
@@ -264,8 +278,11 @@ public class Modello {
 	}
 	
 	
-	
-	//Restituisce l'indice dell'elemento se presente, altrimenti -1.
+	/**
+	 * Restituisce l'indice di elem nel vettore di elementi, se presente, altrimenti -1.
+	 * @param elem
+	 * @return
+	 */
 	public int indiceElemento(Elemento elem){
 		int index = -1;
 		for (int i = 0; i < elementi.size(); i++){
@@ -302,6 +319,10 @@ public class Modello {
 		return output.toString();
 	}
 	
+	/**
+	 * Stampa completa del modello
+	 * @return
+	 */
 	public String stampaModello() {
 		StringBuffer output = new StringBuffer();
 		output.append("NOME MODELLO: " + nome + "\n\n");
