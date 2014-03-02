@@ -18,10 +18,6 @@ public class Merge extends Elemento{
 		return ingressi;
 	}
 	
-	@Override
-	public Elemento getJoinOUT() {
-		return uscita;
-	}
 	
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);

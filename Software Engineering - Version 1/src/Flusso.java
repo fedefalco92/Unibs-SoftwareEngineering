@@ -15,7 +15,7 @@ public class Flusso extends Modello {
 	public Flusso(String nome, Fork _padre) {
 		super("FLUSSO", nome);
 		this.forkIN = _padre;
-		this.setJoinOUT(forkIN.getJoinTerminale());
+		this.setJoinOUT(forkIN.getJoinAssociato());
 	}
 
 	public Fork getForkIN() {

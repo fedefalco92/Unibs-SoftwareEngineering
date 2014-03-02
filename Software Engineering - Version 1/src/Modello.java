@@ -208,7 +208,7 @@ public class Modello extends Elemento {
 				if(!elementoInModello(e.getIngresso()))
 					return false;
 				//Una sola uscita
-				if(!elementoInModello(e.getJoinOUT()))
+				if(!elementoInModello(e.getUscita()))
 					return false;
 				break;
 				
@@ -240,14 +240,14 @@ public class Modello extends Elemento {
 				}
 				//USCITA
 				//Una sola uscita
-				if(!elementoInModello(e.getJoinOUT()))
+				if(!elementoInModello(e.getUscita()))
 					return false;
 				break;
 				
 			case "START":
 				//USCITA
 				//Una sola uscita
-				if(!elementoInModello(e.getJoinOUT()))
+				if(!elementoInModello(e.getUscita()))
 					return false;
 				break;
 			case "END":

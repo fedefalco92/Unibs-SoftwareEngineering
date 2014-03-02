@@ -12,18 +12,19 @@ public class Fork extends Elemento {
 	private Join joinAssociato;
 	private boolean incompleto;
 
-	public Join getJoinTerminale() {
+	
+
+	public Join getJoinAssociato() {
 		return joinAssociato;
 	}
 
-	public void setJoinTerminale(Join joinTerminale) {
-		this.joinAssociato = joinTerminale;
+	public void setJoinAssociato(Join joinAssociato) {
+		this.joinAssociato = joinAssociato;
 	}
 
-	public Fork(String nome, Join _jointerminale) {
+	public Fork(String nome) {
 		super("FORK", nome);
 		this.flussiOUT = new Vector<Flusso>();
-		this.joinAssociato = _jointerminale;
 		this.incompleto = true;
 	}
 
@@ -68,6 +69,7 @@ public class Fork extends Elemento {
 		
 		return output.toString();
 	}
+
 	
 	
 

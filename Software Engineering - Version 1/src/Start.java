@@ -8,10 +8,6 @@ public class Start extends Elemento{
 		this.uscita = null;
 	}
 	
-	@Override
-	public Elemento getJoinOUT() {
-		return uscita;
-	}
 	
 	public void setUscita(Azione uscita) {
 		this.uscita = uscita;

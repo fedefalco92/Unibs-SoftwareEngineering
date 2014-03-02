@@ -176,10 +176,10 @@ public class CreazioneModello {
 					gestisciMerge((Merge) elementoCorrente);
 					break;
 				case "FORK":
-					//uso futuro
+					gestisciFork((Fork) elementoCorrente);
 					break;
 				case "JOIN":
-					//uso futuro
+					gestisciJoin((Join) elementoCorrente);
 					break;
 				default:
 					//
@@ -189,6 +189,121 @@ public class CreazioneModello {
 		
 		
 	}
+	private static void gestisciJoin(Join join) {
+		final String TITOLO = "Cosa vuoi inserire in coda al join "+ join.getNome()+ "?";
+		final String [] VOCI = {
+				"Una nuova azione", 
+				"Un nuovo branch", 
+				"Un nuovo merge", 
+				"un merge esistente", 
+				"un nuovo fork (crea automaticamente il join associato)", 
+				"nodo finale"
+				};
+		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
+		//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
+		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
+		menuAzione.setVoceUscita("");
+		int scelta = menuAzione.scegli();
+		
+		switch (scelta)
+		{
+			case 0: 
+				return;
+			case 1:
+				//l'acquisizione nome va fatta in modo che non ci siano doppioni
+				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
+				Azione nuovaAzione = new Azione(nomeAzione);
+				join.setUscita(nuovaAzione);
+				nuovaAzione.setIngresso(join);
+				modello.aggiungiAzione(nuovaAzione);
+				modello.setUltimaModifica(nuovaAzione);
+				continuaInserimento();
+				break;
+			case 2:
+				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
+				Branch nuovoBranch = new Branch(nomeBranch);
+				join.setUscita(nuovoBranch);
+				nuovoBranch.setIngresso(join);
+				modello.aggiungiBranch(nuovoBranch);
+				modello.setUltimaModifica(nuovoBranch);
+				continuaInserimento();
+				
+				break;
+			case 3:
+				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
+				Merge nuovoMerge = new Merge(nomeMerge);
+				join.setUscita(nuovoMerge);
+				nuovoMerge.aggiungiIngresso(join);
+				modello.aggiungiMerge(nuovoMerge);
+				//l'utilità della prossima istruzione si vedrà
+				//modello.aggiungiMergeIncompleto(nuovoMerge);
+				modello.setUltimaModifica(nuovoMerge);
+				continuaInserimento();
+				break;
+			case 4:
+				if(modello.getMerge().isEmpty()) {
+					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
+					continuaInserimento();
+					break;
+				} else {
+					Merge mergeEsistente= sceltaMerge(modello.getMerge());
+					mergeEsistente.aggiungiIngresso(join);
+					join.setUscita(mergeEsistente);
+					
+					//a questo punto devo decidere dove mandare il programma!!
+					//probabilmente non è necessario mandarlo da nessuna parte dato che se sono giunto qui
+					//ho quasi sicuramente un branch aperto e quindi riprenderà il menu del branch.
+					//ci devo pensare ancora un pochino
+				}
+				
+				break;
+			case 5: //AGGIUNTA FORK
+				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+				Fork nuovoFork = new Fork(nomeFork);
+				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+				Join nuovoJoin = new Join(nomeJoin);
+				
+				nuovoFork.setJoinAssociato(nuovoJoin);
+				nuovoJoin.setForkAssociato(nuovoFork);
+				
+				join.setUscita(nuovoFork);
+				nuovoFork.setIngresso(join);
+				modello.aggiungiFork(nuovoFork);
+				modello.aggiungiJoin(nuovoJoin);
+				modello.setUltimaModifica(nuovoFork);
+				continuaInserimento();
+				break;
+			case 6:
+				join.setUscita(modello.getEnd());
+				modello.setUltimoElemento(join);
+				modello.setUltimaModifica(null);
+				break;
+		
+			default:
+				/*Non entra mai qui*/
+		}
+	}
+
+	private static void gestisciFork(Fork fork) {
+		int numeroFlussi = InputDati.leggiInteroConMinimo("Quanti flussi paralleli vuoi inserire in coda al fork " + fork.getNome() + "?",
+				2);
+		for (int i = 1; i <= numeroFlussi; i++){
+			String nomeFlusso = InputDati.leggiStringa("Inserisci il nome del Fusso " + i + " > ");
+			Flusso flusso = new Flusso(nomeFlusso, fork);
+			//a questo punto bisognerebbe creare il flusso..
+			//come se fosse un modello a se' D: D: D:
+			
+			fork.aggiungiFlusso(flusso);
+			fork.getJoinAssociato().aggiungiFlussoIN(flusso);
+		}
+		
+		//una volta terminato l'inserimento dei flussi si continua con il modello a partire dal join!!
+		modello.setUltimaModifica(fork.getJoinAssociato());
+		continuaInserimento();
+		
+		
+	}
+
 	/**
 	 * Il metodo offre un menu in cui si richiede l'inserimento dell'uscita di un merge.
 	 * la completezza degli ingressi verrà gestita altrove.
@@ -251,7 +366,7 @@ public class CreazioneModello {
 			case 4:
 				if(modello.getMerge().isEmpty()) {
 					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					break;
+					continuaInserimento();
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(merge);
@@ -264,8 +379,21 @@ public class CreazioneModello {
 				}
 				
 				break;
-			case 5:
-				//da fare
+			case 5: //AGGIUNTA FORK
+				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+				Fork nuovoFork = new Fork(nomeFork);
+				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+				Join nuovoJoin = new Join(nomeJoin);
+				
+				nuovoFork.setJoinAssociato(nuovoJoin);
+				nuovoJoin.setForkAssociato(nuovoFork);
+				
+				merge.setUscita(nuovoFork);
+				nuovoFork.setIngresso(merge);
+				modello.aggiungiFork(nuovoFork);
+				modello.aggiungiJoin(nuovoJoin);
+				modello.setUltimaModifica(nuovoFork);
+				continuaInserimento();
 				break;
 			case 6:
 				merge.setUscita(modello.getEnd());
@@ -363,7 +491,7 @@ public class CreazioneModello {
 					break;
 				case 4:if(modello.getMerge().isEmpty()) {
 					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					break;
+					continuaInserimento();
 				} else {
 					System.out.println("A quale merge vuoi collegarti?");
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
@@ -376,8 +504,21 @@ public class CreazioneModello {
 					//ci devo pensare ancora un pochino
 				}
 					break;
-				case 5:
-					//da fare
+				case 5: //AGGIUNTA FORK
+					String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+					Fork nuovoFork = new Fork(nomeFork);
+					String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+					Join nuovoJoin = new Join(nomeJoin);
+					
+					nuovoFork.setJoinAssociato(nuovoJoin);
+					nuovoJoin.setForkAssociato(nuovoFork);
+					
+					branch.aggiungiUscita(nuovoFork);
+					nuovoFork.setIngresso(branch);
+					modello.aggiungiFork(nuovoFork);
+					modello.aggiungiJoin(nuovoJoin);
+					modello.setUltimaModifica(nuovoFork);
+					continuaInserimento();
 					break;
 				case 6:
 					branch.aggiungiUscita(modello.getEnd());
@@ -425,6 +566,7 @@ public class CreazioneModello {
 		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
 		menuAzione.setVoceUscita("");
 		//menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
+		
 		int scelta = menuAzione.scegli();
 		
 		switch (scelta)
@@ -465,7 +607,7 @@ public class CreazioneModello {
 			case 4:
 				if(modello.getMerge().isEmpty()) {
 					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					break;
+					continuaInserimento();
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(azione);
@@ -478,8 +620,21 @@ public class CreazioneModello {
 				}
 				
 				break;
-			case 5:
-				//da fare
+			case 5: //AGGIUNTA FORK
+				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+				Fork nuovoFork = new Fork(nomeFork);
+				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+				Join nuovoJoin = new Join(nomeJoin);
+				
+				nuovoFork.setJoinAssociato(nuovoJoin);
+				nuovoJoin.setForkAssociato(nuovoFork);
+				
+				azione.setUscita(nuovoFork);
+				nuovoFork.setIngresso(azione);
+				modello.aggiungiFork(nuovoFork);
+				modello.aggiungiJoin(nuovoJoin);
+				modello.setUltimaModifica(nuovoFork);
+				continuaInserimento();
 				break;
 			
 			case 6:

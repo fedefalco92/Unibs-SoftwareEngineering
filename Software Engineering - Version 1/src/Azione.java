@@ -16,7 +16,7 @@ public class Azione extends Elemento{
 	}
 	
 	@Override
-	public Elemento getJoinOUT() {
+	public Elemento getUscita() {
 		return uscita;
 	}
 	
