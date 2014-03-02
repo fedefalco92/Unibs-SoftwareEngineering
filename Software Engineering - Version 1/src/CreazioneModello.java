@@ -204,12 +204,13 @@ public class CreazioneModello {
 				"Un nuovo branch", 
 				"Un nuovo merge", 
 				"un merge esistente", 
-				"un nuovo fork", 
-				"un nuovo join", 
-				"nodo finale",
-				"visualizza modello"};
+				"un nuovo fork (crea automaticamente il join associato)", 
+				"nodo finale"
+				};
 		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-		menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
+		//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
+		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
+		menuAzione.setVoceUscita("");
 		int scelta = menuAzione.scegli();
 		
 		switch (scelta)
@@ -267,16 +268,11 @@ public class CreazioneModello {
 				//da fare
 				break;
 			case 6:
-				//da fare
-				break;
-			case 7:
 				merge.setUscita(modello.getEnd());
 				modello.setUltimoElemento(merge);
 				modello.setUltimaModifica(null);
 				break;
-			case 8:
-				visualizzaModello();
-				break;
+		
 			default:
 				/*Non entra mai qui*/
 		}
@@ -319,12 +315,14 @@ public class CreazioneModello {
 					"Un nuovo branch", 
 					"Un nuovo merge", 
 					"Un merge esistente", 
-					"un nuovo fork", 
-					"un nuovo join",
-					"nodo finale",
-					"visualizza modello"};
+					"un nuovo fork (crea automaticamente il join associato)", 
+					"nodo finale"
+					};
 			MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-			menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
+			//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
+			//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
+			menuAzione.setVoceUscita("");
+			//menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
 			int scelta = menuAzione.scegli();
 			
 			switch (scelta)
@@ -382,16 +380,11 @@ public class CreazioneModello {
 					//da fare
 					break;
 				case 6:
-					//da fare
-					break;
-				case 7:
 					branch.aggiungiUscita(modello.getEnd());
 					modello.setUltimoElemento(branch);
 					modello.setUltimaModifica(null);
 					break;
-				case 8:
-					visualizzaModello();
-					break;
+				
 				default:
 					/*Non entra mai qui*/
 			}
@@ -423,12 +416,15 @@ public class CreazioneModello {
 				"Un nuovo branch", 
 				"Un nuovo merge", 
 				"un merge esistente", 
-				"un nuovo fork", 
-				"un nuovo join",
-				"nodo finale",
-				"visualizza modello"};
+				"un nuovo fork (crea automaticamente il join associato)", 
+				//"un nuovo join",
+				"nodo finale"
+				};
 		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-		menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
+		//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
+		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
+		menuAzione.setVoceUscita("");
+		//menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
 		int scelta = menuAzione.scegli();
 		
 		switch (scelta)
@@ -485,17 +481,13 @@ public class CreazioneModello {
 			case 5:
 				//da fare
 				break;
+			
 			case 6:
-				//da fare
-				break;
-			case 7:
 				azione.setUscita(modello.getEnd());
 				modello.setUltimoElemento(azione);
 				modello.setUltimaModifica(null);
 				break;
-			case 8:
-				visualizzaModello();
-				break;
+			
 			default:
 				/*Non entra mai qui*/
 		}
