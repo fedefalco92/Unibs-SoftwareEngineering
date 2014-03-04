@@ -15,6 +15,8 @@ public abstract class Elemento {
 	}
 	
 	public boolean equals(Elemento elem) {
+		if(elem == null)
+			return false;
 		if(ID.equalsIgnoreCase(elem.getID()) && nome.equalsIgnoreCase(elem.getNome()))
 			return true;
 		return false;
