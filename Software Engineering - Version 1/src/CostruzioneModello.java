@@ -17,13 +17,6 @@ public class CostruzioneModello {
 	private static Modello modelloCaricato;
 	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
-	
-	public static void test(){
-		for(Azione elem: modelloCaricato.getAzioni()){
-			System.out.println("ID: " + elem.getID() +" Nome: " + elem.getNome());
-		}
-	}
-	
 	/**
 	 * Metodo che carica un file. 
 	 * Esso invoca un altro metodo per aprire il file attraverso una interfaccia grafica.
@@ -110,7 +103,6 @@ public class CostruzioneModello {
 	    	System.out.println(elem.toString());
 	    }
 	    modelloCaricato.riempiVectorModello();
-	    test();
 	}
 	
 	private static Elemento restituisciElemento(String elemento){
