@@ -29,6 +29,11 @@ public class Merge extends Elemento{
 		return incompleto;
 	}
 	
+	@Override
+	public Elemento getUscita() {
+		return uscita;
+	}
+	
 	public void setUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
