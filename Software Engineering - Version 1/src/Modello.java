@@ -159,46 +159,57 @@ public class Modello extends Elemento {
 	//METODI SUL MODELLO//
 	
 	//RIEMPI VECTOR SPECIALIZZATI NEL MODELLO
-		public void riempiVectorModello(){
-			for(Elemento elem: elementi){
-				switch (elem.getID()) {
-				case "AZIONE":
-					aggiungiAzione((Azione) elem);
-					break;
-				case "BRANCH":
-					aggiungiBranch((Branch) elem);
-					break;
-				case "MERGE":
-					aggiungiMerge((Merge) elem);
-					break;
-				case "END":
-					end = (End) elem;
-					break;
-				case "START":
-					start = (Start) elem;
-					break;
-				case "FORK":
-					//
-					break;
-				case "JOIN":
-					//
-					break;
-				default:
-					break;
-				}
+	public void riempiVectorModello(){
+		for(Elemento elem: elementi){
+			switch (elem.getID()) {
+			case "AZIONE":
+				aggiungiAzione((Azione) elem);
+				break;
+			case "BRANCH":
+				aggiungiBranch((Branch) elem);
+				break;
+			case "MERGE":
+				aggiungiMerge((Merge) elem);
+				break;
+			case "END":
+				end = (End) elem;
+				break;
+			case "START":
+				start = (Start) elem;
+				break;
+			case "FORK":
+				//
+				break;
+			case "JOIN":
+				//
+				break;
+			default:
+				break;
 			}
 		}
-		
-	/**
-	 * Metodo che controlla la correttezza (sintattica ma non semantica) del modello
-	 * Manca controllo IN e OUT reciproco
-	 * @return
-	 */
+	}
+	
 	public boolean controllaModello(){
 		//Controllo immediatamente che siano impostati il punto iniziale e il punto finale
 		if(start == null || end == null)
 			return false;
-		
+		else
+			return controllaInOutModello();
+	}
+	
+	/**
+	 * Metodo che controlla gli In e gli Out reciproci del modello.
+	 * @return
+	 */
+	public boolean controlloInOutReciproci(){
+		return false;
+	}
+	
+	/**
+	 * Metodo che controlla che tutti gli In e gli Out sono presenti nel modello.
+	 * @return false se qualche in o out non sono presenti nel modello, true se sono presenti.
+	 */
+	public boolean controllaInOutModello(){
 		//Ciclo sui vari elementi per controllare ingressi e uscite.
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita siano presenti nel Vector di Elementi
@@ -406,11 +417,4 @@ public class Modello extends Elemento {
 
 		return output.toString();
 	}
-	
-	//AGGIUNGIAMO QUA UN METODO CHE DICE DA SOLO SE IL MODELLO E' CORRETTO?
-	//public boolean corretto(){
-	//	//todo
-	//}
-
-	
 }
