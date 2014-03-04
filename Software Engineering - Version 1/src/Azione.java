@@ -1,3 +1,5 @@
+import java.util.Vector;
+
 
 public class Azione extends Elemento{
 	
@@ -8,16 +10,6 @@ public class Azione extends Elemento{
 		super("AZIONE", nome);
 		this.ingresso = null;
 		this.uscita = null;
-	}
-	
-	@Override
-	public Elemento getIngresso() {
-		return ingresso;
-	}
-	
-	@Override
-	public Elemento getUscita() {
-		return uscita;
 	}
 	
 	public void setIngresso(Elemento ingresso) {
@@ -48,5 +40,27 @@ public class Azione extends Elemento{
 		else output.append("[" + uscita.getID() + "] " + uscita.getNome() + ")");
 		*/
 		return output.toString();
+	}
+
+	@Override
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		return uscita;
+	}
+	
+	@Override
+	public Vector<Elemento> getIngressi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getUscite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

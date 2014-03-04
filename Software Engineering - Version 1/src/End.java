@@ -1,3 +1,5 @@
+import java.util.Vector;
+
 
 public class End extends Elemento {
 	
@@ -8,10 +10,6 @@ public class End extends Elemento {
 		this.ingresso = null;
 	}
 	
-	@Override
-	public Elemento getIngresso() {
-		return ingresso;
-	}
 	
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
@@ -27,5 +25,28 @@ public class End extends Elemento {
 		else output.append("null");
 		output.append(")");
 		return output.toString();
+	}
+
+	@Override
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getIngressi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getUscite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

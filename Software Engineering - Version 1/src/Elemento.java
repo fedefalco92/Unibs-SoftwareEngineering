@@ -30,23 +30,11 @@ public abstract class Elemento {
 		return ID;
 	}
 	
-	//Metodi Getter per favorire il lavoro del controllo delle classi derivate
-	//LI FACCIAMO ABSTRACT? 
-	public Elemento getIngresso() {
-		return null;
-	}
-	
-	public Elemento getUscita(){
-		return null;
-	}
-	
-	public Vector<Elemento> getIngressi() {
-		return null;
-	}
-	
-	public Vector<Elemento> getUscite() {
-		return null;
-	}
+	/*Questi metodi sono diventati Abstract, cosi sono sicuro che vengono implementati*/
+	public abstract Elemento getIngresso();
+	public abstract Elemento getUscita();
+	public abstract Vector<Elemento> getIngressi();
+	public abstract Vector<Elemento> getUscite();
 	
 	public String getElementoString(){
 		StringBuffer output = new StringBuffer();

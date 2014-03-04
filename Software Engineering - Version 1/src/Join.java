@@ -68,4 +68,28 @@ public class Join extends Elemento {
 		return output.toString();
 	}
 
+	@Override
+	public Elemento getIngresso() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Elemento getUscita() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getIngressi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getUscite() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -13,12 +13,6 @@ public class Merge extends Elemento{
 		this.incompleto=true;
 	}
 	
-	@Override
-	public Vector<Elemento> getIngressi() {
-		return ingressi;
-	}
-	
-	
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);
 		if(ingressi.size()>=2)
@@ -27,11 +21,6 @@ public class Merge extends Elemento{
 	
 	public boolean incompleto(){
 		return incompleto;
-	}
-	
-	@Override
-	public Elemento getUscita() {
-		return uscita;
 	}
 	
 	public void setUscita(Elemento uscita) {
@@ -77,5 +66,27 @@ public class Merge extends Elemento{
 		}
 		*/
 		return output.toString();
+	}
+
+	@Override
+	public Vector<Elemento> getIngressi() {
+		return ingressi;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		return uscita;
+	}
+	
+	@Override
+	public Elemento getIngresso() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getUscite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

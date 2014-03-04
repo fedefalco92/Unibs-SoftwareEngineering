@@ -14,24 +14,6 @@ public class Branch extends Elemento{
 	}
 	
 	/**
-	 * Getter per Ingresso
-	 * @return ingresso
-	 */
-	@Override
-	public Elemento getIngresso() {
-		return ingresso;
-	}
-	
-	/**
-	 * Getter per Uscita
-	 * @return uscite
-	 */
-	@Override
-	public Vector<Elemento> getUscite() {
-		return uscite;
-	}
-	
-	/**
 	 * Aggiunge un elemento al Vector Uscita
 	 * @param elemento
 	 */
@@ -99,5 +81,35 @@ public class Branch extends Elemento{
 		}
 		*/
 		return output.toString();
+	}
+
+	/**
+	 * Getter per Ingresso
+	 * @return ingresso
+	 */
+	@Override
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	/**
+	 * Getter per Uscita
+	 * @return uscite
+	 */
+	@Override
+	public Vector<Elemento> getUscite() {
+		return uscite;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getIngressi() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

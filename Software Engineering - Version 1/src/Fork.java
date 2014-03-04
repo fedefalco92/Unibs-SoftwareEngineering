@@ -12,8 +12,6 @@ public class Fork extends Elemento {
 	private Join joinAssociato;
 	private boolean incompleto;
 
-	
-
 	public Join getJoinAssociato() {
 		return joinAssociato;
 	}
@@ -26,12 +24,6 @@ public class Fork extends Elemento {
 		super("FORK", nome);
 		this.flussiOUT = new Vector<Flusso>();
 		this.incompleto = true;
-	}
-
-	
-
-	public Elemento getIngresso() {
-		return ingresso;
 	}
 
 	public void setIngresso(Elemento ingresso) {
@@ -68,6 +60,28 @@ public class Fork extends Elemento {
 		
 		
 		return output.toString();
+	}
+
+	public Elemento getIngresso() {
+		return ingresso;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getIngressi() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Elemento> getUscite() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
