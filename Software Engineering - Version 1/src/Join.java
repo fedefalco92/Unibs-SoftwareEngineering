@@ -51,10 +51,10 @@ public class Join extends Elemento {
 		if(!flussiIN.isEmpty()){
 			
 			for(int i = 0; i < flussiIN.size() - 1; i++){
-				output.append(flussiIN.get(i).getElementoString());
+				output.append(flussiIN.get(i).getFlussoString());
 				output.append(", ");
 			}
-			output.append(flussiIN.lastElement().getElementoString());
+			output.append(flussiIN.lastElement().getFlussoString());
 			
 			if(incompleto)
 				output.append("incompleto");

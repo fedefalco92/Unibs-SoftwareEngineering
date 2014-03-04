@@ -13,7 +13,7 @@ public class Flusso extends Modello {
 	private Join joinOUT;
 	
 	public Flusso(String nome, Fork _padre) {
-		super("FLUSSO", nome);
+		super(nome);
 		this.forkIN = _padre;
 		this.setJoinOUT(forkIN.getJoinAssociato());
 	}
@@ -43,14 +43,14 @@ public class Flusso extends Modello {
 	 * Se la classe Modello derivasse da Elemento questo metodo sarebbe superfluo
 	 * @return
 	 */
-	/*
+	
 	public String getFlussoString(){
 		StringBuffer output = new StringBuffer();
-		output.append("[" + super.getID() + "] " + super.getNome());
+		output.append("[FLUSSO] " + super.getNome());
 		return output.toString();
 	}
 	
-	*/
+
 	
 	/**
 	 * Questo metodo stampa completamente il flusso

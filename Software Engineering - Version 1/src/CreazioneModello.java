@@ -38,7 +38,7 @@ public class CreazioneModello {
 		} while (!fineCreazione);
 
 		return modello;
-		//la prossima istruzione sarà da togliere
+		//la prossima istruzione sara' da togliere
 		//System.out.println(modello);	
 	}
 	
@@ -94,7 +94,7 @@ public class CreazioneModello {
 				break;
 			case 3:
 				//a questo punto aprirei un altro menu che chiede di salvare come testo o come oggetto...
-				//il menu dovrà essere aperto solo se il modello e' corretto!
+				//il menu dovra' essere aperto solo se il modello e' corretto!
 				//prima vediamo cosa si riesce a fare con la classe CostruzioneModello...
 				
 				
@@ -137,12 +137,12 @@ public class CreazioneModello {
 				continuaInserimento();
 				break;
 			case 2:
-				//si può migliorare
+				//si puo' migliorare
 				System.out.println(modello);
 				break;
 			case 3:
 				//a questo punto aprirei un altro menu che chiede di salvare come testo o come oggetto...
-				//il menu dovrà essere aperto solo se il modello e' corretto!
+				//il menu dovra' essere aperto solo se il modello e' corretto!
 				//prima vediamo cosa si riesce a fare con la classe CostruzioneModello...
 				break;
 			default:
@@ -153,7 +153,7 @@ public class CreazioneModello {
 	}
 	*/
 	/**
-	 * Permette di riprendere l'inserimento dopo che lo si è interrotto per visualizzare il modello.
+	 * Permette di riprendere l'inserimento dopo che lo si e' interrotto per visualizzare il modello.
 	 * Non permette di riprendere l'inserimento se l'inserimento &egrave gi&agrave stato ultimato.
 	 */
 	private static void continuaInserimento() {
@@ -235,7 +235,7 @@ public class CreazioneModello {
 				join.setUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(join);
 				modello.aggiungiMerge(nuovoMerge);
-				//l'utilità della prossima istruzione si vedrà
+				//l'utilita' della prossima istruzione si vedra'
 				//modello.aggiungiMergeIncompleto(nuovoMerge);
 				modello.setUltimaModifica(nuovoMerge);
 				continuaInserimento();
@@ -251,8 +251,8 @@ public class CreazioneModello {
 					join.setUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non è necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprenderà il menu del branch.
+					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
+					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
 					//ci devo pensare ancora un pochino
 				}
 				
@@ -290,6 +290,7 @@ public class CreazioneModello {
 		for (int i = 1; i <= numeroFlussi; i++){
 			String nomeFlusso = InputDati.leggiStringa("Inserisci il nome del Fusso " + i + " > ");
 			Flusso flusso = new Flusso(nomeFlusso, fork);
+			
 			//a questo punto bisognerebbe creare il flusso..
 			//come se fosse un modello a se' D: D: D:
 			
@@ -306,7 +307,7 @@ public class CreazioneModello {
 
 	/**
 	 * Il metodo offre un menu in cui si richiede l'inserimento dell'uscita di un merge.
-	 * la completezza degli ingressi verrà gestita altrove.
+	 * la completezza degli ingressi verra' gestita altrove.
 	 * 
 	 * Il menu permette la visualizzazione del modello allo stato attuale
 	 * 
@@ -358,7 +359,7 @@ public class CreazioneModello {
 				merge.setUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(merge);
 				modello.aggiungiMerge(nuovoMerge);
-				//l'utilità della prossima istruzione si vedrà
+				//l'utilita' della prossima istruzione si vedra'
 				//modello.aggiungiMergeIncompleto(nuovoMerge);
 				modello.setUltimaModifica(nuovoMerge);
 				continuaInserimento();
@@ -373,8 +374,8 @@ public class CreazioneModello {
 					merge.setUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non è necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprenderà il menu del branch.
+					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
+					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
 					//ci devo pensare ancora un pochino
 				}
 				
@@ -408,13 +409,13 @@ public class CreazioneModello {
 	}
 	
 	/**
-	 * Un nuovo branch permette l'inserimento di due o più alternative.
+	 * Un nuovo branch permette l'inserimento di due o piu' alternative.
 	 * Le prime due sono obbligatorie. Inserite queste si chiede se si vuole aggiungerne un'altra.
 	 * All'inizio di ogni alternativa si richiede l'inserimento di un nuovo elemento.
 	 * Una volta inserito questo, si continua a inserire le uscite di questo fino a che si termina.
 	 * 
 	 * DA DISCUTERE
-	 * Un branch può avere come alternativa il nodo finale? 
+	 * Un branch puo' avere come alternativa il nodo finale? 
 	 * In teoria s&igrave, A PATTO CHE esista almeno un merge su cui sia possibile mandare le altre alternative.
 	 * Il merge deve essere gi&agrave stato creato perch&eacute deve avere come uscita un elemento gi&agrave creato.
 	 * Nel caso non esista nessun merge al quale ci si possa effettivamente collegare
@@ -499,8 +500,8 @@ public class CreazioneModello {
 					branch.aggiungiUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non è necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprenderà il menu del branch.
+					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
+					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
 					//ci devo pensare ancora un pochino
 				}
 					break;
@@ -599,7 +600,7 @@ public class CreazioneModello {
 				azione.setUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(azione);
 				modello.aggiungiMerge(nuovoMerge);
-				//l'utilità della prossima istruzione si vedrà
+				//l'utilita' della prossima istruzione si vedra'
 				//modello.aggiungiMergeIncompleto(nuovoMerge);
 				modello.setUltimaModifica(nuovoMerge);
 				continuaInserimento();
@@ -614,8 +615,8 @@ public class CreazioneModello {
 					azione.setUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non è necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprenderà il menu del branch.
+					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
+					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
 					//ci devo pensare ancora un pochino
 				}
 				

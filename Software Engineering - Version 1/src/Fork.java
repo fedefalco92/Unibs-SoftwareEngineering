@@ -54,10 +54,10 @@ public class Fork extends Elemento {
 		output.append(") - out(");
 		if(!flussiOUT.isEmpty()){
 			for(int i = 0; i < flussiOUT.size() - 1; i++){
-				output.append(flussiOUT.get(i).getElementoString()); //IN ALTERNATIVA getFlussoString()
+				output.append(flussiOUT.get(i).getFlussoString()); //IN ALTERNATIVA getFlussoString()
 				output.append(", ");
 			}
-			output.append(flussiOUT.lastElement().getElementoString());
+			output.append(flussiOUT.lastElement().getFlussoString());
 			
 			if(incompleto)
 				output.append("incompleto");

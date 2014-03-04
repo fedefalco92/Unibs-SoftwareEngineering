@@ -1,7 +1,7 @@
 import java.util.Vector;
 
 
-public class Modello extends Elemento {
+public class Modello /*extends Elemento */{
 	
 	private String nome;
 	
@@ -23,7 +23,7 @@ public class Modello extends Elemento {
 	private Vector<Merge> mergeIncompleti;
 	
 	public Modello(String nome){
-		super("MODELLO", nome);
+		//super("MODELLO", nome);
 		this.nome = nome;
 		elementi = new Vector<Elemento>();
 		
@@ -36,13 +36,13 @@ public class Modello extends Elemento {
 		end = new End("End");
 		mergeIncompleti = new Vector<Merge>();
 	}
-	
+	/*
 	/**
 	 * Altro costruttore necessario per le classi Flusso ( e Alternativa? )
 	 * @param ID
 	 * @param nome
 	 */
-	public Modello(String ID, String nome){
+	/* public Modello(String ID, String nome){
 		super(ID, nome);
 		this.nome = nome;
 		elementi = new Vector<Elemento>();
@@ -56,7 +56,7 @@ public class Modello extends Elemento {
 		end = new End("End");
 		mergeIncompleti = new Vector<Merge>();
 	}
-	
+	*/
 	//METODI AGGIUNTA A VECTOR//
 	public void aggiungiElemento(Elemento elem){
 		elementi.add(elem);
