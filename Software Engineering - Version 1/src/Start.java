@@ -8,9 +8,13 @@ public class Start extends Elemento{
 		this.uscita = null;
 	}
 	
-	
 	public void setUscita(Azione uscita) {
 		this.uscita = uscita;
+	}
+	
+	@Override
+	public Elemento getUscita() {
+		return uscita;
 	}
 	
 	@Override

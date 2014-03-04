@@ -231,6 +231,7 @@ public class Modello /*extends Elemento */{
 	/**
 	 * Metodo che controlla che tutti gli In e gli Out sono presenti nel modello.
 	 * @return false se qualche in o out non sono presenti nel modello, true se sono presenti.
+	 * @author federicofalcone
 	 */
 	public boolean controllaInOutModello(){
 		//Ciclo sui vari elementi per controllare ingressi e uscite.
@@ -303,6 +304,7 @@ public class Modello /*extends Elemento */{
 	 * Verifica se un elemento &egrave contenuto nel modello
 	 * @param elem
 	 * @return
+	 * @author federicofalcone
 	 */
 	public boolean elementoInModello(Elemento elem){
 		for(Elemento e: elementi){
@@ -321,6 +323,7 @@ public class Modello /*extends Elemento */{
 	 * @param ID
 	 * @param nome
 	 * @return
+	 * @author federicofalcone
 	 */
 	
 	public Elemento ricercaElementoInModello(String ID, String nome){
