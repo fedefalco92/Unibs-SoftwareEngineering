@@ -12,27 +12,31 @@ import java.util.Vector;
  * @author Massi
  *
  */
+
+
 public class ClasseEquivalenza {
 	/*
-	 Definire bene come � espresso il concetto di equivalenza, cio� se basta l'uguaglianza del percorso o �
+	 Definire bene come e' espresso il concetto di equivalenza, cioe' se basta l'uguaglianza del percorso o e'
 	 necessario tutto
 	 */
 	private String nome;
 	private Prova istanzaProva;
 	private int cardinalita;
 	private Vector<String> insiemeAttivita;		//Totale delle attivita' prese in ingresso dal modello...sara' tolto!
+	private Vector<String> attivitaCoinvolte;
 	private Vector<Vector<String>> diagnosiMinimali;
-	private Hashtable <String,Integer> probabilitaProva;
-	private Hashtable <String,Integer> probabilitaClasse;
+	private Hashtable <String,Double> probabilitaProva;
+	private Hashtable <String,Double> probabilitaClasse;
 	
 	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita){
 		this.nome = nome;
 		istanzaProva = null;
 		cardinalita = 0;
 		diagnosiMinimali = null;
+		attivitaCoinvolte = new Vector<String>();
 		this.insiemeAttivita = insiemeAttivita;		
-		probabilitaProva = new Hashtable <String,Integer>();
-		probabilitaClasse = new Hashtable <String,Integer>();
+		probabilitaProva = new Hashtable <String,Double>();
+		probabilitaClasse = new Hashtable <String,Double>();
 	}
 	
 	public void setNome(String nome){
@@ -54,16 +58,12 @@ public class ClasseEquivalenza {
 	public void setCardinalita(int card){
 		cardinalita = card;
 	}
-	
-	public void incrementaCardinalita(){
-		cardinalita++;
-	}	
-	
+
 	public Prova getProva(){
 		return istanzaProva;
 	}	
 	
-	public Hashtable <String,Integer> getProbabilitaClasse(){
+	public Hashtable <String,Double> getProbabilitaClasse(){
 		this.setProbabilitaClasse();
 		return probabilitaClasse;		
 	}	
@@ -97,7 +97,8 @@ public class ClasseEquivalenza {
 						 elementiDaRimuovere.add(elem);
 					 }
 			 }				 				 				
-		 }						
+		 }	
+		 		 
 		
 		 //System.out.println(elementiDaRimuovere.toString()+"\n\n");
 		 
@@ -145,9 +146,15 @@ public class ClasseEquivalenza {
 		
 		//System.out.println("Corrispondenze per calcolo MHS: " + corrispondenze); 
 		
-		diagnosiMinimali = UtilitaGenerazioneMHS.generaMHS(corrispondenze,insiemeAttivita);
+		//se ho corrispondenze su cui calcolare le diagnosi minimali...
 		
-		//System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
+		if(corrispondenze != null){
+		
+			diagnosiMinimali = UtilitaGenerazioneMHS.generaMHS(corrispondenze,insiemeAttivita);
+		
+			//System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
+		}
+
 	}
 	
 	/**
@@ -171,6 +178,7 @@ public class ClasseEquivalenza {
 		
 		if(insiemiPartenza.isEmpty()){
 			//N.B: se non ho attivita di partenza come mi comporto??
+			return null;
 		}
 		
 		else{
@@ -213,6 +221,12 @@ public class ClasseEquivalenza {
 	 * (in caso di molteplicita' >1) si considera una sola prova(non la si replica in questa classe)
 	 */
 	
+	/*
+	 * ATTENZIONE: CONTROLLARE QUESTO METODO CHE C'E' QUALCOSA CHE NON VA!!!!
+	 * SBALLATI GLI INDICI DI SETTAGGIO!!!
+	 * N.B!!!
+	 */
+	
 	private void setProbabilitaClasse(){
 		//solo qui vado ad istanziare effettivamente le diagnosi 
 		
@@ -234,33 +248,9 @@ public class ClasseEquivalenza {
 		//ciclo di riempimento della tabella delle attivita'
 		
 		for(String elem : insiemeAttivita){
-			probabilitaProva.put(elem, -1);
+			probabilitaProva.put(elem, -1.0);
 		}
 		
-		//System.out.println(probabilitaProva.toString() + "\n");
-		
-		//CHIEDERE ALLA ZANELLA PER IL CALCOLO DELLA PROBABILITA'(CONTEGGIO DI APPARTENENZA???)
-		//Per ora si e' impostato un valore di default pari a 1
-		//successivamente andra' integrato con l'effettiva implementazione
-		
-		for(Vector<String> sottoinsieme : diagnosiMinimali){
-			//passo in rassegna ciascun sottoinsieme
-			for(String azione : sottoinsieme){
-				if(!probabilitaProva.containsValue(azione)){
-					//se l'attivita' non e' presente la aggiungo
-					probabilitaProva.put(azione, 1);
-				}
-				else{
-					//altrimenti incremento la relativa probabilita' di 1
-					//o eseguo azione specifica di risposta
-					
-				}
-			}
-		}
-				
-		
-		//System.out.println(probabilitaProva.toString());
-				
 		//recupero le azioni coinvolte nella prova in questione
 		//e da queste creo un nuovo vettore con solo le azioni non coinvolte(che non fanno parte di alcuna
 		//diagnosi minimale)
@@ -271,12 +261,16 @@ public class ClasseEquivalenza {
 		//System.out.println(azioniResidue.toString());
 		
 		//System.out.println(diagnosiMinimali.toString());
-				
-		for(Vector<String> sottoinsieme : diagnosiMinimali){
-			//passo in rassegna ciascun sottoinsieme
-			for(String azione : sottoinsieme){
-				int indiceDaRimuovere = azioniResidue.indexOf(azione);
-				azioniResidue.removeElementAt(indiceDaRimuovere);				
+	
+		if(!azioniResidue.isEmpty()){
+			for(Vector<String> sottoinsieme : diagnosiMinimali){
+				//passo in rassegna ciascun sottoinsieme
+				for(String azione : sottoinsieme){
+					int indiceDaRimuovere = azioniResidue.indexOf(azione);
+					if(indiceDaRimuovere >= 0){
+						azioniResidue.removeElementAt(indiceDaRimuovere);
+					}
+				}
 			}
 		}
 		
@@ -285,49 +279,104 @@ public class ClasseEquivalenza {
 		//ora scansiono le azioni residue e assegno loro probabilita' pari a 0
 		
 		for(String azione : azioniResidue){
-			probabilitaProva.put(azione,0);
-		}	
+			probabilitaProva.put(azione,0.0);
+		}			
 		
+		//Recupero tutte le azioni coinvolte nelle diagnosi minimali(in generale)
+		Vector <String> azioniInDiagnosi = UtilitaGenerazioneMHS.getAzioniInsieme(diagnosiMinimali);
+		
+		//System.out.println(azioniInDiagnosi.toString());
+		
+		//se non e' vuoto posso procedere all'elaborazione
+		
+	//	if(!azioniInDiagnosi.isEmpty()){
+			//applicazione della formula dei lucidi per il calcolo della probabilita'
+			//con il metodo 1
+			double probabilitaCumulate[] = new double[azioniInDiagnosi.size()];
+			//inizializzazione del vettore temporaneo delle probabilita' cumulate			
+			for(int i=0;i<probabilitaCumulate.length;i++){
+				probabilitaCumulate[i] = 0.0;
+			}
+			//ciclo sulle attivita' contenute nella diagnosi minimale
+			//ed internamente ciclo sulle diangosi minimali
+			
+		for(String singleAction : azioniInDiagnosi){
+			//posizione in elenco(qui so che c'e' di sicuro)
+			
+			int posizioneInElenco = azioniInDiagnosi.indexOf(singleAction);
+			
+			//System.out.println("Posizione in elenco: " + posizioneInElenco);
+			
+			for(Vector<String> diagnosi_sing : diagnosiMinimali){
+				int dimensioneSingola = diagnosi_sing.size();
+				
+				//System.out.println("Dimensione Singola " + dimensioneSingola);
+				
+				//se l'azione e' presente nel sottoinsieme faccio 1/cardinalita' del sottoinsieme
+				//e la sommo nell'array delle probabilita' cumulate, creato sulla dimensione delle
+				//attivita' considerate
+				if(UtilitaGenerazioneMHS.member(singleAction, diagnosi_sing)){
+					probabilitaCumulate[posizioneInElenco] += (1/(double)dimensioneSingola);
+					//System.out.println("probabilitaCumulate[" + posizioneInElenco+"]" + "=" + probabilitaCumulate[posizioneInElenco]);
+				}
+			}
+			//se arrivo qui ho finito di passare in rassegna i sottoinsiemi e posso calcolare la 
+			//probabilita' definitiva
+			int contaOccorrenzeAttivita = UtilitaGenerazioneMHS.contaPresenze(singleAction, diagnosiMinimali);
+			//probabilitaCumulate[posizioneInElenco] /= contaOccorrenzeAttivita;
+			probabilitaProva.put(singleAction, probabilitaCumulate[posizioneInElenco]/(double)contaOccorrenzeAttivita);
+		}
+		
+		//System.out.println(probabilitaProva.toString());
+		
+		//System.out.println(probabilitaProvaM1.toString());			
+
 		Enumeration<String> iteratore = probabilitaProva.keys();
 		while(iteratore.hasMoreElements()){
 			String azione = iteratore.nextElement();
-			int probProva = probabilitaProva.get(azione);
+			double probProva = probabilitaProva.get(azione);
 			probabilitaClasse.put(azione, probProva*cardinalita);
 		}
 		
-	/*	System.out.println("Probabilita' relative alla singola prova : \n(un valore negativo significa IGNOTA)");
+		//System.out.println(probabilitaClasseM1.toString());	
+		
+	}
+	
+	public String toString(){
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("Nome classe di equivalenza : " + nome + "\n");
+		buffer.append(istanzaProva.toString() + "\n");
+		buffer.append("Cardinalita' della classe : " + cardinalita + "\n");
+		buffer.append("Diagnosi minimali : " + diagnosiMinimali.toString() + "\n");
+		buffer.append("\nPROBABILITA' PROVA : \n");
+		//Iteratore sulla tabella delle probabilita' della prova
 		Enumeration<String> iteratore = probabilitaProva.keys();
 		while(iteratore.hasMoreElements()){
 			String azione = iteratore.nextElement();
-			int probProva = probabilitaProva.get(azione);
-			if(probProva != -1){
-				System.out.println(azione + " = " + probProva);
+			double probabilita = probabilitaProva.get(azione);
+			if (probabilita >= 0){
+				//per evitare la stampa di valori negativi(IGNOTA)
+				buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
 			}
 			else{
-				System.out.println(azione + " = " + "IGNOTA");
+				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
 			}
-		}
-		
-		if(cardinalita>1){
-			//solo in questo caso sono distinte
-			System.out.println("Probabilita' relative alla classe : \n ");
-			Enumeration<String> iteratore_globale = probabilitaProva.keys();
-			while(iteratore_globale.hasMoreElements()){
-				String azione = iteratore_globale.nextElement();
-				int probProva = probabilitaProva.get(azione);
-				if(probProva != -1){
-					System.out.println(azione + " = " + probProva*cardinalita);
-				}
-				else{
-					System.out.println(azione + " = " + "IGNOTA");
-				}
+		}			
+		buffer.append("\nPROBABILITA' CLASSE DI EQUIVALENZA : \n");
+		//Iteratore sulla tabella delle probabilita' della classe di equivalenza
+		Enumeration<String> iteratore2 = probabilitaClasse.keys();
+		while(iteratore2.hasMoreElements()){
+			String azione = iteratore2.nextElement();
+			double probabilita = probabilitaClasse.get(azione);
+			if (probabilita >= 0){
+				//per evitare la stampa di valori negativi(IGNOTA)
+				buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
 			}
-			//System.out.println(probabilitaClasse.toString()+ "\n\n");
-			
-		}
-		*/
+			else{
+				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
+			}
+		}			
+		return buffer.toString();
 	}
-	
-	
 	
 }

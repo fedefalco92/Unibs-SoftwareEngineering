@@ -35,12 +35,12 @@ public class TestSuite {
 		//ciclo su tutte le classi di equivalenza per determinare la somma delle probabilita'
 				
 		for(ClasseEquivalenza cl_eq : classiEquivalenza){
-			Hashtable <String,Integer> probabilitaSingolaClasse = cl_eq.getProbabilitaClasse();
+			Hashtable <String,Double> probabilitaSingolaClasse = cl_eq.getProbabilitaClasse();
 			//analizzo le probabilita' per eseguire i relativi conteggi
 			Enumeration<String> iteratore = probabilitaSingolaClasse.keys();
 			while(iteratore.hasMoreElements()){
 				String azione = iteratore.nextElement();
-				int probabilita = probabilitaSingolaClasse.get(azione);
+				double probabilita = probabilitaSingolaClasse.get(azione);
 				int posizioneRelativa = insiemeAttivita.indexOf(azione);
 				if (probabilita >= 0){
 					//o e' nulla o e' diversa da zero(comunque non IGNOTA)
@@ -60,12 +60,12 @@ public class TestSuite {
 		}		
 		
 		for(ClasseEquivalenza cl_eq : classiEquivalenza){			
-			Hashtable <String,Integer> probabilitaSingolaClasse = cl_eq.getProbabilitaClasse();
+			Hashtable <String,Double> probabilitaSingolaClasse = cl_eq.getProbabilitaClasse();
 			//analizzo le probabilita' per eseguire i relativi conteggi
 			Enumeration<String> iteratore2 = probabilitaSingolaClasse.keys();
 			while(iteratore2.hasMoreElements()){
 				String azione = iteratore2.nextElement();
-				int probabilita = probabilitaSingolaClasse.get(azione);
+				double probabilita = probabilitaSingolaClasse.get(azione);
 				int posizioneRelativa = insiemeAttivita.indexOf(azione);	
 				if(probabilita >= 0){
 					if (posizioneRelativa >= 0){
@@ -77,7 +77,7 @@ public class TestSuite {
 		
 		//QUESTO PERO' LO MODIFICHEREI ALTRIMENTI IMPONGO SEMPRE UNA CARDINALITA' PARI A 1
 		//ANCHE PER UNA AZIONE MAI VERIFICATA, MA SI RISOLVE CON IL CALCOLO DELLA PROBABILITA'...
-		
+	
 		for(int i=0;i<cardinalitaClassi.length;i++){
 			if(cardinalitaClassi[i] == 0){
 				cardinalitaClassi[i] = 1;
@@ -89,6 +89,9 @@ public class TestSuite {
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
+		for(ClasseEquivalenza cl_eq : classiEquivalenza){
+			buffer.append(cl_eq.toString() + "\n");
+		}
 		buffer.append("Probabilita' del test suite calcolate con il METODO 1: \n");
 		for(int i=0;i<probabilitaM1.length;i++){
 			buffer.append("Probabilita A"+(i+1)+" = " + probabilitaM1[i] + "\n");

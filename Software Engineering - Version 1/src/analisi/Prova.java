@@ -82,9 +82,9 @@ public class Prova {
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Prova : " + getNome() + "\n");
+		buffer.append("Prova : " + getNome() + "\n\n");
 		for(Cammino p : insiemeCopertura){
-			buffer.append(p.toString());
+			buffer.append(p.toString()+ "\n");
 		}
 		return buffer.toString();
 	}

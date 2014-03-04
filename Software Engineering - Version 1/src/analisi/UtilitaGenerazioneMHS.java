@@ -449,7 +449,7 @@ public class UtilitaGenerazioneMHS {
 	 * @return
 	 */
 	
-	private static boolean member(String elem,Vector<String> v1){
+	public static boolean member(String elem,Vector<String> v1){
 		for(int i=0;i<v1.size();i++){
 			if(v1.get(i).equalsIgnoreCase(elem))
 				return true;
@@ -487,6 +487,43 @@ public class UtilitaGenerazioneMHS {
 			return true;
 		}
 	}	
+	
+	/**
+	 * Ritorna l'insieme di azioni distinte contenute nel superinsieme considerato
+	 * @param superinsieme
+	 * @return
+	 */
+	
+	public static Vector<String> getAzioniInsieme(Vector<Vector<String>> superinsieme){
+		Vector<String> azioni = new Vector<String>();
+		for(Vector<String> insieme : superinsieme){
+			for(String elemento : insieme){
+				if(azioni.indexOf(elemento) < 0){
+					azioni.add(elemento);
+				}
+			}
+		}
+		return azioni;			
+	}
+	
+	/**
+	 * Conta quante volte un elemento e' contenuto in un superinsieme
+	 * @param item
+	 * @param superinsieme
+	 * @return
+	 */
+	
+	public static int contaPresenze(String item, Vector<Vector<String>> superinsieme){
+		int presenze = 0;
+		for(Vector<String> insieme : superinsieme){
+			for(String elemento : insieme){
+				if(item.equalsIgnoreCase(elemento)){
+					presenze++;
+				}
+			}
+		}
+		return presenze;
+	}
 	
 
 	
