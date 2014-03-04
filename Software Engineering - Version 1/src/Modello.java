@@ -202,6 +202,29 @@ public class Modello extends Elemento {
 	 * @return
 	 */
 	public boolean controlloInOutReciproci(){
+		for(Elemento e: elementi){
+			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
+			switch (e.getID()) {
+			case "AZIONE":
+				//
+				break;
+			case "BRANCH":
+				//
+				break;
+			case "MERGE":
+				//
+				break;
+			case "START":
+				//
+				break;
+			case "END":
+				//
+				break;
+				
+			default:
+				break;
+			}
+		}
 		return false;
 	}
 	
