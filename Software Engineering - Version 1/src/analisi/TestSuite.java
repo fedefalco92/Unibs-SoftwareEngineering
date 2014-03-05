@@ -15,25 +15,27 @@ public class TestSuite {
 	
 	private Vector<String> insiemeAttivita;
 	private Vector<ClasseEquivalenza> classiEquivalenza;
-	private double[] probabilitaM1;
+	private Hashtable <String,Double> probabilitaM1;
 	
 	public TestSuite(Vector<String> insiemeAttivita){
 		classiEquivalenza = new Vector<ClasseEquivalenza>();
 		this.insiemeAttivita = insiemeAttivita;
-		probabilitaM1 = new double[insiemeAttivita.size()];
-		for(int i=0;i<probabilitaM1.length;i++){
-			probabilitaM1[i] = 0;
-		}
+		probabilitaM1 = new Hashtable <String,Double>();		
 	}
 
 	public void addNuovaClasseEquivalenza(ClasseEquivalenza classe){
 		classiEquivalenza.add(classe);
 	}	
 	
+	//PROBLEMI QUI!!!!
+	
 	public void calcolaProbabilitaM1(){
 		
 		//ciclo su tutte le classi di equivalenza per determinare la somma delle probabilita'
-				
+		double[] probabilitaM1_vec = new double[insiemeAttivita.size()];
+		for(int i=0;i<probabilitaM1_vec.length;i++){
+			probabilitaM1_vec[i] = 0;
+		}				
 		for(ClasseEquivalenza cl_eq : classiEquivalenza){
 			Hashtable <String,Double> probabilitaSingolaClasse = cl_eq.getProbabilitaClasse();
 			//analizzo le probabilita' per eseguire i relativi conteggi
@@ -42,10 +44,11 @@ public class TestSuite {
 				String azione = iteratore.nextElement();
 				double probabilita = probabilitaSingolaClasse.get(azione);
 				int posizioneRelativa = insiemeAttivita.indexOf(azione);
+				//System.out.println(posizioneRelativa);
 				if (probabilita >= 0){
 					//o e' nulla o e' diversa da zero(comunque non IGNOTA)
 					if(posizioneRelativa >= 0){
-						probabilitaM1[posizioneRelativa] += probabilita;
+						probabilitaM1_vec[posizioneRelativa] += probabilita;
 					}
 				}
 			}			
@@ -82,8 +85,12 @@ public class TestSuite {
 			if(cardinalitaClassi[i] == 0){
 				cardinalitaClassi[i] = 1;
 			}
-			probabilitaM1[i] = probabilitaM1[i]/cardinalitaClassi[i];		
-		}	
+			probabilitaM1_vec[i] = probabilitaM1_vec[i]/cardinalitaClassi[i];		
+		}
+		
+		for(int i=0;i<insiemeAttivita.size();i++){
+			probabilitaM1.put(insiemeAttivita.elementAt(i), probabilitaM1_vec[i]);		
+		}		
 		
 	}
 	
@@ -93,9 +100,12 @@ public class TestSuite {
 			buffer.append(cl_eq.toString() + "\n");
 		}
 		buffer.append("Probabilita' del test suite calcolate con il METODO 1: \n");
-		for(int i=0;i<probabilitaM1.length;i++){
-			buffer.append("Probabilita A"+(i+1)+" = " + probabilitaM1[i] + "\n");
-		}
+		Enumeration<String> iteratore2 = probabilitaM1.keys();
+		while(iteratore2.hasMoreElements()){
+			String azione = iteratore2.nextElement();
+			double probabilita = probabilitaM1.get(azione);
+			buffer.append("Probabilita' " + azione + "\t" + " : " + probabilita+"\n");
+		}			
 		buffer.append("\n");
 		return buffer.toString();
 	}

@@ -277,11 +277,11 @@ public class ClasseEquivalenza {
 		//System.out.println(azioniResidue.toString());
 		
 		//ora scansiono le azioni residue e assegno loro probabilita' pari a 0
-		
+	
 		for(String azione : azioniResidue){
 			probabilitaProva.put(azione,0.0);
 		}			
-		
+	
 		//Recupero tutte le azioni coinvolte nelle diagnosi minimali(in generale)
 		Vector <String> azioniInDiagnosi = UtilitaGenerazioneMHS.getAzioniInsieme(diagnosiMinimali);
 		
