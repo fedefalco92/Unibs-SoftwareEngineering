@@ -4,6 +4,7 @@ import java.util.Vector;
 public class Start extends Elemento{
 	
 	private Azione uscita;
+	private Elemento uscitaEl;
 	
 	public Start (String nome){
 		super("START", nome);
@@ -47,6 +48,12 @@ public class Start extends Elemento{
 	public Vector<Elemento> getUscite() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void aggiungiUscita(Elemento uscita) {
+		this.uscitaEl = uscita;
+		
 	}
 
 }

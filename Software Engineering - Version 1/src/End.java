@@ -49,4 +49,11 @@ public class End extends Elemento {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public void aggiungiUscita(Elemento uscita) {
+		// TODO Auto-generated method stub
+		
+	}
 }

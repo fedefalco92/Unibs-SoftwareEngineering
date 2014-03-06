@@ -44,6 +44,24 @@ public class MyMenu
 	System.out.println(VOCE_USCITA);
     System.out.println();
   }
+  
+  public void stampaMenuSenzaUscita ()
+  {
+	System.out.println(CORNICE);
+	System.out.println(titolo);
+	System.out.println(CORNICE);
+    for (int i=0; i<voci.length; i++)
+	 {
+	  System.out.println( (i+1) + "\t" + voci[i]);
+	 }
+  }
+  
+
+  public int scegliSenzaUscita ()
+  {
+	stampaMenuSenzaUscita();
+	return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 1, voci.length);	 
+  }
 		
 }
 

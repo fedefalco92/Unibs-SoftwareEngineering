@@ -23,7 +23,7 @@ public class Merge extends Elemento{
 		return incompleto;
 	}
 	
-	public void setUscita(Elemento uscita) {
+	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
 	

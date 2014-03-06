@@ -16,7 +16,7 @@ public class Azione extends Elemento{
 		this.ingresso = ingresso;
 	}
 	
-	public void setUscita(Elemento uscita) {
+	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
 	

@@ -4,6 +4,8 @@ public class Branch extends Elemento{
 
 	private Elemento ingresso;
 	private Vector <Elemento> uscite;
+	private Merge mergePrecedente;
+	private Merge mergeSeguente;
 	private boolean incompleto;
 	
 	public Branch (String nome){
@@ -111,5 +113,21 @@ public class Branch extends Elemento{
 	public Vector<Elemento> getIngressi() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Merge getMergePrecedente() {
+		return mergePrecedente;
+	}
+
+	public void setMergePrecedente(Merge mergePrecedente) {
+		this.mergePrecedente = mergePrecedente;
+	}
+
+	public Merge getMergeSeguente() {
+		return mergeSeguente;
+	}
+
+	public void setMergeSeguente(Merge mergeSeguente) {
+		this.mergeSeguente = mergeSeguente;
 	}
 }

@@ -31,7 +31,7 @@ public class Join extends Elemento {
 		return uscita;
 	}
 
-	public void setUscita(Elemento uscita) {
+	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
 	

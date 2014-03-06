@@ -213,7 +213,7 @@ public class CreazioneModello {
 				//l'acquisizione nome va fatta in modo che non ci siano doppioni
 				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
 				Azione nuovaAzione = new Azione(nomeAzione);
-				join.setUscita(nuovaAzione);
+				join.aggiungiUscita(nuovaAzione);
 				nuovaAzione.setIngresso(join);
 				modello.aggiungiAzione(nuovaAzione);
 				modello.setUltimaModifica(nuovaAzione);
@@ -222,7 +222,7 @@ public class CreazioneModello {
 			case 2:
 				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
 				Branch nuovoBranch = new Branch(nomeBranch);
-				join.setUscita(nuovoBranch);
+				join.aggiungiUscita(nuovoBranch);
 				nuovoBranch.setIngresso(join);
 				modello.aggiungiBranch(nuovoBranch);
 				modello.setUltimaModifica(nuovoBranch);
@@ -232,7 +232,7 @@ public class CreazioneModello {
 			case 3:
 				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
 				Merge nuovoMerge = new Merge(nomeMerge);
-				join.setUscita(nuovoMerge);
+				join.aggiungiUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(join);
 				modello.aggiungiMerge(nuovoMerge);
 				//l'utilita' della prossima istruzione si vedra'
@@ -248,7 +248,7 @@ public class CreazioneModello {
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(join);
-					join.setUscita(mergeEsistente);
+					join.aggiungiUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
 					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
@@ -266,7 +266,7 @@ public class CreazioneModello {
 				nuovoFork.setJoinAssociato(nuovoJoin);
 				nuovoJoin.setForkAssociato(nuovoFork);
 				
-				join.setUscita(nuovoFork);
+				join.aggiungiUscita(nuovoFork);
 				nuovoFork.setIngresso(join);
 				modello.aggiungiFork(nuovoFork);
 				modello.aggiungiJoin(nuovoJoin);
@@ -274,7 +274,7 @@ public class CreazioneModello {
 				continuaInserimento();
 				break;
 			case 6:
-				join.setUscita(modello.getEnd());
+				join.aggiungiUscita(modello.getEnd());
 				modello.setUltimoElemento(join);
 				modello.setUltimaModifica(null);
 				break;
@@ -336,7 +336,7 @@ public class CreazioneModello {
 				//l'acquisizione nome va fatta in modo che non ci siano doppioni
 				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
 				Azione nuovaAzione = new Azione(nomeAzione);
-				merge.setUscita(nuovaAzione);
+				merge.aggiungiUscita(nuovaAzione);
 				nuovaAzione.setIngresso(merge);
 				modello.aggiungiAzione(nuovaAzione);
 				modello.setUltimaModifica(nuovaAzione);
@@ -345,7 +345,7 @@ public class CreazioneModello {
 			case 2:
 				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
 				Branch nuovoBranch = new Branch(nomeBranch);
-				merge.setUscita(nuovoBranch);
+				merge.aggiungiUscita(nuovoBranch);
 				nuovoBranch.setIngresso(merge);
 				modello.aggiungiBranch(nuovoBranch);
 				modello.setUltimaModifica(nuovoBranch);
@@ -355,7 +355,7 @@ public class CreazioneModello {
 			case 3:
 				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
 				Merge nuovoMerge = new Merge(nomeMerge);
-				merge.setUscita(nuovoMerge);
+				merge.aggiungiUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(merge);
 				modello.aggiungiMerge(nuovoMerge);
 				//l'utilita' della prossima istruzione si vedra'
@@ -370,7 +370,7 @@ public class CreazioneModello {
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(merge);
-					merge.setUscita(mergeEsistente);
+					merge.aggiungiUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
 					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
@@ -388,7 +388,7 @@ public class CreazioneModello {
 				nuovoFork.setJoinAssociato(nuovoJoin);
 				nuovoJoin.setForkAssociato(nuovoFork);
 				
-				merge.setUscita(nuovoFork);
+				merge.aggiungiUscita(nuovoFork);
 				nuovoFork.setIngresso(merge);
 				modello.aggiungiFork(nuovoFork);
 				modello.aggiungiJoin(nuovoJoin);
@@ -396,7 +396,7 @@ public class CreazioneModello {
 				continuaInserimento();
 				break;
 			case 6:
-				merge.setUscita(modello.getEnd());
+				merge.aggiungiUscita(modello.getEnd());
 				modello.setUltimoElemento(merge);
 				modello.setUltimaModifica(null);
 				break;
@@ -577,7 +577,7 @@ public class CreazioneModello {
 				//l'acquisizione nome va fatta in modo che non ci siano doppioni
 				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
 				Azione nuovaAzione = new Azione(nomeAzione);
-				azione.setUscita(nuovaAzione);
+				azione.aggiungiUscita(nuovaAzione);
 				nuovaAzione.setIngresso(azione);
 				modello.aggiungiAzione(nuovaAzione);
 				modello.setUltimaModifica(nuovaAzione);
@@ -586,7 +586,7 @@ public class CreazioneModello {
 			case 2:
 				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
 				Branch nuovoBranch = new Branch(nomeBranch);
-				azione.setUscita(nuovoBranch);
+				azione.aggiungiUscita(nuovoBranch);
 				nuovoBranch.setIngresso(azione);
 				modello.aggiungiBranch(nuovoBranch);
 				modello.setUltimaModifica(nuovoBranch);
@@ -596,7 +596,7 @@ public class CreazioneModello {
 			case 3:
 				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
 				Merge nuovoMerge = new Merge(nomeMerge);
-				azione.setUscita(nuovoMerge);
+				azione.aggiungiUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(azione);
 				modello.aggiungiMerge(nuovoMerge);
 				//l'utilita' della prossima istruzione si vedra'
@@ -611,7 +611,7 @@ public class CreazioneModello {
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(azione);
-					azione.setUscita(mergeEsistente);
+					azione.aggiungiUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
 					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
@@ -629,7 +629,7 @@ public class CreazioneModello {
 				nuovoFork.setJoinAssociato(nuovoJoin);
 				nuovoJoin.setForkAssociato(nuovoFork);
 				
-				azione.setUscita(nuovoFork);
+				azione.aggiungiUscita(nuovoFork);
 				nuovoFork.setIngresso(azione);
 				modello.aggiungiFork(nuovoFork);
 				modello.aggiungiJoin(nuovoJoin);
@@ -638,7 +638,7 @@ public class CreazioneModello {
 				break;
 			
 			case 6:
-				azione.setUscita(modello.getEnd());
+				azione.aggiungiUscita(modello.getEnd());
 				modello.setUltimoElemento(azione);
 				modello.setUltimaModifica(null);
 				break;

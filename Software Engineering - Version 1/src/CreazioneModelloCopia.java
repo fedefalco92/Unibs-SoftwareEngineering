@@ -1,9 +1,9 @@
 import java.util.Vector;
-
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 
-//VERSIONE 1: NO FORK E JOIN
+
+
 /* da mettere in javadoc una volta ultimata la classe
  * 
  * questa classe conterra' un menu per gestire la creazione di un nuovo modello
@@ -20,7 +20,23 @@ import it.unibs.fp.mylib.MyMenu;
  */
 public class CreazioneModelloCopia {
 	
-	private static Modello modello;
+	private final static String [] VOCI_SCELTA_NODO_FINALE = {
+		
+		"Una nuova azione", 
+		"Un nuovo branch (Crea automaticamente i merge associati)", 
+		"Un nuovo fork (crea automaticamente il join associato)", 
+		"Nodo finale"
+		};
+
+	private final static String [] VOCI_SCELTA_MERGE_FINALE = {
+		"Una nuova azione", 
+		"Un nuovo branch (Crea automaticamente i merge associati)", 
+		"Un nuovo fork (crea automaticamente il join associato)", 
+		"Merge"
+		};
+	
+	//tolgo l'attributo
+	//private static Modello modello;
 	
 	/**
 	 * Metodo principale della classe.
@@ -30,11 +46,11 @@ public class CreazioneModelloCopia {
 	 * @return 
 	 */
 	public static Modello creaModello(String nomeModello){
-		modello = new Modello(nomeModello);
+		Modello modello = new Modello(nomeModello);
 			
 		boolean fineCreazione = false;
 		do {
-			fineCreazione = menuCreazione(modello);
+			fineCreazione = menuPrincipaleCreazione(modello);
 		} while (!fineCreazione);
 
 		return modello;
@@ -57,9 +73,9 @@ public class CreazioneModelloCopia {
 	 * 
 	 * @return
 	 */
-	public static boolean menuCreazione(Modello _modello){
-		final String TITOLO = "MENU CREAZIONE MODELLO " + _modello.getNome();;
-		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Termina e salva"};
+	private static boolean menuPrincipaleCreazione(Modello modello){
+		final String TITOLO = "MENU CREAZIONE MODELLO " + modello.getNome();;
+		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Salva il modello ed esci"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI);
 		//nuova funzione-permette di cambiare VOCE_USCITA 
 		menuCreazione.setVoceUscita("0\tTorna al menu principale (Tutte le modifiche non salvate andranno perse)");
@@ -70,8 +86,9 @@ public class CreazioneModelloCopia {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
-				
-					//inserimento prima azione obbligatorio
+					//CODICE PRECEDENTE CON PRIMA AZIONE OBBLIGATORIA
+					/*
+					//inserimento prima azione obbligatorio?
 					//acquisizione nome
 					String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
 					Azione primaAzione = new Azione (nomePrimaAzione);
@@ -83,21 +100,30 @@ public class CreazioneModelloCopia {
 					
 					modello.setUltimaModifica(modello.getAzioni().firstElement());
 					//in alternativa: modello.setUltimaModifica(primaAzione);
-					continuaInserimento();
+					continuaInserimento(modello);
 					//a questo punto ci potrebbero essere ancora dei merge non ultimati
 					//metto un controllo per verificare che il modello sia corrett
 					//TODO
+					 * 
+					 */
+				/*
+				while(!modello.completo()){
+					continuaInserimento(modello, modello.getStart());
+				}
+				*/
+				
+				gestisciStart(modello, modello.getStart());
 				
 				break;
 			case 2:
-				visualizzaModello();
+				visualizzaModello(modello);
 				break;
 			case 3:
 				//a questo punto aprirei un altro menu che chiede di salvare come testo o come oggetto...
 				//il menu dovra' essere aperto solo se il modello e' corretto!
 				//prima vediamo cosa si riesce a fare con la classe CostruzioneModello...
 				
-				
+				salvaModello(modello);
 				
 				break;
 			default:
@@ -107,21 +133,28 @@ public class CreazioneModelloCopia {
 		return false;
 	}
 	
+	private static void salvaModello(Modello _modello) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * Il metodo mette in output il modello sfruttando il metodo toString
 	 * Si potr&agrave migliorare in futuro.
 	 * 
 	 * per ora &egrave private, sar&agrave public se i menu verranno esportati nella classe menuClass
 	 */
-	private static void visualizzaModello() {
-		
-		System.out.println(modello.stampaModello());
+	private static void visualizzaModello(Modello _modello) {
+		if(_modello.completo())
+			System.out.println(_modello.stampaModello());
+		else
+			System.out.println("> Modello non ancora creato! <");
 		//precedentemente era System.out.println(modello);
 		//(Sfruttava il toString())
 	}
 
-	/*
-	public static boolean menuInserimento(){
+	
+	private static boolean menuInserimento(Modello modello, Elemento elemento){
 		final String TITOLO = "Cosa vuoi inserire in coda?";
 		final String [] VOCI = {"Una nuova azione", "Un nuovo branch", "Un nuovo merge"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI);
@@ -134,7 +167,7 @@ public class CreazioneModelloCopia {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
-				continuaInserimento();
+				
 				break;
 			case 2:
 				//si puo' migliorare
@@ -151,45 +184,58 @@ public class CreazioneModelloCopia {
 		
 		return false;
 	}
-	*/
+	
 	/**
 	 * Permette di riprendere l'inserimento dopo che lo si e' interrotto per visualizzare il modello.
 	 * Non permette di riprendere l'inserimento se l'inserimento &egrave gi&agrave stato ultimato.
+	 * @param elemento TODO
 	 */
-	private static void continuaInserimento() {
-		//
-		Elemento elementoCorrente = modello.getUltimaModifica();
-		
-		if (elementoCorrente==null){
-			System.out.println("L'inserimento del modello e' gia' stato ultimato.");
-		} else {
-		
-			String tipo = elementoCorrente.getID();
-			switch(tipo){
-				case "AZIONE":
-					gestisciAzione((Azione) elementoCorrente);				
-					break;
-				case "BRANCH":
-					gestisciBranch((Branch) elementoCorrente);
-					break;
-				case "MERGE":
-					gestisciMerge((Merge) elementoCorrente);
-					break;
-				case "FORK":
-					gestisciFork((Fork) elementoCorrente);
-					break;
-				case "JOIN":
-					gestisciJoin((Join) elementoCorrente);
-					break;
-				default:
-					//
-			}
-				
+	private static void continuaInserimento(Modello modello, Elemento elemento) {
+
+		String tipo = elemento.getID();
+		switch(tipo){
+			case "START":
+				gestisciStart(modello, (Start) elemento);
+				break;
+			case "AZIONE":
+				gestisciAzione(modello, (Azione) elemento, null);				
+				break;
+			case "BRANCH":
+				gestisciBranch(modello, (Branch) elemento);
+				break;
+			case "MERGE":
+				gestisciMerge(modello, (Merge) elemento, null);
+				break;
+			case "FORK":
+				gestisciFork(modello, (Fork) elemento);
+				break;
+			case "JOIN":
+				gestisciJoin(modello, (Join) elemento);
+				break;
+			default:
+				//
+			
 		}
 		
 		
 	}
-	private static void gestisciJoin(Join join) {
+	
+	private static void gestisciStart(Modello modello, Start start) {
+		//inserimento prima azione obbligatorio?
+		//acquisizione nome
+		String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
+		Azione primaAzione = new Azione (nomePrimaAzione);
+		//la prima azione ha come ingresso lo start
+		primaAzione.setIngresso(start);
+		//metto la prima azione in coda a start
+		start.setUscita(primaAzione);
+		modello.aggiungiAzione(primaAzione);
+		
+		gestisciAzione(modello, primaAzione, null);
+		
+	}
+
+	private static void gestisciJoin(Modello modello, Join join) {
 		final String TITOLO = "Cosa vuoi inserire in coda al join "+ join.getNome()+ "?";
 		final String [] VOCI = {
 				"Una nuova azione", 
@@ -211,44 +257,44 @@ public class CreazioneModelloCopia {
 				return;
 			case 1:
 				//l'acquisizione nome va fatta in modo che non ci siano doppioni
-				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
+				String nomeAzione = acquisizioneNome(modello, "Inserisci il nome della nuova azione > ");
 				Azione nuovaAzione = new Azione(nomeAzione);
-				join.setUscita(nuovaAzione);
+				join.aggiungiUscita(nuovaAzione);
 				nuovaAzione.setIngresso(join);
 				modello.aggiungiAzione(nuovaAzione);
 				modello.setUltimaModifica(nuovaAzione);
-				continuaInserimento();
+				continuaInserimento(modello, null);
 				break;
 			case 2:
-				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
+				String nomeBranch = acquisizioneNome(modello, "Inserisci il nome del nuovo branch > ");
 				Branch nuovoBranch = new Branch(nomeBranch);
-				join.setUscita(nuovoBranch);
+				join.aggiungiUscita(nuovoBranch);
 				nuovoBranch.setIngresso(join);
 				modello.aggiungiBranch(nuovoBranch);
 				modello.setUltimaModifica(nuovoBranch);
-				continuaInserimento();
+				continuaInserimento(modello, null);
 				
 				break;
 			case 3:
-				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
+				String nomeMerge = acquisizioneNome(modello, "Inserisci il nome del nuovo merge > ");
 				Merge nuovoMerge = new Merge(nomeMerge);
-				join.setUscita(nuovoMerge);
+				join.aggiungiUscita(nuovoMerge);
 				nuovoMerge.aggiungiIngresso(join);
 				modello.aggiungiMerge(nuovoMerge);
 				//l'utilita' della prossima istruzione si vedra'
 				//modello.aggiungiMergeIncompleto(nuovoMerge);
 				modello.setUltimaModifica(nuovoMerge);
-				continuaInserimento();
+				continuaInserimento(modello, null);
 				break;
 			case 4:
 				if(modello.getMerge().isEmpty()) {
 					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					continuaInserimento();
+					continuaInserimento(modello, null);
 					break;
 				} else {
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
 					mergeEsistente.aggiungiIngresso(join);
-					join.setUscita(mergeEsistente);
+					join.aggiungiUscita(mergeEsistente);
 					
 					//a questo punto devo decidere dove mandare il programma!!
 					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
@@ -258,23 +304,23 @@ public class CreazioneModelloCopia {
 				
 				break;
 			case 5: //AGGIUNTA FORK
-				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+				String nomeFork = acquisizioneNome(modello, "Inserisci il nome del nuovo fork > ");
 				Fork nuovoFork = new Fork(nomeFork);
-				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+				String nomeJoin = acquisizioneNome(modello, "Inserisci il nome del join associato > ");
 				Join nuovoJoin = new Join(nomeJoin);
 				
 				nuovoFork.setJoinAssociato(nuovoJoin);
 				nuovoJoin.setForkAssociato(nuovoFork);
 				
-				join.setUscita(nuovoFork);
+				join.aggiungiUscita(nuovoFork);
 				nuovoFork.setIngresso(join);
 				modello.aggiungiFork(nuovoFork);
 				modello.aggiungiJoin(nuovoJoin);
 				modello.setUltimaModifica(nuovoFork);
-				continuaInserimento();
+				continuaInserimento(modello, null);
 				break;
 			case 6:
-				join.setUscita(modello.getEnd());
+				join.aggiungiUscita(modello.getEnd());
 				modello.setUltimoElemento(join);
 				modello.setUltimaModifica(null);
 				break;
@@ -284,7 +330,7 @@ public class CreazioneModelloCopia {
 		}
 	}
 
-	private static void gestisciFork(Fork fork) {
+	private static void gestisciFork(Modello modello, Fork fork) {
 		int numeroFlussi = InputDati.leggiInteroConMinimo("Quanti flussi paralleli vuoi inserire in coda al fork " + fork.getNome() + "?",
 				2);
 		for (int i = 1; i <= numeroFlussi; i++){
@@ -299,7 +345,7 @@ public class CreazioneModelloCopia {
 		
 		//una volta terminato l'inserimento dei flussi si continua con il modello a partire dal join!!
 		modello.setUltimaModifica(fork.getJoinAssociato());
-		continuaInserimento();
+		continuaInserimento(modello, null);
 		
 		
 	}
@@ -309,98 +355,41 @@ public class CreazioneModelloCopia {
 	 * la completezza degli ingressi verra' gestita altrove.
 	 * 
 	 * Il menu permette la visualizzazione del modello allo stato attuale
-	 * 
 	 * @param merge
+	 * @param finale TODO
 	 */
-	private static void gestisciMerge(Merge merge) {
+	private static void gestisciMerge(Modello modello, Merge merge, Merge finale) {
 		final String TITOLO = "Cosa vuoi inserire in coda al merge "+ merge.getNome()+ "?";
-		final String [] VOCI = {
-				"Una nuova azione", 
-				"Un nuovo branch", 
-				"Un nuovo merge", 
-				"un merge esistente", 
-				"un nuovo fork (crea automaticamente il join associato)", 
-				"nodo finale"
-				};
-		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-		//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
-		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
-		menuAzione.setVoceUscita("");
-		int scelta = menuAzione.scegli();
+		String [] vociMenu;
+		if (finale!= null)
+			vociMenu = VOCI_SCELTA_NODO_FINALE;
+		else 
+			vociMenu = VOCI_SCELTA_MERGE_FINALE;
+		MyMenu menuMerge = new MyMenu(TITOLO, vociMenu);
+		int scelta = menuMerge.scegliSenzaUscita();
 		
+
 		switch (scelta)
 		{
 			case 0: 
 				return;
 			case 1:
-				//l'acquisizione nome va fatta in modo che non ci siano doppioni
-				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
-				Azione nuovaAzione = new Azione(nomeAzione);
-				merge.setUscita(nuovaAzione);
-				nuovaAzione.setIngresso(merge);
-				modello.aggiungiAzione(nuovaAzione);
-				modello.setUltimaModifica(nuovaAzione);
-				continuaInserimento();
+				Azione nuovaAzione = nuovaAzione(modello, merge);
+				gestisciAzione(modello, nuovaAzione, null);
 				break;
 			case 2:
-				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
-				Branch nuovoBranch = new Branch(nomeBranch);
-				merge.setUscita(nuovoBranch);
-				nuovoBranch.setIngresso(merge);
-				modello.aggiungiBranch(nuovoBranch);
-				modello.setUltimaModifica(nuovoBranch);
-				continuaInserimento();
-				
+				Branch nuovoBranch = nuovoBranch(modello, merge);
+				gestisciBranch(modello, nuovoBranch);
 				break;
-			case 3:
-				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
-				Merge nuovoMerge = new Merge(nomeMerge);
-				merge.setUscita(nuovoMerge);
-				nuovoMerge.aggiungiIngresso(merge);
-				modello.aggiungiMerge(nuovoMerge);
-				//l'utilita' della prossima istruzione si vedra'
-				//modello.aggiungiMergeIncompleto(nuovoMerge);
-				modello.setUltimaModifica(nuovoMerge);
-				continuaInserimento();
+			case 3: //AGGIUNTA FORK
+				Fork nuovoFork = nuovoFork(modello, merge);
+				gestisciFork(modello, nuovoFork);
 				break;
 			case 4:
-				if(modello.getMerge().isEmpty()) {
-					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					continuaInserimento();
-				} else {
-					Merge mergeEsistente= sceltaMerge(modello.getMerge());
-					mergeEsistente.aggiungiIngresso(merge);
-					merge.setUscita(mergeEsistente);
-					
-					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
-					//ci devo pensare ancora un pochino
-				}
-				
+				merge.aggiungiUscita(modello.getEnd());
+				modello.getEnd().setIngresso(merge);
 				break;
-			case 5: //AGGIUNTA FORK
-				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
-				Fork nuovoFork = new Fork(nomeFork);
-				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
-				Join nuovoJoin = new Join(nomeJoin);
-				
-				nuovoFork.setJoinAssociato(nuovoJoin);
-				nuovoJoin.setForkAssociato(nuovoFork);
-				
-				merge.setUscita(nuovoFork);
-				nuovoFork.setIngresso(merge);
-				modello.aggiungiFork(nuovoFork);
-				modello.aggiungiJoin(nuovoJoin);
-				modello.setUltimaModifica(nuovoFork);
-				continuaInserimento();
-				break;
-			case 6:
-				merge.setUscita(modello.getEnd());
-				modello.setUltimoElemento(merge);
-				modello.setUltimaModifica(null);
-				break;
-		
+			
 			default:
 				/*Non entra mai qui*/
 		}
@@ -431,9 +420,18 @@ public class CreazioneModelloCopia {
 	 * CHIAMANDOLA ALTERNATIVA PERO'!
 	 * @param branch
 	 */
-	private static void gestisciBranch(Branch branch) {
+	private static void gestisciBranch(Modello modello, Branch branch) {
+		
+		int numeroAlternative = InputDati.leggiInteroConMinimo("Quante alternative vuoi inserire in coda al branch " + branch.getNome() + "?",
+				2);
+		for (int i = 1; i <= numeroAlternative; i++){
+			
+		}
+	
+		/*
 		//ci sono almeno due alternative da inserire obbligatoriamente.
 		int i=1;
+		
 		boolean stop=false;
 		while(!stop){
 			final String TITOLO = "Menu creazione del branch "+ branch.getNome() +" - ALTERNATIVA " + i +
@@ -459,39 +457,39 @@ public class CreazioneModelloCopia {
 					return;
 				case 1:
 					//l'acquisizione nome va fatta in modo che non ci siano doppioni
-					String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
+					String nomeAzione = acquisizioneNome(modello, "Inserisci il nome della nuova azione > ");
 					Azione nuovaAzione = new Azione(nomeAzione);
 					branch.aggiungiUscita(nuovaAzione);
 					nuovaAzione.setIngresso(branch);
 					modello.aggiungiAzione(nuovaAzione);
 					modello.setUltimaModifica(nuovaAzione);
-					continuaInserimento();
+					continuaInserimento(modello, null);
 					break;
 		
 				case 2:
-					String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
+					String nomeBranch = acquisizioneNome(modello, "Inserisci il nome del nuovo branch > ");
 					Branch nuovoBranch = new Branch(nomeBranch);
 					branch.aggiungiUscita(nuovoBranch);
 					nuovoBranch.setIngresso(branch);
 					modello.aggiungiBranch(nuovoBranch);
 					modello.setUltimaModifica(nuovoBranch);
-					continuaInserimento();
+					continuaInserimento(modello, null);
 					
 					break;
 			
 				case 3:
-					String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge> ");
+					String nomeMerge = acquisizioneNome(modello, "Inserisci il nome del nuovo merge> ");
 					Merge nuovoMerge = new Merge(nomeMerge);
 					branch.aggiungiUscita(nuovoMerge);
 					nuovoMerge.aggiungiIngresso(branch);
 					modello.aggiungiMerge(nuovoMerge);
 					//modello.aggiungiMergeIncompleto(nuovoMerge);
 					modello.setUltimaModifica(nuovoMerge);
-					continuaInserimento();
+					continuaInserimento(modello, null);
 					break;
 				case 4:if(modello.getMerge().isEmpty()) {
 					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					continuaInserimento();
+					continuaInserimento(modello, null);
 				} else {
 					System.out.println("A quale merge vuoi collegarti?");
 					Merge mergeEsistente= sceltaMerge(modello.getMerge());
@@ -505,9 +503,9 @@ public class CreazioneModelloCopia {
 				}
 					break;
 				case 5: //AGGIUNTA FORK
-					String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
+					String nomeFork = acquisizioneNome(modello, "Inserisci il nome del nuovo fork > ");
 					Fork nuovoFork = new Fork(nomeFork);
-					String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
+					String nomeJoin = acquisizioneNome(modello, "Inserisci il nome del join associato > ");
 					Join nuovoJoin = new Join(nomeJoin);
 					
 					nuovoFork.setJoinAssociato(nuovoJoin);
@@ -518,7 +516,7 @@ public class CreazioneModelloCopia {
 					modello.aggiungiFork(nuovoFork);
 					modello.aggiungiJoin(nuovoJoin);
 					modello.setUltimaModifica(nuovoFork);
-					continuaInserimento();
+					continuaInserimento(modello, null);
 					break;
 				case 6:
 					branch.aggiungiUscita(modello.getEnd());
@@ -527,7 +525,7 @@ public class CreazioneModelloCopia {
 					break;
 				
 				default:
-					/*Non entra mai qui*/
+					//Non entra mai qui
 			}
 			
 			i++;
@@ -536,7 +534,7 @@ public class CreazioneModelloCopia {
 						+ " e' completo! Vuoi iniziare l'inserimento di un'altra alternativa?");
 				if (!continua) stop=true;
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -549,102 +547,40 @@ public class CreazioneModelloCopia {
 	 * -un nuovo join
 	 * -il nodo finale
 	 * @param azione
+	 * @param finale TODO
 	 */
-	private static void gestisciAzione(Azione azione) {
+	private static void gestisciAzione(Modello modello, Azione azione, Merge finale) {
 		final String TITOLO = "Cosa vuoi inserire in coda all'azione "+ azione.getNome()+ "?";
-		final String [] VOCI = {
-				"Una nuova azione", 
-				"Un nuovo branch", 
-				"Un nuovo merge", 
-				"un merge esistente", 
-				"un nuovo fork (crea automaticamente il join associato)", 
-				//"un nuovo join",
-				"nodo finale"
-				};
-		MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-		//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
-		//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
-		menuAzione.setVoceUscita("");
-		//menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
-		
-		int scelta = menuAzione.scegli();
+		String [] vociMenu;
+		if (finale!= null)
+			vociMenu = VOCI_SCELTA_NODO_FINALE;
+		else 
+			vociMenu = VOCI_SCELTA_MERGE_FINALE;
+		MyMenu menuAzione = new MyMenu(TITOLO, vociMenu);
+		int scelta = menuAzione.scegliSenzaUscita();
 		
 		switch (scelta)
 		{
-			case 0: 
-				return;
 			case 1:
-				//l'acquisizione nome va fatta in modo che non ci siano doppioni
-				String nomeAzione = acquisizioneNome("Inserisci il nome della nuova azione > ");
-				Azione nuovaAzione = new Azione(nomeAzione);
-				azione.setUscita(nuovaAzione);
-				nuovaAzione.setIngresso(azione);
-				modello.aggiungiAzione(nuovaAzione);
-				modello.setUltimaModifica(nuovaAzione);
-				continuaInserimento();
+				Azione nuovaAzione = nuovaAzione(modello, azione);
+				gestisciAzione(modello, nuovaAzione, finale);
 				break;
 			case 2:
-				String nomeBranch = acquisizioneNome("Inserisci il nome del nuovo branch > ");
-				Branch nuovoBranch = new Branch(nomeBranch);
-				azione.setUscita(nuovoBranch);
-				nuovoBranch.setIngresso(azione);
-				modello.aggiungiBranch(nuovoBranch);
-				modello.setUltimaModifica(nuovoBranch);
-				continuaInserimento();
-				
+				Branch nuovoBranch = nuovoBranch(modello, azione);
+				gestisciBranch(modello, nuovoBranch);
 				break;
-			case 3:
-				String nomeMerge = acquisizioneNome("Inserisci il nome del nuovo merge > ");
-				Merge nuovoMerge = new Merge(nomeMerge);
-				azione.setUscita(nuovoMerge);
-				nuovoMerge.aggiungiIngresso(azione);
-				modello.aggiungiMerge(nuovoMerge);
-				//l'utilita' della prossima istruzione si vedra'
-				//modello.aggiungiMergeIncompleto(nuovoMerge);
-				modello.setUltimaModifica(nuovoMerge);
-				continuaInserimento();
+			case 3: //AGGIUNTA FORK
+				Fork nuovoFork = nuovoFork(modello, azione);
+				gestisciFork(modello, nuovoFork);
 				break;
 			case 4:
-				if(modello.getMerge().isEmpty()) {
-					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					continuaInserimento();
+				if(finale!=null){
+					azione.aggiungiUscita(modello.getEnd());
+					modello.getEnd().setIngresso(azione);
 				} else {
-					Merge mergeEsistente= sceltaMerge(modello.getMerge());
-					mergeEsistente.aggiungiIngresso(azione);
-					azione.setUscita(mergeEsistente);
-					
-					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
-					//ci devo pensare ancora un pochino
+					azione.aggiungiUscita(finale);
 				}
-				
 				break;
-			case 5: //AGGIUNTA FORK
-				String nomeFork = acquisizioneNome("Inserisci il nome del nuovo fork > ");
-				Fork nuovoFork = new Fork(nomeFork);
-				String nomeJoin = acquisizioneNome("Inserisci il nome del join associato > ");
-				Join nuovoJoin = new Join(nomeJoin);
-				
-				nuovoFork.setJoinAssociato(nuovoJoin);
-				nuovoJoin.setForkAssociato(nuovoFork);
-				
-				azione.setUscita(nuovoFork);
-				nuovoFork.setIngresso(azione);
-				modello.aggiungiFork(nuovoFork);
-				modello.aggiungiJoin(nuovoJoin);
-				modello.setUltimaModifica(nuovoFork);
-				continuaInserimento();
-				break;
-			
-			case 6:
-				azione.setUscita(modello.getEnd());
-				modello.setUltimoElemento(azione);
-				modello.setUltimaModifica(null);
-				break;
-			
-			default:
-				/*Non entra mai qui*/
 		}
 	}
 
@@ -663,7 +599,7 @@ public class CreazioneModelloCopia {
 	}
 	
 
-	private static String acquisizioneNome(String string) {
+	private static String acquisizioneNome(Modello modello, String string) {
 		boolean finito=false;
 		String nome;
 		do {
@@ -673,6 +609,48 @@ public class CreazioneModelloCopia {
 				System.out.println("ATTENZIONE! NOME GIA' UTILIZZATO! RIPROVA > ");
 		} while (!finito);
 		return nome;
+	}
+	
+	private static Azione nuovaAzione(Modello modello, Elemento ingresso){
+		//l'acquisizione nome va fatta in modo che non ci siano doppioni
+		String nomeAzione = acquisizioneNome(modello, "Inserisci il nome della nuova azione > ");
+		Azione nuovaAzione = new Azione(nomeAzione);
+		ingresso.aggiungiUscita(nuovaAzione);
+		nuovaAzione.setIngresso(ingresso);
+		modello.aggiungiAzione(nuovaAzione);
+		//modello.setUltimaModifica(nuovaAzione);
+		
+		return nuovaAzione;
+	}
+
+	private static Branch nuovoBranch(Modello modello, Elemento ingresso) {
+		
+		String nomeBranch = acquisizioneNome(modello, "Inserisci il nome del nuovo branch > ");
+		Branch nuovoBranch = new Branch(nomeBranch);
+		ingresso.aggiungiUscita(nuovoBranch);
+		nuovoBranch.setIngresso(ingresso);
+		modello.aggiungiBranch(nuovoBranch);
+	
+		return nuovoBranch;
+		
+	}
+
+	private static Fork nuovoFork(Modello modello, Elemento elemento) {
+		String nomeFork = acquisizioneNome(modello, "Inserisci il nome del nuovo fork > ");
+		Fork nuovoFork = new Fork(nomeFork);
+		String nomeJoin = acquisizioneNome(modello, "Inserisci il nome del join associato > ");
+		Join nuovoJoin = new Join(nomeJoin);
+		
+		nuovoFork.setJoinAssociato(nuovoJoin);
+		nuovoJoin.setForkAssociato(nuovoFork);
+		
+		elemento.aggiungiUscita(nuovoFork);
+		nuovoFork.setIngresso(elemento);
+		modello.aggiungiFork(nuovoFork);
+		modello.aggiungiJoin(nuovoJoin);
+		
+		return nuovoFork;
+		
 	}
 	
 	/* io (maffi) preferirei fare una cosa meno static e piu' istanziata

@@ -227,7 +227,7 @@ public class CostruzioneModello {
 			case "AZIONE":
 				Azione nuovaAzione = (Azione) elemIndex;
 				if(elemFirst != null)
-					nuovaAzione.setUscita(elemFirst);
+					nuovaAzione.aggiungiUscita(elemFirst);
 				i = modelloCaricato.indiceElemento(elemIndex);
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovaAzione);
@@ -244,7 +244,7 @@ public class CostruzioneModello {
 			case "MERGE":
 				Merge nuovoMerge = (Merge) elemIndex;
 				if(elemFirst != null)
-					nuovoMerge.setUscita(elemFirst);
+					nuovoMerge.aggiungiUscita(elemFirst);
 				i = modelloCaricato.indiceElemento(elemIndex);
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovoMerge);

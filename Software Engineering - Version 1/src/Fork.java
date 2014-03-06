@@ -9,8 +9,9 @@ public class Fork extends Elemento {
 	
 	private Elemento ingresso;
 	private Vector<Flusso> flussiOUT;
+	private Vector<Elemento> uscite;
 	private Join joinAssociato;
-	private boolean incompleto;
+	private boolean incompleto; //attenzione! ancora da decidere se per flussiOUT o uscite
 
 	public Join getJoinAssociato() {
 		return joinAssociato;
@@ -18,6 +19,12 @@ public class Fork extends Elemento {
 
 	public void setJoinAssociato(Join joinAssociato) {
 		this.joinAssociato = joinAssociato;
+	}
+	
+	public void aggiungiUscita(Elemento uscita){
+		uscite.add(uscita);
+		if(uscite.size()>=2)
+			incompleto=false;
 	}
 
 	public Fork(String nome) {
