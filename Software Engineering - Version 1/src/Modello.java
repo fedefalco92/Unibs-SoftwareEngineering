@@ -36,6 +36,8 @@ public class Modello /*extends Elemento */{
 		join = new Vector<Join>();
 		end = new End("End");
 		mergeIncompleti = new Vector<Merge>();
+		
+		completo = false;
 	}
 	/*
 	/**
