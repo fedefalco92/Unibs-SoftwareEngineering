@@ -39,6 +39,14 @@ public class Modello /*extends Elemento */{
 		
 		completo = false;
 	}
+	
+	public Vector<String> getNomiAzioni(){
+		Vector<String> v = new Vector <String>();
+		for (Azione azione: azioni){
+			v.add(azione.getNome());
+		}
+		return v;
+	}
 	/*
 	/**
 	 * Altro costruttore necessario per le classi Flusso ( e Alternativa? )

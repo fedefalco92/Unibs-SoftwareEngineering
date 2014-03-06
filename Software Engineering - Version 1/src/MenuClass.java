@@ -42,7 +42,7 @@ public class MenuClass {
 	//per ora provo a fare tutto static come dice Falcon...
 	private static Modello creaModello() {
 		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
-		return CreazioneModello.creaModello(nomeModello);
+		return CreazioneModelloCopia.creaModello(nomeModello);
 		
 	}
 	
