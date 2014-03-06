@@ -20,6 +20,7 @@ public class Modello /*extends Elemento */{
 	private End end;
 	
 	private Elemento ultimaModifica;
+	private Boolean completo;
 	private Vector<Merge> mergeIncompleti;
 	
 	public Modello(String nome){
@@ -425,7 +426,7 @@ public class Modello /*extends Elemento */{
 	 * Equivale al toString ma ogni riga &egrave preceduta da un \t
 	 * @return
 	 */
-	public Object toStringINDENTATO() {
+	public String toStringINDENTATO() {
 		StringBuffer output=new StringBuffer();
 		
 		
@@ -442,5 +443,13 @@ public class Modello /*extends Elemento */{
 
 
 		return output.toString();
+	}
+	
+	public boolean completo(){
+		return completo;
+	}
+	
+	public void termina(){
+		completo=true;
 	}
 }
