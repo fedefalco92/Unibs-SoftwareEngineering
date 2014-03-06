@@ -18,7 +18,7 @@ import it.unibs.fp.mylib.MyMenu;
  * 
  * @author Maffi
  */
-public class CreazioneModello {
+public class CreazioneModelloCopia {
 	
 	private static Modello modello;
 	
