@@ -204,17 +204,57 @@ public class Modello /*extends Elemento */{
 			return false;
 		}
 		else{
-			return controllaInOutModello();
+			if(controllaInOutModello()){
+				if(controlloInOutReciproci()){
+					return true;
+				} else{
+					System.out.println("C'e' un problema nei legami tra in e out di un elemento");
+					return false;
+				}
+			}else{
+				System.out.println("Il modello contiene delle uscite o delle entrate non specificate negli elementi.");
+				return false;
+			}
 		}
 	}
 	
 	/**
 	 * Metodo che controlla gli In e gli Out reciproci del modello.
-	 * @return
+	 * @return TRUE se ok, altrimenti FALSE.
 	 */
 	public boolean controlloInOutReciproci(){
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
+			Elemento elemFindOut = null;
+			Elemento elemFindIn = null;
+			Elemento auxOut = null;
+			Elemento auxIn = null;
+			
+			//Controllo l'uscita di un elemento
+			
+			//Se singolo elemento ho finito, altrimenti cerco su tutti gli elementi
+			
+			//Per ogni elemento in uscita verifico che l'ingresso di quell'elemento abbia come elemento anche e.
+			
+			//Se il controllo non e' vero, restituisco false
+			
+			if(e.getUscita() != null){
+				//Uscita dell'elemento
+				auxOut = e.getUscita();
+				elemFindOut = ricercaElemento(auxOut);
+				if(elemFindOut.getIngresso() != null){	
+					auxIn = elemFindOut.getIngresso();
+					elemFindIn = ricercaElemento(auxIn);
+					//Se ingresso ed elemento principale non sono uguali
+					if(! elemFindIn.equals(e)){
+						return false;
+					}
+				}
+			}
+			
+			
+			
+			/*
 			switch (e.getID()) {
 			case "AZIONE":
 				//
@@ -242,8 +282,9 @@ public class Modello /*extends Elemento */{
 			default:
 				break;
 			}
+			*/
 		}
-		return false;
+		return true;
 	}
 	
 	/**
@@ -342,7 +383,7 @@ public class Modello /*extends Elemento */{
 	 * 
 	 * @param ID
 	 * @param nome
-	 * @return
+	 * @return L'elemento trovato.
 	 * @author federicofalcone
 	 */
 	
@@ -355,6 +396,22 @@ public class Modello /*extends Elemento */{
 		return null;
 	}
 	
+	/**
+	 * Metodo di ricerca nel vector di elementi.
+	 * Restituisce l'elemento nel Vector di elementi, dato un elemento.
+	 * 
+	 * @param elem L'elemento da cercare
+	 * @return L'elemento trovato.
+	 * @author federicofalcone
+	 */
+	public Elemento ricercaElemento(Elemento elem){
+		for(Elemento e: elementi){
+			if(e.equals(elem)){
+				return e;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Restituisce l'indice di elem nel vettore di elementi, se presente, altrimenti -1.
