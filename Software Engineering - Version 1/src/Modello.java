@@ -222,22 +222,21 @@ public class Modello /*extends Elemento */{
 	 * Metodo che controlla gli In e gli Out reciproci del modello.
 	 * @return TRUE se ok, altrimenti FALSE.
 	 */
+	//DA FARE REFACTORING
 	public boolean controlloInOutReciproci(){
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
+			
+			//Inizializzo gli Elementi trovati dagli in e dagli out
 			Elemento elemFindOut = null;
 			Elemento elemFindIn = null;
+			
+			//Elementi corrispondenti gli in e gli out
 			Elemento auxOut = null;
 			Elemento auxIn = null;
 			
-			//Controllo l'uscita di un elemento
-			
-			//Se singolo elemento ho finito, altrimenti cerco su tutti gli elementi
-			
-			//Per ogni elemento in uscita verifico che l'ingresso di quell'elemento abbia come elemento anche e.
-			
-			//Se il controllo non e' vero, restituisco false
-			
+			//USCITA SINGOLA
+			//Controllo che l'uscita non sia diversa da null
 			if(e.getUscita() != null){
 				//Uscita dell'elemento
 				auxOut = e.getUscita();
@@ -248,6 +247,34 @@ public class Modello /*extends Elemento */{
 					//Se ingresso ed elemento principale non sono uguali
 					if(! elemFindIn.equals(e)){
 						return false;
+					}
+				}
+			}
+			
+			//USCITA COME VECTOR
+			//Controllo sugli elementi con piu' uscite (Branch e Fork)
+			if(e.getUscite() != null){
+				for(Elemento elem: e.getUscite()){
+					elemFindOut = ricercaElemento(elem);
+				
+					//Controllo sugli elementi con un solo ingresso
+					if(elemFindOut.getIngresso() != null){
+						auxIn = elemFindOut.getIngresso();
+						elemFindIn = ricercaElemento(auxIn);
+						if(! elemFindIn.equals(e)){
+							return false;
+						}
+					}
+					
+					//Controllo sugli elementi con piu' ingressi (Merge, Join)
+					if(elemFindOut.getIngressi() != null){
+						for(Elemento elemInt: elemFindOut.getIngressi()){
+							//auxIn = elemInt;
+							elemFindIn = ricercaElemento(elemInt);
+							if(! elemFindIn.equals(e)){
+								return false;
+							}
+						}
 					}
 				}
 			}
