@@ -222,7 +222,7 @@ public class Modello /*extends Elemento */{
 	 * Metodo che controlla gli In e gli Out reciproci del modello.
 	 * @return TRUE se ok, altrimenti FALSE.
 	 */
-	//DA FARE REFACTORING
+	//DA FARE REFACTORING 
 	public boolean controlloInOutReciproci(){
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
