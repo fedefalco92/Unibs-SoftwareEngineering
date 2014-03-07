@@ -127,12 +127,12 @@ public class CostruzioneModello {
 				case "END":
 					elem = new End(NomeElem);
 					break;
-//				case "FORK":
-//					//elem = new Fork(NomeElem);
-//					break;
-//				case "JOIN":
-//					//elem = new Join(NomeElem);
-//					break;
+				case "FORK":
+					elem = new Fork(NomeElem);
+					break;
+				case "JOIN":
+					elem = new Join(NomeElem);
+					break;
 				default:
 					System.out.println("Elemento non riconosciuto");
 				}
@@ -173,6 +173,11 @@ public class CostruzioneModello {
 		return uscite;
 	}
 	
+	/**
+	 * Metodo che dato un elemento lo aggiunge al vector delle entrate.
+	 * @param elemIndex
+	 * @param entrate
+	 */
 	private static void aggiungoEntrate(Elemento elemIndex, Vector <Elemento> entrate){
 		if(! entrate.isEmpty()){
 			Elemento elemFirst = entrate.firstElement();
@@ -204,6 +209,23 @@ public class CostruzioneModello {
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovoMerge);
 				break;
+			case "FORK":
+//				Fork nuovoFork = (Fork) elemIndex;
+//				if(elemFirst != null)
+//					nuovoFork.setIngresso(elemFirst);
+//				i = modelloCaricato.indiceElemento(elemIndex);
+//				if(i != -1)
+//					modelloCaricato.getElementi().set(i, nuovoFork);
+//				break;
+			case "JOIN":
+//				Join nuovoJoin = (Join) elemIndex;
+//				for(Elemento elemIter: entrate){
+//					nuovoJoin.aggiungiIngresso(elemIter);
+//				}
+//				i = modelloCaricato.indiceElemento(elemIndex);
+//				if(i != -1)
+//					modelloCaricato.getElementi().set(i, nuovoJoin);
+//				break;
 			case "END":
 				End nuovoEnd = (End) elemIndex;
 				if(elemFirst != null)
@@ -249,6 +271,23 @@ public class CostruzioneModello {
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovoMerge);
 				break;
+			case "FORK":
+//				Fork nuovoFork = (Fork) elemIndex;
+//				for(Elemento elemIter: uscite){
+//					nuovoFork.aggiungiUscita(elemIter);
+//				}
+//				i = modelloCaricato.indiceElemento(elemIndex);
+//				if(i != -1)
+//					modelloCaricato.getElementi().set(i, nuovoFork);
+				break;
+			case "JOIN":
+//				Join nuovoJoin = (Join) elemIndex;
+//				if(elemFirst != null)
+//					nuovoJoin.aggiungiUscita(elemFirst);
+//				i = modelloCaricato.indiceElemento(elemIndex);
+//				if(i != -1)
+//					modelloCaricato.getElementi().set(i, nuovoJoin);
+				break;
 			case "START":
 				Start nuovoStart = (Start) elemIndex;
 				Azione azioneFirst = (Azione) elemFirst;
@@ -264,6 +303,7 @@ public class CostruzioneModello {
 		}
 	}
 	
+	//ORA METODO CHE NON SERVE PIU'
 	private static void analisiRiga(String stringa){
 		//Elemento nuovoElemento = null;
 		

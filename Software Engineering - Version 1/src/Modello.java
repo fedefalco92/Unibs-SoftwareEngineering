@@ -24,7 +24,6 @@ public class Modello /*extends Elemento */{
 	private Vector<Merge> mergeIncompleti;
 	
 	public Modello(String nome){
-		//super("MODELLO", nome);
 		this.nome = nome;
 		elementi = new Vector<Elemento>();
 		
@@ -47,27 +46,7 @@ public class Modello /*extends Elemento */{
 		}
 		return v;
 	}
-	/*
-	/**
-	 * Altro costruttore necessario per le classi Flusso ( e Alternativa? )
-	 * @param ID
-	 * @param nome
-	 */
-	/* public Modello(String ID, String nome){
-		super(ID, nome);
-		this.nome = nome;
-		elementi = new Vector<Elemento>();
-		
-		start = new Start("Start");
-		azioni = new Vector<Azione>();
-		branch = new Vector<Branch>();
-		merge = new Vector<Merge>();
-		fork = new Vector<Fork>();
-		join = new Vector<Join>();
-		end = new End("End");
-		mergeIncompleti = new Vector<Merge>();
-	}
-	*/
+	
 	//METODI AGGIUNTA A VECTOR//
 	public void aggiungiElemento(Elemento elem){
 		elementi.add(elem);
@@ -200,12 +179,33 @@ public class Modello /*extends Elemento */{
 		}
 	}
 	
+	//CONTROLLO CORRETTEZZA ELEMENTI
+	/**
+	 * Metodo padre che fa i controlli necessari sul modello.
+	 * Esso richiama altri metodi ausiliari per verificare la correttezza del modello
+	 * @return TRUE se il modello e' sintatticamente e semanticamente corretto, FALSE altrimenti.
+	 */
 	public boolean controllaModello(){
 		//Controllo immediatamente che siano impostati il punto iniziale e il punto finale
-		if(start == null || end == null)
+		if(start == null && end == null){
+			System.out.println("Manca il nodo iniziale START e il nodo finale END");
 			return false;
-		else
+		}else if(start == null){
+			System.out.println("Manca il nodo iniziale START");
+			return false;
+		}else if(end == null){
+			System.out.println("Manca il nodo finale END");
+			return false;
+		}else if(fork.size() != join.size()){
+			System.out.println("I FORK presenti del modello sono in numero diverso rispetto ai JOIN presenti. C'e' un errore nel modello");
+			return false;
+		}else if(branch.size() != merge.size()){
+			System.out.println("I BRANCH presenti del modello sono in numero diverso rispetto ai MERGE presenti. C'e' un errore nel modello");
+			return false;
+		}
+		else{
 			return controllaInOutModello();
+		}
 	}
 	
 	/**
@@ -225,6 +225,13 @@ public class Modello /*extends Elemento */{
 			case "MERGE":
 				//
 				break;
+			case "FORK":
+				//
+				break;
+			case "JOIN":
+				//
+				break;
+				
 			case "START":
 				//
 				break;
@@ -259,6 +266,7 @@ public class Modello /*extends Elemento */{
 				break;
 				
 			case "BRANCH":
+			case "FORK" :
 				//INGRESSO
 				//Un solo ingresso
 				if(!elementoInModello(e.getIngresso()))
@@ -275,6 +283,7 @@ public class Modello /*extends Elemento */{
 				break;
 				
 			case "MERGE":
+			case "JOIN":
 				//INGRESSO
 				//Almeno due ingressi
 				if(e.getIngressi().size() < 2)
