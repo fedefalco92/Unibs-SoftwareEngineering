@@ -11,7 +11,7 @@ import java.util.Vector;
  * @author Massi
  *
  */
-public class UtilitaGenerazioneMHS {
+public class UtilityInsiemi {
 	
 	private static final int DELIM = 1; //Per estensioni future, ma e' da rivedere
 	
@@ -107,20 +107,6 @@ public class UtilitaGenerazioneMHS {
 	   
 	   return sostituisciConTesto(hittingSet, idTestuali);
 	}	
-
-	/*
-	public static Vector<String> estraiIdentificatori(Vector<Vector<String>> insieme){
-		Vector<String> identificatori = new Vector<String>();
-		for(Vector<String> sottoinsieme : insieme){
-			for(String elem : sottoinsieme){
-				if(!member(elem,identificatori)){
-					identificatori.add(elem);
-				}
-			}
-		}
-		return identificatori;
-	}	
-	 */
 
 	/**
 	 * Mette un numero adeguato di "0" in testa alla stringa, per 
@@ -523,6 +509,49 @@ public class UtilitaGenerazioneMHS {
 			}
 		}
 		return presenze;
+	}
+	
+	/**
+	 * Calcolo del coefficiente di Ochiai fra due vettori binari
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
+	
+	public static double coeffOchiai(Vector<Integer> v1, Vector<Integer> v2){
+		int countn11 = 0;
+		int countn10 = 0;
+		int countn01 = 0;
+		for(int i=0;i<v1.size();i++){
+			if(v1.elementAt(i) == 1 && v2.elementAt(i)==1)
+				countn11++;
+			else if(v1.elementAt(i) == 1 && v2.elementAt(i)==0)
+				countn10++;
+			else if(v1.elementAt(i) == 0 && v2.elementAt(i)==1)
+				countn01++;								
+		}
+		return ((double)countn11/Math.sqrt((double)(countn11+countn10)*(countn11+countn01)));	
+	}
+	
+	/**
+	 * Calcolo dell'intersezione fra due intervalli
+	 * (da controllare)
+	 * @param e1
+	 * @param e2
+	 * @return
+	 */
+	
+	public static int intersecaIntervallo(OggettoAnalisi e1, OggettoAnalisi e2){
+		int infE1 = e1.getExtInf();
+		int supE1 = e1.getExtSup();
+		int infE2 = e2.getExtInf();
+		int supE2 = e2.getExtSup();
+		int d1 = Math.abs(infE1 - infE2);
+		int d2 = Math.abs(supE1 - supE2);
+		if(d1 <= d2){	//posizione dell' = ???
+			return d1;
+		}
+		return d2;
 	}
 	
 

@@ -22,7 +22,7 @@ public class ClasseEquivalenza {
 	private String nome;
 	private Prova istanzaProva;
 	private int cardinalita;
-	private Vector<String> insiemeAttivita;		//Totale delle attivita' prese in ingresso dal modello...sara' tolto!
+	private Vector<String> insiemeAzioni;		//Totale delle attivita' prese in ingresso dal modello...sara' tolto!
 	private Vector<String> attivitaCoinvolte;
 	private Vector<Vector<String>> diagnosiMinimali;
 	private Hashtable <String,Double> probabilitaProva;
@@ -34,7 +34,7 @@ public class ClasseEquivalenza {
 		cardinalita = 0;
 		diagnosiMinimali = null;
 		attivitaCoinvolte = new Vector<String>();
-		this.insiemeAttivita = insiemeAttivita;		
+		this.insiemeAzioni = insiemeAttivita;		
 		probabilitaProva = new Hashtable <String,Double>();
 		probabilitaClasse = new Hashtable <String,Double>();
 	}
@@ -61,7 +61,21 @@ public class ClasseEquivalenza {
 
 	public Prova getProva(){
 		return istanzaProva;
-	}	
+	}
+	
+	/**
+	 * Metodo che ritorna un vettore di prove replicate in base alla cardinalita
+	 * (soluzione temporanea...si cerchera' di trovare un modo migliore...)
+	 * @return
+	 */
+	
+	public Vector<Prova> getProveReplicate(){
+		Vector<Prova> vettoreProve = new Vector<Prova>();
+		for(int i=0;i<cardinalita;i++){
+			vettoreProve.add(istanzaProva);
+		}
+		return vettoreProve;
+	}
 	
 	public Hashtable <String,Double> getProbabilitaClasse(){
 		this.setProbabilitaClasse();
@@ -150,7 +164,7 @@ public class ClasseEquivalenza {
 		
 		if(corrispondenze != null){
 		
-			diagnosiMinimali = UtilitaGenerazioneMHS.generaMHS(corrispondenze,insiemeAttivita);
+			diagnosiMinimali = UtilityInsiemi.generaMHS(corrispondenze,insiemeAzioni);
 		
 			//System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
 		}
@@ -167,7 +181,7 @@ public class ClasseEquivalenza {
 	
 	private Vector<Vector<Integer>> generazioneCorrispondenze(){
 		//ampiezza della colonna
-		int numeroColonne = insiemeAttivita.size();
+		int numeroColonne = insiemeAzioni.size();
 		
 		Vector<Vector<Integer>> tabellaCorrispondenze = new Vector<Vector<Integer>>();
 		
@@ -194,7 +208,7 @@ public class ClasseEquivalenza {
 				for(String elemento : sottoinsieme){
 					//recupero la posizione dell'attivita' nell'elenco(vector) presente nello stato dell'oggetto
 					
-					int posizioneInElencoGenerale = insiemeAttivita.indexOf(elemento);
+					int posizioneInElencoGenerale = insiemeAzioni.indexOf(elemento);
 					
 					//System.out.println("Posizione in elenco: " + posizioneInElencoGenerale);
 					
@@ -247,7 +261,7 @@ public class ClasseEquivalenza {
 		
 		//ciclo di riempimento della tabella delle attivita'
 		
-		for(String elem : insiemeAttivita){
+		for(String elem : insiemeAzioni){
 			probabilitaProva.put(elem, -1.0);
 		}
 		
@@ -283,7 +297,7 @@ public class ClasseEquivalenza {
 		}			
 	
 		//Recupero tutte le azioni coinvolte nelle diagnosi minimali(in generale)
-		Vector <String> azioniInDiagnosi = UtilitaGenerazioneMHS.getAzioniInsieme(diagnosiMinimali);
+		Vector <String> azioniInDiagnosi = UtilityInsiemi.getAzioniInsieme(diagnosiMinimali);
 		
 		//System.out.println(azioniInDiagnosi.toString());
 		
@@ -315,14 +329,14 @@ public class ClasseEquivalenza {
 				//se l'azione e' presente nel sottoinsieme faccio 1/cardinalita' del sottoinsieme
 				//e la sommo nell'array delle probabilita' cumulate, creato sulla dimensione delle
 				//attivita' considerate
-				if(UtilitaGenerazioneMHS.member(singleAction, diagnosi_sing)){
+				if(UtilityInsiemi.member(singleAction, diagnosi_sing)){
 					probabilitaCumulate[posizioneInElenco] += (1/(double)dimensioneSingola);
 					//System.out.println("probabilitaCumulate[" + posizioneInElenco+"]" + "=" + probabilitaCumulate[posizioneInElenco]);
 				}
 			}
 			//se arrivo qui ho finito di passare in rassegna i sottoinsiemi e posso calcolare la 
 			//probabilita' definitiva
-			int contaOccorrenzeAttivita = UtilitaGenerazioneMHS.contaPresenze(singleAction, diagnosiMinimali);
+			int contaOccorrenzeAttivita = UtilityInsiemi.contaPresenze(singleAction, diagnosiMinimali);
 			//probabilitaCumulate[posizioneInElenco] /= contaOccorrenzeAttivita;
 			probabilitaProva.put(singleAction, probabilitaCumulate[posizioneInElenco]/(double)contaOccorrenzeAttivita);
 		}
@@ -361,7 +375,8 @@ public class ClasseEquivalenza {
 			else{
 				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
 			}
-		}			
+		}	
+	 if(cardinalita > 1){
 		buffer.append("\nPROBABILITA' CLASSE DI EQUIVALENZA : \n");
 		//Iteratore sulla tabella delle probabilita' della classe di equivalenza
 		Enumeration<String> iteratore2 = probabilitaClasse.keys();
@@ -375,7 +390,8 @@ public class ClasseEquivalenza {
 			else{
 				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
 			}
-		}			
+		}		
+	 }
 		return buffer.toString();
 	}
 	
