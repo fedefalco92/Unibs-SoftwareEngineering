@@ -17,21 +17,21 @@ public class CalcoloProbabilita {
 	 * @param args
 	 */
 
-	/*
+/*	
 	public static void main(String[] args) {
 		//PRIMO METODO DI CALCOLO DELLE PROBABILITA'
 		//costruzione degli oggetti tipo prova(esempi del PDF relativo)
 		
-		Vector<String> attivitaTotali = new Vector<String>();
-		attivitaTotali.add("A1");
-		attivitaTotali.add("A2");
-		attivitaTotali.add("A3");
-		attivitaTotali.add("A4");
-		attivitaTotali.add("A5");
-		attivitaTotali.add("A6");
-		attivitaTotali.add("A7");
-		attivitaTotali.add("A8");
-		attivitaTotali.add("A9");
+		Vector<String> azioniTotali = new Vector<String>();
+		azioniTotali.add("A1");
+		azioniTotali.add("A2");
+		azioniTotali.add("A3");
+		azioniTotali.add("A4");
+		azioniTotali.add("A5");
+		azioniTotali.add("A6");
+		azioniTotali.add("A7");
+		azioniTotali.add("A8");
+		azioniTotali.add("A9");
 		
 /*
 		attivitaTotali.add("A4");
@@ -79,8 +79,8 @@ public class CalcoloProbabilita {
 		p5.addPercorso(new Cammino("A1,A2,A3,A4,A6",false));
 		p5.addPercorso(new Cammino("A1",true));
 		p5.addPercorso(new Cammino("A1,A2,A3",true));
-		
-		
+		*/
+	/*	
 		Prova p1 = new Prova("1");
 		p1.addPercorso(new Cammino("A1,A3,A4,A5,A7,A8,A9",false));
 		p1.addPercorso(new Cammino("A1,A3,A4,A5",true));
@@ -96,28 +96,35 @@ public class CalcoloProbabilita {
 		
 		//classi di equivalenza
 		//QUESTA PARTE DOVRA' ESSERE ORGANIZZATA PER UN RIEMPIMENTO AUTOMATICO
-		ClasseEquivalenza cl1 = new ClasseEquivalenza("Classe 1",attivitaTotali);
+		ClasseEquivalenza cl1 = new ClasseEquivalenza("Classe 1",azioniTotali);
 		cl1.setIstanzaProva(p1);
 		cl1.setCardinalita(1);
-		ClasseEquivalenza cl2 = new ClasseEquivalenza("Classe 2",attivitaTotali);
+		ClasseEquivalenza cl2 = new ClasseEquivalenza("Classe 2",azioniTotali);
 		cl2.setIstanzaProva(p2);	
 		cl2.setCardinalita(1);		
-		ClasseEquivalenza cl3 = new ClasseEquivalenza("Classe 3",attivitaTotali);
+		ClasseEquivalenza cl3 = new ClasseEquivalenza("Classe 3",azioniTotali);
 		cl3.setIstanzaProva(p3);
 		cl3.setCardinalita(1);		
 		/*ClasseEquivalenza cl4 = new ClasseEquivalenza("Classe 4",attivitaTotali);
 		cl4.setIstanzaProva(p5);
 		cl4.setCardinalita(1);		
-		
+		*/
+/*		
 		//aggiunta ad un test suite 
-		TestSuite ts1 = new TestSuite(attivitaTotali);
+		TestSuite ts1 = new TestSuite(azioniTotali);
 		ts1.addNuovaClasseEquivalenza(cl1);
 		ts1.addNuovaClasseEquivalenza(cl2);
 		ts1.addNuovaClasseEquivalenza(cl3);	
 		//ts1.addNuovaClasseEquivalenza(cl4);	
 		
 		ts1.calcolaProbabilitaM1();		
+		ts1.calcolaProbabilitaM2();
+		
 		System.out.println(ts1);
+		
+		Distanze dist = new Distanze(ts1);
+		dist.riempiElencoM1();
+		//dist.riempiElencoM2();
 			
 
 		
