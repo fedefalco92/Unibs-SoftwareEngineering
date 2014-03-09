@@ -152,7 +152,7 @@ public class Distanze {
 			copiaM2.pollFirstEntry();
 			distanzaPerAzione.put(chiaveAttuale, intersezione);
 		}
-		System.out.println(distanzaPerAzione.toString());
+		//System.out.println(distanzaPerAzione.toString());
 
 	}
 

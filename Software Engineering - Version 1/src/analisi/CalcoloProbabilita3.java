@@ -14,7 +14,7 @@ public class CalcoloProbabilita3 {
 	/**
 	 * @param args
 	 */
-	/*
+/*	
 	public static void main(String[] args) {
 		//costruzione degli oggetti tipo prova(esempi del PDF relativo)
 		

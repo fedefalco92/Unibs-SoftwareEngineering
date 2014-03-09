@@ -592,10 +592,17 @@ public class UtilityInsiemi {
 			return 0;
 		return Math.abs(infE2-supE1);
 		*/
-		if((infE2>=infE1 && supE2<=supE1) || (infE1<=infE2 && infE2<=supE1) || (infE1<=infE2 && supE1<=supE2))
+		/*if((infE2>=infE1 && supE2<=supE1) || (infE1<=infE2 && infE2<=supE1) || (infE1<=infE2 && supE1<=supE2))
 			return 0;
 		else
-			return Math.min(d1, d2);
+			return Math.min(d1, d2);*/
+		if(infE1<infE2 && infE1<supE2 && supE1<infE2 && supE1<supE2){
+			return Math.abs(infE2-supE1);
+		}
+		else if(infE1>supE2 && infE1>infE2 && supE1>supE2 && supE1>infE2){
+			return Math.abs(infE1-supE2);
+		}		
+		return 0;
 	}	
 	
 
