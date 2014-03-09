@@ -1,9 +1,10 @@
 import java.util.Vector;
 
 
-public class Join extends Elemento {
+public class Join extends Elemento implements ElementoTerminale {
 
-	private Vector<Flusso> flussiIN;
+	//private Vector<Flusso> flussiIN;
+	private Vector<Elemento> ingressi;
 	private Fork forkAssociato;
 	private Elemento uscita;
 	private boolean incompleto;
@@ -15,7 +16,8 @@ public class Join extends Elemento {
 	 */
 	public Join(String nome) {
 		super("JOIN", nome);
-		flussiIN = new Vector <Flusso>();
+		//flussiIN = new Vector <Flusso>();
+		ingressi = new Vector <Elemento>();
 		incompleto = true;
 	}
 
@@ -35,11 +37,13 @@ public class Join extends Elemento {
 		this.uscita = uscita;
 	}
 	
+	/*
 	public void aggiungiFlussoIN(Flusso f){
 		flussiIN.add(f);
 		if(flussiIN.size()>=2)
 			incompleto=false;
 	}
+	*/
 	
 	@Override
 	public String toString() {
@@ -48,7 +52,19 @@ public class Join extends Elemento {
 		
 		
 		output.append("in(" );
-		if(!flussiIN.isEmpty()){
+		if(!ingressi.isEmpty()){
+			
+			for(int i = 0; i < ingressi.size() - 1; i++){
+				output.append(ingressi.get(i));
+				output.append(", ");
+			}
+			output.append(ingressi.lastElement());
+			
+			if(incompleto)
+				output.append("incompleto");
+		}
+		/*
+		 * if(!flussiIN.isEmpty()){
 			
 			for(int i = 0; i < flussiIN.size() - 1; i++){
 				output.append(flussiIN.get(i).getFlussoString());
@@ -59,6 +75,7 @@ public class Join extends Elemento {
 			if(incompleto)
 				output.append("incompleto");
 		}
+		 */
 		else output.append("empty");
 		output.append(") - out(");
 		if(uscita!=null) output.append(uscita.getElementoString());
@@ -76,20 +93,24 @@ public class Join extends Elemento {
 
 	@Override
 	public Elemento getUscita() {
-		// TODO Auto-generated method stub
-		return null;
+		return uscita;
 	}
 
 	@Override
 	public Vector<Elemento> getIngressi() {
-		// TODO Auto-generated method stub
-		return null;
+		return ingressi;
 	}
 
 	@Override
 	public Vector<Elemento> getUscite() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void aggiungiIngresso(Elemento elem) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
