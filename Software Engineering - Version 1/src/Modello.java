@@ -488,13 +488,12 @@ public class Modello {
 		for(Merge m:merge){
 			if(nome.equals(m.getNome())) return false;
 		}
-		/* uso futuro (le classi Fork e Join sono vuote al momento)
 		for(Fork f:fork){
-			if((nome.equals(f.getNome())) return false;
+			if(nome.equals(f.getNome())) return false;
 		}
 		for(Join j:join){
-			if((nome.equals(j.getNome())) return false;
-		} */
+			if(nome.equals(j.getNome())) return false;
+		} 
 		
 		return true;
 	}

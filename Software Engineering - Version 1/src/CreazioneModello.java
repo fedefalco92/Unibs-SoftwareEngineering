@@ -293,8 +293,8 @@ public class CreazioneModello {
 			Flusso flusso = new Flusso(nomeFlusso, fork);
 			
 			
-			fork.aggiungiFlusso(flusso);
-			fork.getJoinAssociato().aggiungiFlussoIN(flusso);
+			//fork.aggiungiFlusso(flusso);
+			//fork.getJoinAssociato().aggiungiFlussoIN(flusso);
 		}
 		
 		//una volta terminato l'inserimento dei flussi si continua con il modello a partire dal join!!

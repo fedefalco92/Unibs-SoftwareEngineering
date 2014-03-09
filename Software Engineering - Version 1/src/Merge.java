@@ -1,6 +1,6 @@
 import java.util.Vector;
 
-public class Merge extends Elemento{
+public class Merge extends Elemento implements ElementoTerminale{
 
 	private Vector <Elemento> ingressi;
 	private Elemento uscita;

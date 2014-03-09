@@ -8,7 +8,7 @@ import java.util.Vector;
 public class Fork extends Elemento {
 	
 	private Elemento ingresso;
-	private Vector<Flusso> flussiOUT;
+	//private Vector<Flusso> flussiOUT;
 	private Vector<Elemento> uscite;
 	private Join joinAssociato;
 	private boolean incompleto; //attenzione! ancora da decidere se per flussiOUT o uscite
@@ -29,20 +29,22 @@ public class Fork extends Elemento {
 
 	public Fork(String nome) {
 		super("FORK", nome);
-		this.flussiOUT = new Vector<Flusso>();
+		//this.flussiOUT = new Vector<Flusso>();
 		this.incompleto = true;
+		this.uscite = new Vector <Elemento> ();
 	}
 
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
 	
+	/*
 	public void aggiungiFlusso(Flusso f){
 		flussiOUT.add(f);
 		if(flussiOUT.size()>=2)
 			incompleto=false;
 	}
-	
+	*/
 	public String toString(){
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
@@ -51,6 +53,17 @@ public class Fork extends Elemento {
 		if(ingresso!=null) output.append(ingresso.getElementoString());
 		else output.append("null");
 		output.append(") - out(");
+		if(!uscite.isEmpty()){
+			for(int i = 0; i < uscite.size() - 1; i++){
+				output.append(uscite.get(i)); //IN ALTERNATIVA getFlussoString()
+				output.append(", ");
+			}
+			output.append(uscite.lastElement());
+			
+			if(incompleto)
+				output.append("incompleto");
+		}
+		/*
 		if(!flussiOUT.isEmpty()){
 			for(int i = 0; i < flussiOUT.size() - 1; i++){
 				output.append(flussiOUT.get(i).getFlussoString()); //IN ALTERNATIVA getFlussoString()
@@ -61,6 +74,7 @@ public class Fork extends Elemento {
 			if(incompleto)
 				output.append("incompleto");
 		}
+		*/
 		else output.append("empty");
 		
 		output.append(")");
