@@ -1,7 +1,8 @@
+import java.beans.FeatureDescriptor;
 import java.util.Vector;
 
 
-public class Modello /*extends Elemento */{
+public class Modello {
 	
 	private String nome;
 	
@@ -149,6 +150,10 @@ public class Modello /*extends Elemento */{
 	//METODI SUL MODELLO//
 	
 	//RIEMPI VECTOR SPECIALIZZATI NEL MODELLO
+	/**
+	 * Metodo che riempie i vector dei modelli specializzati partendo dal vector di elementi contenuti nel modello.
+	 * @author federicofalcone
+	 */
 	public void riempiVectorModello(){
 		for(Elemento elem: elementi){
 			switch (elem.getID()) {
@@ -168,10 +173,10 @@ public class Modello /*extends Elemento */{
 				start = (Start) elem;
 				break;
 			case "FORK":
-				//
+				aggiungiFork((Fork) elem);
 				break;
 			case "JOIN":
-				//
+				aggiungiJoin((Join) elem);
 				break;
 			default:
 				break;
@@ -184,6 +189,7 @@ public class Modello /*extends Elemento */{
 	 * Metodo padre che fa i controlli necessari sul modello.
 	 * Esso richiama altri metodi ausiliari per verificare la correttezza del modello
 	 * @return TRUE se il modello e' sintatticamente e semanticamente corretto, FALSE altrimenti.
+	 * @author federicofalcone
 	 */
 	public boolean controllaModello(){
 		//Controllo immediatamente che siano impostati il punto iniziale e il punto finale
@@ -221,8 +227,9 @@ public class Modello /*extends Elemento */{
 	/**
 	 * Metodo che controlla gli In e gli Out reciproci del modello.
 	 * @return TRUE se ok, altrimenti FALSE.
+	 * @author federicofalcone
 	 */
-	//DA FARE REFACTORING 
+	//TO DO: REFACTORING 
 	public boolean controlloInOutReciproci(){
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
@@ -278,38 +285,6 @@ public class Modello /*extends Elemento */{
 					}
 				}
 			}
-			
-			
-			
-			/*
-			switch (e.getID()) {
-			case "AZIONE":
-				//
-				break;
-			case "BRANCH":
-				//
-				break;
-			case "MERGE":
-				//
-				break;
-			case "FORK":
-				//
-				break;
-			case "JOIN":
-				//
-				break;
-				
-			case "START":
-				//
-				break;
-			case "END":
-				//
-				break;
-				
-			default:
-				break;
-			}
-			*/
 		}
 		return true;
 	}
@@ -413,7 +388,6 @@ public class Modello /*extends Elemento */{
 	 * @return L'elemento trovato.
 	 * @author federicofalcone
 	 */
-	
 	public Elemento ricercaElementoInModello(String ID, String nome){
 		for(Elemento elem: elementi){
 			if(elem.getID().equalsIgnoreCase(ID) && elem.getNome().equalsIgnoreCase(nome)){
