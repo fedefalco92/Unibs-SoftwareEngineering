@@ -2,7 +2,8 @@ import java.util.Vector;
 
 /**
  * La classe fork ha come ingresso un qualsiasi elemento e come uscite almeno due flussi di esecuzione paralleli!
- * @author Maffi
+ * 
+ * @author Maff3x
  *
  */
 public class Fork extends Elemento {

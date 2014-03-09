@@ -105,9 +105,37 @@ public class CreazioneModelloCopia {
 	}
 	
 	private static void salvaModello(Modello modello) {
+		
+		final String TITOLO = "MENU SALVATAGGIO MODELLO " + modello.getNome();;
+		final String [] VOCI = {"Salva come testo" , "Salva come oggetto"};
+		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
+		menuCreazione.setVoceUscita("0\tTorna indietro");
+		int scelta = menuCreazione.scegli();
+		
+		switch (scelta)
+		{
+			case 0: 
+				return;
+			case 1:				
+				salvaFormatoTestuale(modello);
+				break;
+			case 2:
+				salvaFormatoOggetto(modello);
+				break;
+		}
+	}
+
+	private static void salvaFormatoOggetto(Modello modello) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	private static void salvaFormatoTestuale(Modello modello) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	/**
 	 * Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
