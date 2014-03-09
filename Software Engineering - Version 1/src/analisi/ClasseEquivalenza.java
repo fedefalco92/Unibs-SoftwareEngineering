@@ -151,22 +151,13 @@ public class ClasseEquivalenza {
 	private void generaDiagnosi(){
 		
 		//Applicazione dei metodi creati per trovare l'insieme di diagnosi minimali		
-		
-		//System.out.println("Insieme Attivita' : " + insiemeAttivita);
-		
-		//System.out.println("Insieme base di partenza: " + generaInsiemePartenza().toString());
-	
 		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
-		
-		//System.out.println("Corrispondenze per calcolo MHS: " + corrispondenze); 
-		
+	
 		//se ho corrispondenze su cui calcolare le diagnosi minimali...
 		
 		if(corrispondenze != null){
 		
-			diagnosiMinimali = UtilityInsiemi.generaMHS(corrispondenze,insiemeAzioni);
-		
-			//System.out.println("Insieme delle diagnosi minimali: " + diagnosiMinimali.toString() + "\n\n\n");
+			diagnosiMinimali = UtilityInsiemi.generaMHS(corrispondenze,insiemeAzioni);		
 		}
 
 	}
@@ -217,9 +208,6 @@ public class ClasseEquivalenza {
 					if(posizioneInElencoGenerale != -1){
 						rigaCorrispondenza.setElementAt(1, posizioneInElencoGenerale);					
 					}
-				/*	else{
-						rigaCorrispondenza.setElementAt(0, posizioneInElencoGenerale);		
-					}*/
 				}
 				tabellaCorrispondenze.add(rigaCorrispondenza);
 			}
@@ -245,9 +233,7 @@ public class ClasseEquivalenza {
 		//solo qui vado ad istanziare effettivamente le diagnosi 
 		
 		generaDiagnosi();
-		
-		//System.out.println("Diagnosi minimali : " + diagnosiMinimali.toString() + "\n\n");
-		
+			
 		//Qui devo contare le frequenze di ciascuna attivita'--->come devo fare???
 		
 		//HO PROVATO AD UTILIZZARE LE HASHTABLE, MA DEVO VERIFICARE SE EFFETTIVAMENTE FUNZIONA...
@@ -271,11 +257,7 @@ public class ClasseEquivalenza {
 		//N.B: --> IN FUTURO POSSO SPOSTARE QUESTA OPERAZIONE DIRETTAMENTE IN PROVA!!!
 		
 		Vector<String> azioniResidue = istanzaProva.getAzioniCoinvolte();
-		
-		//System.out.println(azioniResidue.toString());
-		
-		//System.out.println(diagnosiMinimali.toString());
-	
+
 		if(!azioniResidue.isEmpty()){
 			for(Vector<String> sottoinsieme : diagnosiMinimali){
 				//passo in rassegna ciascun sottoinsieme
@@ -288,8 +270,6 @@ public class ClasseEquivalenza {
 			}
 		}
 		
-		//System.out.println(azioniResidue.toString());
-		
 		//ora scansiono le azioni residue e assegno loro probabilita' pari a 0
 	
 		for(String azione : azioniResidue){
@@ -298,9 +278,7 @@ public class ClasseEquivalenza {
 	
 		//Recupero tutte le azioni coinvolte nelle diagnosi minimali(in generale)
 		Vector <String> azioniInDiagnosi = UtilityInsiemi.getAzioniInsieme(diagnosiMinimali);
-		
-		//System.out.println(azioniInDiagnosi.toString());
-		
+
 		//se non e' vuoto posso procedere all'elaborazione
 		
 	//	if(!azioniInDiagnosi.isEmpty()){
@@ -318,32 +296,20 @@ public class ClasseEquivalenza {
 			//posizione in elenco(qui so che c'e' di sicuro)
 			
 			int posizioneInElenco = azioniInDiagnosi.indexOf(singleAction);
-			
-			//System.out.println("Posizione in elenco: " + posizioneInElenco);
-			
 			for(Vector<String> diagnosi_sing : diagnosiMinimali){
 				int dimensioneSingola = diagnosi_sing.size();
-				
-				//System.out.println("Dimensione Singola " + dimensioneSingola);
-				
 				//se l'azione e' presente nel sottoinsieme faccio 1/cardinalita' del sottoinsieme
 				//e la sommo nell'array delle probabilita' cumulate, creato sulla dimensione delle
 				//attivita' considerate
 				if(UtilityInsiemi.member(singleAction, diagnosi_sing)){
 					probabilitaCumulate[posizioneInElenco] += (1/(double)dimensioneSingola);
-					//System.out.println("probabilitaCumulate[" + posizioneInElenco+"]" + "=" + probabilitaCumulate[posizioneInElenco]);
 				}
 			}
 			//se arrivo qui ho finito di passare in rassegna i sottoinsiemi e posso calcolare la 
 			//probabilita' definitiva
 			int contaOccorrenzeAttivita = UtilityInsiemi.contaPresenze(singleAction, diagnosiMinimali);
-			//probabilitaCumulate[posizioneInElenco] /= contaOccorrenzeAttivita;
 			probabilitaProva.put(singleAction, probabilitaCumulate[posizioneInElenco]/(double)contaOccorrenzeAttivita);
 		}
-		
-		//System.out.println(probabilitaProva.toString());
-		
-		//System.out.println(probabilitaProvaM1.toString());			
 
 		Enumeration<String> iteratore = probabilitaProva.keys();
 		while(iteratore.hasMoreElements()){
@@ -351,9 +317,6 @@ public class ClasseEquivalenza {
 			double probProva = probabilitaProva.get(azione);
 			probabilitaClasse.put(azione, probProva*cardinalita);
 		}
-		
-		//System.out.println(probabilitaClasseM1.toString());	
-		
 	}
 	
 	public String toString(){

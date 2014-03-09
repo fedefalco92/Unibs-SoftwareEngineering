@@ -530,7 +530,10 @@ public class UtilityInsiemi {
 			else if(v1.elementAt(i) == 0 && v2.elementAt(i)==1)
 				countn01++;								
 		}
-		return ((double)countn11/Math.sqrt((double)(countn11+countn10)*(countn11+countn01)));	
+		double denom = (countn11+countn10)*(countn11+countn01);
+		if(denom == 0)
+			return 0;
+		return ((double)countn11/Math.sqrt(denom));	
 	}
 	
 	/**
@@ -553,6 +556,47 @@ public class UtilityInsiemi {
 		}
 		return d2;
 	}
+	
+	/**
+	 * Calcolo dell'intersezione fra due intervalli
+	 * (da controllare)
+	 * @param e1
+	 * @param e2
+	 * @return
+	 */
+	
+	//N.B: NON FUNZIONA, DA SISTEMARE!!!!!!
+	public static int intersecaIntervallo(int infE1,int supE1,int infE2, int supE2){
+		int d1 = Math.abs(infE1 - infE2);
+		int d2 = Math.abs(supE1 - supE2);
+		/*if(d1 == d2){
+			return 0;
+		}
+		else{
+			if(infE1 == supE2)
+				return 0;
+			else
+				return Math.min(d1, d2);
+		}*/
+		/*if(infE1<=infE2 && supE1<=infE2)
+			return Math.min(d1, d2);
+		if(infE1>= supE2 && supE1>=infE2)
+			//return Math.min(d1, d2);
+			return 0;
+		
+			return 0;*/
+		//intersezioni
+		/*if(infE1>=infE2)
+			return 0;
+		if(supE1<=supE2)
+			return 0;
+		return Math.abs(infE2-supE1);
+		*/
+		if((infE2>=infE1 && supE2<=supE1) || (infE1<=infE2 && infE2<=supE1) || (infE1<=infE2 && supE1<=supE2))
+			return 0;
+		else
+			return Math.min(d1, d2);
+	}	
 	
 
 	

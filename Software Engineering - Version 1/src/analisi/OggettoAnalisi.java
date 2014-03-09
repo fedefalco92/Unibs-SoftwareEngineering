@@ -3,6 +3,7 @@
  */
 package analisi;
 
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 /**
@@ -17,8 +18,6 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
 	private int extSup;
 	
 	public OggettoAnalisi(String identificatore, double probabilita){
-		//this.identificatori = new Vector<String>();
-		//identificatori.addElement(identificatore);
 		identificatori = identificatore;
 		this.probabilita = probabilita;
 		this.extInf = 1;
@@ -26,12 +25,15 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
 	}	
 	
 	public OggettoAnalisi(String identificatore, double probabilita,int extInf){
-		//this.identificatori = new Vector<String>();
-		//identificatori.addElement(identificatore);
 		identificatori = identificatore;
 		this.probabilita = probabilita;
 		this.extInf = extInf;
 		extSup = 1;
+	}
+	
+	public void setID(String ID){
+		if(!ID.equalsIgnoreCase(this.identificatori))
+			identificatori =  ID + "," + identificatori;
 	}
 	
 	public int getExtInf(){
@@ -46,17 +48,16 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
 		return probabilita;
 	}
 	
-	/*public Vector<String> getIdentificatori(){
+	public String getIDs(){
 		return identificatori;
 	}
 	
-	public void addIdentificatore(String id){
-		identificatori.addElement(id);
-	}*/
-	
 	public void setExtInf(int ext){
 		extInf = ext;
-		//extSup = ext;
+	}
+	
+	public void setExtSup(int ext){
+		extSup = ext;
 	}
 	
 	public void incrementaSup(){
@@ -64,7 +65,7 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
 	}
 	
 	public void incrementaInf(){
-		extInf++;
+		extInf++;	
 	}	
 	
 	public void shiftIntevallo(int offset){
@@ -75,23 +76,15 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
 	
 	@Override
 	public int compareTo(OggettoAnalisi altroOgg) {
+		
 		if(probabilita > altroOgg.getProbabilita()){
-		//	this.incrementaInf();
-			return 1;
-			
+			return -1;		
 		}
 		else if (probabilita < altroOgg.getProbabilita()){
-			//this.incrementaInf();
-			return -1;
+			return 1;
 		}
 		else{
-			if(altroOgg != this)
-				altroOgg.incrementaSup();
-			/*for(String elem : identificatori){
-				altroOgg.addIdentificatore(elem);
-			}
-			*/
-			//altroOgg.setIdentificatore(identificatore)
+			altroOgg.setID(this.identificatori);
 			return 0; //---> questa va aggiunta quando non si vogliono replicati!!!
 		}
 	}
