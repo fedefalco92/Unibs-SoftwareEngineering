@@ -210,22 +210,22 @@ public class CostruzioneModello {
 					modelloCaricato.getElementi().set(i, nuovoMerge);
 				break;
 			case "FORK":
-//				Fork nuovoFork = (Fork) elemIndex;
-//				if(elemFirst != null)
-//					nuovoFork.setIngresso(elemFirst);
-//				i = modelloCaricato.indiceElemento(elemIndex);
-//				if(i != -1)
-//					modelloCaricato.getElementi().set(i, nuovoFork);
-//				break;
+				Fork nuovoFork = (Fork) elemIndex;
+				if(elemFirst != null)
+					nuovoFork.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoFork);
+				break;
 			case "JOIN":
-//				Join nuovoJoin = (Join) elemIndex;
-//				for(Elemento elemIter: entrate){
-//					nuovoJoin.aggiungiIngresso(elemIter);
-//				}
-//				i = modelloCaricato.indiceElemento(elemIndex);
-//				if(i != -1)
-//					modelloCaricato.getElementi().set(i, nuovoJoin);
-//				break;
+				Join nuovoJoin = (Join) elemIndex;
+				for(Elemento elemIter: entrate){
+					nuovoJoin.aggiungiIngresso(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoJoin);
+				break;
 			case "END":
 				End nuovoEnd = (End) elemIndex;
 				if(elemFirst != null)
@@ -272,21 +272,21 @@ public class CostruzioneModello {
 					modelloCaricato.getElementi().set(i, nuovoMerge);
 				break;
 			case "FORK":
-//				Fork nuovoFork = (Fork) elemIndex;
-//				for(Elemento elemIter: uscite){
-//					nuovoFork.aggiungiUscita(elemIter);
-//				}
-//				i = modelloCaricato.indiceElemento(elemIndex);
-//				if(i != -1)
-//					modelloCaricato.getElementi().set(i, nuovoFork);
+				Fork nuovoFork = (Fork) elemIndex;
+				for(Elemento elemIter: uscite){
+					nuovoFork.aggiungiUscita(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoFork);
 				break;
 			case "JOIN":
-//				Join nuovoJoin = (Join) elemIndex;
-//				if(elemFirst != null)
-//					nuovoJoin.aggiungiUscita(elemFirst);
-//				i = modelloCaricato.indiceElemento(elemIndex);
-//				if(i != -1)
-//					modelloCaricato.getElementi().set(i, nuovoJoin);
+				Join nuovoJoin = (Join) elemIndex;
+				if(elemFirst != null)
+					nuovoJoin.aggiungiUscita(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoJoin);
 				break;
 			case "START":
 				Start nuovoStart = (Start) elemIndex;
@@ -369,17 +369,6 @@ public class CostruzioneModello {
 	 */
 	private static String analisiIn(String stringa){
 		return restituisciStringa("in(", ")", stringa);
-		/*
-		String inElem = null;
-		int index = stringa.indexOf("in(");
-		int end = stringa.indexOf(")", index);
-		if(index != -1 && end != -1){
-			inElem = stringa.substring(index, end);
-			inElem = inElem.replaceAll("in\\(", "");
-			inElem = inElem.trim();
-		}
-		return inElem;
-		*/
 	}
 	
 	/**
@@ -389,17 +378,6 @@ public class CostruzioneModello {
 	 */
 	private static String analisiOut(String stringa){
 		return restituisciStringa("out(", ")", stringa);
-		/*
-		String outElem = null;
-		int index = stringa.indexOf("out(");
-		int end = stringa.indexOf(")", index);
-		if(index != -1 && end != -1){
-			outElem = stringa.substring(index, end);
-			outElem = outElem.replaceAll("out\\(", "");
-			outElem = outElem.trim();
-		}
-		return outElem;
-		*/
 	}
 	
 	/**
@@ -431,7 +409,6 @@ public class CostruzioneModello {
 		Vector <String> stringheSeparate = new Vector <String> ();
 		String [] result = stringa.split(regSeparator);
 	     for (int i=0; i < result.length; i++){
-	    	// System.out.println(result[i]);
 	    	 stringheSeparate.add(result[i].trim());
 	     }
 		return stringheSeparate;
