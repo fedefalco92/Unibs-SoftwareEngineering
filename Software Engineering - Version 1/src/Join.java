@@ -81,6 +81,7 @@ public class Join extends Elemento implements ElementoTerminale {
 		return null;
 	}
 
+	
 	@Override
 	public void aggiungiIngresso(Elemento elem) {
 		ingressi.add(elem);
