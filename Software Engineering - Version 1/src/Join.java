@@ -7,7 +7,7 @@ public class Join extends Elemento implements ElementoTerminale {
 	private Vector<Elemento> ingressi;
 	private Fork forkAssociato;
 	private Elemento uscita;
-	private boolean incompleto;
+	//private boolean incompleto;
 	
 	/*
 	 * nel costruttore non metto il fork padre dato che 
@@ -18,7 +18,7 @@ public class Join extends Elemento implements ElementoTerminale {
 		super("JOIN", nome);
 		//flussiIN = new Vector <Flusso>();
 		ingressi = new Vector <Elemento>();
-		incompleto = true;
+		//incompleto = true;
 	}
 
 	public Fork getForkAssociato() {
@@ -33,6 +33,7 @@ public class Join extends Elemento implements ElementoTerminale {
 		return uscita;
 	}
 
+	@Override
 	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
@@ -55,13 +56,13 @@ public class Join extends Elemento implements ElementoTerminale {
 		if(!ingressi.isEmpty()){
 			
 			for(int i = 0; i < ingressi.size() - 1; i++){
-				output.append(ingressi.get(i));
+				output.append(ingressi.get(i).getElementoString());
 				output.append(", ");
 			}
-			output.append(ingressi.lastElement());
+			output.append(ingressi.lastElement().getElementoString());
 			
-			if(incompleto)
-				output.append("incompleto");
+//			if(incompleto)
+//				output.append("incompleto");
 		}
 		/*
 		 * if(!flussiIN.isEmpty()){
@@ -109,8 +110,7 @@ public class Join extends Elemento implements ElementoTerminale {
 
 	@Override
 	public void aggiungiIngresso(Elemento elem) {
-		// TODO Auto-generated method stub
-		
+		ingressi.add(elem);
 	}
 
 }
