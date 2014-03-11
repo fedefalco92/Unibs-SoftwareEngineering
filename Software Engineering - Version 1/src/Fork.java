@@ -56,10 +56,10 @@ public class Fork extends Elemento {
 		output.append(") - out(");
 		if(!uscite.isEmpty()){
 			for(int i = 0; i < uscite.size() - 1; i++){
-				output.append(uscite.get(i)); //IN ALTERNATIVA getFlussoString()
+				output.append(uscite.get(i).getElementoString());
 				output.append(", ");
 			}
-			output.append(uscite.lastElement());
+			output.append(uscite.lastElement().getElementoString());
 			
 			if(incompleto)
 				output.append("incompleto");
@@ -102,8 +102,7 @@ public class Fork extends Elemento {
 
 	@Override
 	public Vector<Elemento> getUscite() {
-		// TODO Auto-generated method stub
-		return null;
+		return uscite;
 	}
 
 	

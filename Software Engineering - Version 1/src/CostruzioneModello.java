@@ -266,7 +266,7 @@ public class CostruzioneModello {
 			case "MERGE":
 				Merge nuovoMerge = (Merge) elemIndex;
 				if(elemFirst != null)
-					nuovoMerge.aggiungiUscita(elemFirst);
+					nuovoMerge.aggiungiUscita(elemFirst); //FORSE E' MEGLIO METTERE SETUSCITA
 				i = modelloCaricato.indiceElemento(elemIndex);
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovoMerge);
@@ -283,7 +283,7 @@ public class CostruzioneModello {
 			case "JOIN":
 				Join nuovoJoin = (Join) elemIndex;
 				if(elemFirst != null)
-					nuovoJoin.aggiungiUscita(elemFirst);
+					nuovoJoin.aggiungiUscita(elemFirst); //FORSE E' MEGLIO METTERE SETUSCITA
 				i = modelloCaricato.indiceElemento(elemIndex);
 				if(i != -1)
 					modelloCaricato.getElementi().set(i, nuovoJoin);
@@ -422,7 +422,8 @@ public class CostruzioneModello {
 	private static boolean checkID(String id){
 		if(id != null){
 			boolean condizioniVerificate = id.equalsIgnoreCase("Azione") || id.equalsIgnoreCase("Branch") || 
-					id.equalsIgnoreCase("Merge") || id.equalsIgnoreCase("Start") || id.equalsIgnoreCase("End"); //Da aggiungere condizioni
+					id.equalsIgnoreCase("Merge") || id.equalsIgnoreCase("Start") || id.equalsIgnoreCase("End") ||
+					id.equalsIgnoreCase("Fork") || id.equalsIgnoreCase("Join");
 			return condizioniVerificate;
 		}
 		else

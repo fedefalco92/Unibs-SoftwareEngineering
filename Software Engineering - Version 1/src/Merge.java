@@ -13,6 +13,7 @@ public class Merge extends Elemento implements ElementoTerminale{
 		this.incompleto=true;
 	}
 	
+	@Override
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);
 		if(ingressi.size()>=2)
@@ -23,6 +24,7 @@ public class Merge extends Elemento implements ElementoTerminale{
 		return incompleto;
 	}
 	
+	@Override
 	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}
