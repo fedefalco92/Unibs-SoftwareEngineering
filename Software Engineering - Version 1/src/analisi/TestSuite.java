@@ -18,9 +18,9 @@ public class TestSuite {
 	private Hashtable <String,Double> probabilitaM1;
 	private Hashtable <String,Double> probabilitaM2;
 	
-	public TestSuite(Vector<String> insiemeAttivita){
+	public TestSuite(Vector<String> insiemeAzioni){
 		classiEquivalenza = new Vector<ClasseEquivalenza>();
-		this.insiemeAzioni = insiemeAttivita;
+		this.insiemeAzioni = insiemeAzioni;
 		probabilitaM1 = new Hashtable <String,Double>();
 		probabilitaM2 = new Hashtable <String,Double>();
 	}
