@@ -35,6 +35,14 @@ public class Prova {
 		return insiemeCopertura;
 	}
 	
+	public boolean isEmptyInsiemeCopertura(){
+		return insiemeCopertura.isEmpty();
+	}
+	
+	public int numeroCammini(){
+		return insiemeCopertura.size();
+	}	
+	
 	public Vector<Cammino> getEsitoOK(){
 		Vector<Cammino> provaOk = new  Vector<Cammino>();
 		for(Cammino p : insiemeCopertura){

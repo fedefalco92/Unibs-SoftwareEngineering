@@ -28,6 +28,17 @@ public class ClasseEquivalenza {
 	private Hashtable <String,Double> probabilitaProva;
 	private Hashtable <String,Double> probabilitaClasse;
 	
+	public ClasseEquivalenza(String nome){
+		this.nome = nome;
+		istanzaProva = null;
+		cardinalita = 0;
+		diagnosiMinimali = null;
+		attivitaCoinvolte = new Vector<String>();
+		this.insiemeAzioni = null;		
+		probabilitaProva = new Hashtable <String,Double>();
+		probabilitaClasse = new Hashtable <String,Double>();
+	}
+	
 	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita){
 		this.nome = nome;
 		istanzaProva = null;
@@ -38,6 +49,17 @@ public class ClasseEquivalenza {
 		probabilitaProva = new Hashtable <String,Double>();
 		probabilitaClasse = new Hashtable <String,Double>();
 	}
+	
+	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita, int cardinalita){
+		this.nome = nome;
+		istanzaProva = null;
+		this.cardinalita = cardinalita;
+		diagnosiMinimali = null;
+		attivitaCoinvolte = new Vector<String>();
+		this.insiemeAzioni = insiemeAttivita;		
+		probabilitaProva = new Hashtable <String,Double>();
+		probabilitaClasse = new Hashtable <String,Double>();
+	}	
 	
 	public void setNome(String nome){
 		this.nome = nome;
