@@ -34,6 +34,7 @@ public class CostruzioneModello {
 				String fileString = leggoFile2(new FileReader(file));
 				stampaModelloCaricato();
 				riempioInOut(fileString);
+				stampaModelloCaricato();
 				/*Fine nuove aggiunte*/
 			}else{
 				System.out.println("Non hai selezionato nessun file");
@@ -102,86 +103,25 @@ public class CostruzioneModello {
 	
 	public static boolean riempioInOut(String stringa){
 		String [] result = stringa.split("\n");
-//		boolean fine = false;
-//		while(!fine){
-			for (int i=0; i < result.length; i++){
-		    	 String elem = analisiElemento(result[i]);
-		    	 String idElem = restituisciID(elem);
-		    	 String nomeElem = restituisciNome(elem);
-		    	 Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
-		    	 
-		    	 for (Elemento next: restisciUscite(result[i])){
-		    		 next = modelloCaricato.ricercaElemento(next);
-		    		 
-		    	 }
-		    	 
-		    	 System.out.println("***");
-		    }
-//			fine=true;
-//		}
-//	    return fine;
+		for (int i=0; i < result.length; i++){
+	    	 String elem = analisiElemento(result[i]);
+	    	 String idElem = restituisciID(elem);
+	    	 String nomeElem = restituisciNome(elem);
+	    	 Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
+	    	 
+	    	 for (Elemento next: restisciUscite(result[i])){
+	    		 next = modelloCaricato.ricercaElemento(next);
+	    		 riempimentoRicorsivo(corrente, next);
+	    	 }
+	    }
+		System.out.println("***");
 		return true;
 	}
 	
 	public static void riempimentoRicorsivo(Elemento corrente, Elemento next){
 		if(corrente != null && next != null){
-			
-			/*
-			switch (corrente.getID()) {
-			case "AZIONE":
-				Azione nuovaAzione = (Azione) elemIndex;
-				if(elemFirst != null)
-					nuovaAzione.setIngresso(elemFirst);
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovaAzione);
-				break;
-			case "BRANCH":
-				Branch nuovoBranch = (Branch) elemIndex;
-				if(elemFirst != null)
-					nuovoBranch.setIngresso(elemFirst);
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovoBranch);
-				break;
-			case "MERGE":
-				Merge nuovoMerge = (Merge) elemIndex;
-				for(Elemento elemIter: entrate){
-					nuovoMerge.aggiungiIngresso(elemIter);
-				}
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovoMerge);
-				break;
-			case "FORK":
-				Fork nuovoFork = (Fork) elemIndex;
-				if(elemFirst != null)
-					nuovoFork.setIngresso(elemFirst);
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovoFork);
-				break;
-			case "JOIN":
-				Join nuovoJoin = (Join) elemIndex;
-				for(Elemento elemIter: entrate){
-					nuovoJoin.aggiungiIngresso(elemIter);
-				}
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovoJoin);
-				break;
-			case "END":
-				End nuovoEnd = (End) elemIndex;
-				if(elemFirst != null)
-					nuovoEnd.setIngresso(elemFirst);
-				i = modelloCaricato.indiceElemento(elemIndex);
-				if(i != -1)
-					modelloCaricato.getElementi().set(i, nuovoEnd);
-				break;
-			default:
-				break;
-			}
-			*/
+			corrente.aggiungiUscita(next);
+			next.aggiungiIngresso(corrente);
 		}
 	}
 	
