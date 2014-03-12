@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 /**
  * Classe con metodi static che permette la costruzione del modello, 
  * partendo dall'apertura di un file e arrivando al caricamento completo.
+ * 
+ * NOTA: I FILE CON COMMENTI "INUTILE" ASPETTIAMO A CANCELLARLI"!!!!
  *
  */
 
@@ -29,17 +31,19 @@ public class CostruzioneModello {
 			file = aprifile(loc);
 			if(file != null){
 				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
-				//leggoFile(new FileReader(file)); //Vecchio algoritmo
+				//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
 				/*Nuovo Algoritmo*/
-				String fileString = leggoFile2(new FileReader(file));
+				String fileString = leggoFile(new FileReader(file));
 				stampaModelloCaricato();
-				riempioInOut(fileString);
+				riempimentoTotale(fileString);
 				stampaModelloCaricato();
 				/*Fine nuove aggiunte*/
 			}else{
 				System.out.println("Non hai selezionato nessun file");
 			}
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
+		
+		//Riempio i vector specializzati con il modello appena caricato
 		modelloCaricato.riempiVectorModello();
 		return modelloCaricato;
 	}
@@ -69,19 +73,24 @@ public class CostruzioneModello {
 	    }
 	}
 	
-	
-	public static String leggoFile2(FileReader fileReader){
+	public static String leggoFile(FileReader fileReader){
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		StringBuffer fileString = new StringBuffer();
 		
+		//Inizializzo la riga letta come null
 		String riga = null;
-		
+				
+		//Eseguo un ciclo infinito che termina solamente alla fine del file,
+		//ovvero quando la riga e' null.
 		while(true){
-			try {
+			//Leggo riga per riga gestendo le IOException
+	    	try {
 				riga = bufferedReader.readLine();
 			} catch (IOException e) { e.printStackTrace(); }
-			
-			if(riga == null){
+	    	
+	    	//Controllo se la riga e' null e in caso esco. 
+	    	//Se null significa che sono arrivato in fondo al file.
+	    	if(riga == null){
 	    		break;
 	    	}
 			
@@ -93,15 +102,16 @@ public class CostruzioneModello {
 	    	};
 		}
 		
+		//Chiudo il bufferedReader
 		try {
 			bufferedReader.close();
 		} catch (IOException e) {e.printStackTrace();}
-		System.out.println(fileString);
 		
+		//Restituisco la stringa del file
 		return fileString.toString();
 	}
 	
-	public static boolean riempioInOut(String stringa){
+	public static boolean riempimentoTotale(String stringa){
 		String [] result = stringa.split("\n");
 		for (int i=0; i < result.length; i++){
 	    	 String elem = analisiElemento(result[i]);
@@ -111,14 +121,14 @@ public class CostruzioneModello {
 	    	 
 	    	 for (Elemento next: restisciUscite(result[i])){
 	    		 next = modelloCaricato.ricercaElemento(next);
-	    		 riempimentoRicorsivo(corrente, next);
+	    		 riempimentoInOut(corrente, next);
 	    	 }
 	    }
 		System.out.println("***");
 		return true;
 	}
 	
-	public static void riempimentoRicorsivo(Elemento corrente, Elemento next){
+	public static void riempimentoInOut(Elemento corrente, Elemento next){
 		if(corrente != null && next != null){
 			corrente.aggiungiUscita(next);
 			next.aggiungiIngresso(corrente);
@@ -127,6 +137,8 @@ public class CostruzioneModello {
 	
 	//FINE METODI NUOVO ALGORITMO
     ////////////////////////////////////////////////////////
+	
+	
 	/**
 	 * Metodo che legge le righe di un file.
 	 * Attraverso un BufferedReader viene letto il file riga per riga.
@@ -135,7 +147,9 @@ public class CostruzioneModello {
 	 * La lettura finisce alla fine del file, ovvero quando viene letta la stringa null.
 	 * @param FileReader. Il file da leggere.
 	 */
-	private static void leggoFile(FileReader fileReader){
+	//Inutile
+	/*
+	private static void leggoFileOld(FileReader fileReader){
 		
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		Vector <Elemento> entrate = new Vector <Elemento>();
@@ -177,6 +191,7 @@ public class CostruzioneModello {
 	    	System.out.println(elem.toString());
 	    }
 	}
+	*/
 	
 	private static Elemento restituisciElemento(String elemento){
 		Elemento elem = null;
@@ -218,6 +233,8 @@ public class CostruzioneModello {
 		modelloCaricato.aggiungiElemento(elem);
 	}
 	
+	//Inutile
+	/*
 	private static Vector <Elemento> restituisciEntrate(String stringa){
 		Vector <Elemento> entrate = new Vector <Elemento>();
 		String in = analisiIn(stringa);
@@ -231,6 +248,7 @@ public class CostruzioneModello {
 		}
 		return entrate;
 	}
+	*/
 	
 	private static Vector <Elemento> restisciUscite(String stringa){
 		Vector <Elemento> uscite = new Vector <Elemento>();
@@ -251,6 +269,8 @@ public class CostruzioneModello {
 	 * @param elemIndex
 	 * @param entrate
 	 */
+	//Inutile
+	/*
 	private static void aggiungoEntrate(Elemento elemIndex, Vector <Elemento> entrate){
 		if(! entrate.isEmpty()){
 			Elemento elemFirst = entrate.firstElement();
@@ -312,7 +332,10 @@ public class CostruzioneModello {
 			}
 		}
 	}
+	*/
 	
+	//Inutile
+	/*
 	private static void aggiungoUscite(Elemento elemIndex, Vector <Elemento> uscite){
 		if(! uscite.isEmpty()){
 			Elemento elemFirst = uscite.firstElement();
@@ -375,8 +398,11 @@ public class CostruzioneModello {
 			}
 		}
 	}
+	*/
 	
 	//ORA METODO CHE NON SERVE PIU'
+	//Inutile
+	/*
 	private static void analisiRiga(String stringa){
 		//Elemento nuovoElemento = null;
 		
@@ -416,6 +442,7 @@ public class CostruzioneModello {
 		System.out.println();
 		
 	}
+	*/
 	
 	/**
 	 * Analizza una stringa e restituisce l'elemento inziale del pattern.
@@ -440,9 +467,13 @@ public class CostruzioneModello {
 	 * @param riga
 	 * @return inElem
 	 */
+	//Intuile
+	/*
 	private static String analisiIn(String stringa){
 		return restituisciStringa("in(", ")", stringa);
 	}
+	*/
+	
 	
 	/**
 	 * Analizza una stringa e restituisce la stringa all'interno di out(..)
@@ -452,6 +483,7 @@ public class CostruzioneModello {
 	private static String analisiOut(String stringa){
 		return restituisciStringa("out(", ")", stringa);
 	}
+	
 	
 	/**
 	 * Passata una stringa e due parametri per l'inizio e la fine restituisce una stringa tra i due parametri.
