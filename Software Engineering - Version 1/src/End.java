@@ -14,6 +14,18 @@ public class End extends Elemento {
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
+
+	//METODI EREDITATI DALLA CLASSE PADRE
+	
+	@Override
+	public void aggiungiIngresso(Elemento ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	@Override
+	public void aggiungiUscita(Elemento uscita) {
+		// TODO Auto-generated method stub
+	}
 	
 	@Override
 	public String toString() {
@@ -48,12 +60,5 @@ public class End extends Elemento {
 	public Vector<Elemento> getUscite() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-
-	@Override
-	public void aggiungiUscita(Elemento uscita) {
-		// TODO Auto-generated method stub
-		
 	}
 }

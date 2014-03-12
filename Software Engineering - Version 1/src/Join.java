@@ -24,10 +24,16 @@ public class Join extends Elemento implements ElementoTerminale {
 	public Elemento getJoinOUT() {
 		return uscita;
 	}
-
+	
+	//METODI EREDITATI DALLA CLASSE PADRE
 	@Override
 	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
+	}
+	
+	@Override
+	public void aggiungiIngresso(Elemento elem) {
+		ingressi.add(elem);
 	}
 	
 	@Override
@@ -79,12 +85,6 @@ public class Join extends Elemento implements ElementoTerminale {
 	public Vector<Elemento> getUscite() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	
-	@Override
-	public void aggiungiIngresso(Elemento elem) {
-		ingressi.add(elem);
 	}
 
 }

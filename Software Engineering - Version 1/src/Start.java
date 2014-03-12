@@ -15,6 +15,19 @@ public class Start extends Elemento{
 		this.uscita = uscita;
 	}
 	
+	//METODI EREDITATI DALLA CLASSE PADRE
+	@Override
+	public void aggiungiUscita(Elemento uscita) {
+		this.uscitaEl = uscita;
+		if(uscita.getID().equalsIgnoreCase("AZIONE"))
+			this.uscita = (Azione) uscita;
+	}
+
+	@Override
+	public void aggiungiIngresso(Elemento ingresso) {
+		// TODO Auto-generated method stub
+	}
+	
 	@Override
 	public String toString() {
 		StringBuffer output=new StringBuffer();
@@ -48,12 +61,6 @@ public class Start extends Elemento{
 	public Vector<Elemento> getUscite() {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void aggiungiUscita(Elemento uscita) {
-		this.uscitaEl = uscita;
-		
 	}
 
 }

@@ -9,7 +9,6 @@ import java.util.Vector;
 public class Fork extends Elemento {
 	
 	private Elemento ingresso;
-	//private Vector<Flusso> flussiOUT;
 	private Vector<Elemento> uscite;
 	private Join joinAssociato;
 	private boolean incompleto; //attenzione! ancora da decidere se per flussiOUT o uscite
@@ -22,15 +21,8 @@ public class Fork extends Elemento {
 		this.joinAssociato = joinAssociato;
 	}
 	
-	public void aggiungiUscita(Elemento uscita){
-		uscite.add(uscita);
-		if(uscite.size()>=2)
-			incompleto=false;
-	}
-
 	public Fork(String nome) {
 		super("FORK", nome);
-		//this.flussiOUT = new Vector<Flusso>();
 		this.incompleto = true;
 		this.uscite = new Vector <Elemento> ();
 	}
@@ -39,13 +31,20 @@ public class Fork extends Elemento {
 		this.ingresso = ingresso;
 	}
 	
-	/*
-	public void aggiungiFlusso(Flusso f){
-		flussiOUT.add(f);
-		if(flussiOUT.size()>=2)
+	//METODI EREDITATI DALLA CLASSE PADRE
+	@Override
+	public void aggiungiUscita(Elemento uscita){
+		uscite.add(uscita);
+		if(uscite.size()>=2)
 			incompleto=false;
 	}
-	*/
+	
+	@Override
+	public void aggiungiIngresso(Elemento ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	@Override
 	public String toString(){
 		StringBuffer output=new StringBuffer();
 		output.append(super.toString() + " : ");
@@ -84,6 +83,7 @@ public class Fork extends Elemento {
 		return output.toString();
 	}
 
+	@Override
 	public Elemento getIngresso() {
 		return ingresso;
 	}

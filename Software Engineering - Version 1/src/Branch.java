@@ -15,35 +15,43 @@ public class Branch extends Elemento{
 		this.incompleto = true;
 	}
 	
-	/**
-	 * Aggiunge un elemento al Vector Uscita
-	 * @param elemento
-	 */
+	public boolean incompleto(){
+		return incompleto;
+	}
+	
+	public Merge getMergePrecedente() {
+		return mergePrecedente;
+	}
+
+	public void setMergePrecedente(Merge mergePrecedente) {
+		this.mergePrecedente = mergePrecedente;
+	}
+
+	public Merge getMergeSeguente() {
+		return mergeSeguente;
+	}
+
+	public void setMergeSeguente(Merge mergeSeguente) {
+		this.mergeSeguente = mergeSeguente;
+	}
+	
+	public void setIngresso(Elemento ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	//METODI EREDITATI DALLA CLASSE PADRE
+	@Override
+	public void aggiungiIngresso(Elemento ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	@Override
 	public void aggiungiUscita(Elemento elem){
 		uscite.add(elem);
 		if(uscite.size()>=2)
 			incompleto=false;
 	}
 	
-	/**
-	 * Getter per l'incompletezza del Branch.
-	 * @return incompleto
-	 */
-	public boolean incompleto(){
-		return incompleto;
-	}
-	
-	/**
-	 * Setter per l'ingresso
-	 * @param ingresso
-	 */
-	public void setIngresso(Elemento ingresso) {
-		this.ingresso = ingresso;
-	}
-	
-	/**
-	 * Metodo toString() per l'elemento.
-	 */
 	@Override
 	public String toString() {
 		
@@ -85,19 +93,11 @@ public class Branch extends Elemento{
 		return output.toString();
 	}
 
-	/**
-	 * Getter per Ingresso
-	 * @return ingresso
-	 */
 	@Override
 	public Elemento getIngresso() {
 		return ingresso;
 	}
 	
-	/**
-	 * Getter per Uscita
-	 * @return uscite
-	 */
 	@Override
 	public Vector<Elemento> getUscite() {
 		return uscite;
@@ -115,19 +115,4 @@ public class Branch extends Elemento{
 		return null;
 	}
 
-	public Merge getMergePrecedente() {
-		return mergePrecedente;
-	}
-
-	public void setMergePrecedente(Merge mergePrecedente) {
-		this.mergePrecedente = mergePrecedente;
-	}
-
-	public Merge getMergeSeguente() {
-		return mergeSeguente;
-	}
-
-	public void setMergeSeguente(Merge mergeSeguente) {
-		this.mergeSeguente = mergeSeguente;
-	}
 }

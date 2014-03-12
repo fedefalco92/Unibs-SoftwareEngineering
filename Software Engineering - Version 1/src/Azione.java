@@ -12,10 +12,19 @@ public class Azione extends Elemento{
 		this.uscita = null;
 	}
 	
+	
 	public void setIngresso(Elemento ingresso) {
 		this.ingresso = ingresso;
 	}
 	
+	//METODI EREDITATI DALLA CLASSE PADRE
+	
+	@Override
+	public void aggiungiIngresso(Elemento ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	@Override
 	public void aggiungiUscita(Elemento uscita) {
 		this.uscita = uscita;
 	}

@@ -110,6 +110,10 @@ public class CostruzioneModello {
 		    	 String nomeElem = restituisciNome(elem);
 		    	 Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
 		    	 
+		    	 for (Elemento next: restisciUscite(result[i])){
+		    		 next = modelloCaricato.ricercaElemento(next);
+		    		 
+		    	 }
 		    	 
 		    	 System.out.println("***");
 		    }
@@ -117,6 +121,66 @@ public class CostruzioneModello {
 //		}
 //	    return fine;
 		return true;
+	}
+	
+	public static void riempimentoRicorsivo(Elemento corrente, Elemento next){
+		if(corrente != null && next != null){
+			
+			switch (corrente.getID()) {
+			case "AZIONE":
+				Azione nuovaAzione = (Azione) elemIndex;
+				if(elemFirst != null)
+					nuovaAzione.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovaAzione);
+				break;
+			case "BRANCH":
+				Branch nuovoBranch = (Branch) elemIndex;
+				if(elemFirst != null)
+					nuovoBranch.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoBranch);
+				break;
+			case "MERGE":
+				Merge nuovoMerge = (Merge) elemIndex;
+				for(Elemento elemIter: entrate){
+					nuovoMerge.aggiungiIngresso(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoMerge);
+				break;
+			case "FORK":
+				Fork nuovoFork = (Fork) elemIndex;
+				if(elemFirst != null)
+					nuovoFork.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoFork);
+				break;
+			case "JOIN":
+				Join nuovoJoin = (Join) elemIndex;
+				for(Elemento elemIter: entrate){
+					nuovoJoin.aggiungiIngresso(elemIter);
+				}
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoJoin);
+				break;
+			case "END":
+				End nuovoEnd = (End) elemIndex;
+				if(elemFirst != null)
+					nuovoEnd.setIngresso(elemFirst);
+				i = modelloCaricato.indiceElemento(elemIndex);
+				if(i != -1)
+					modelloCaricato.getElementi().set(i, nuovoEnd);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	
 	//FINE METODI NUOVO ALGORITMO

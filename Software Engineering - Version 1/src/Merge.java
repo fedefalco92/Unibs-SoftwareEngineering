@@ -13,15 +13,16 @@ public class Merge extends Elemento implements ElementoTerminale{
 		this.incompleto=true;
 	}
 	
+	public boolean incompleto(){
+		return incompleto;
+	}
+	
+	//METODI EREDITATI DALLA CLASSE PADRE
 	@Override
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);
 		if(ingressi.size()>=2)
 			incompleto=false;
-	}
-	
-	public boolean incompleto(){
-		return incompleto;
 	}
 	
 	@Override
@@ -91,4 +92,5 @@ public class Merge extends Elemento implements ElementoTerminale{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }
