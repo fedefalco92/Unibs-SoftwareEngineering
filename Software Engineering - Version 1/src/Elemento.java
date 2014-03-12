@@ -35,6 +35,8 @@ public abstract class Elemento {
 	public abstract Elemento getUscita();
 	public abstract Vector<Elemento> getIngressi();
 	public abstract Vector<Elemento> getUscite();
+	
+	/*A cosa serve?*/
 	public abstract void aggiungiUscita(Elemento uscita);
 	
 	public String getElementoString(){

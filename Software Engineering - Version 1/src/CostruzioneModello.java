@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,11 +29,17 @@ public class CostruzioneModello {
 			file = aprifile(loc);
 			if(file != null){
 				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
-				leggoFile(new FileReader(file));
+				//leggoFile(new FileReader(file)); //Vecchio algoritmo
+				/*Nuovo Algoritmo*/
+				String fileString = leggoFile2(new FileReader(file));
+				stampaModelloCaricato();
+				riempioInOut(fileString);
+				/*Fine nuove aggiunte*/
 			}else{
 				System.out.println("Non hai selezionato nessun file");
 			}
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
+		modelloCaricato.riempiVectorModello();
 		return modelloCaricato;
 	}
 	
@@ -53,6 +60,67 @@ public class CostruzioneModello {
 	    	return null;
 	}
 	
+	////////////////////////////////////////////////////////
+	//METODI DI PROVA NUOVO ALGORITMO
+	public static void stampaModelloCaricato(){
+	    for(Elemento elem: modelloCaricato.getElementi()){
+	    	System.out.println(elem.toString());
+	    }
+	}
+	
+	
+	public static String leggoFile2(FileReader fileReader){
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		StringBuffer fileString = new StringBuffer();
+		
+		String riga = null;
+		
+		while(true){
+			try {
+				riga = bufferedReader.readLine();
+			} catch (IOException e) { e.printStackTrace(); }
+			
+			if(riga == null){
+	    		break;
+	    	}
+			
+			String elemento = analisiElemento(riga);
+	    	Elemento nuovoElemento = restituisciElemento(elemento);
+	    	if(nuovoElemento != null){
+	    		aggiungoElemento(nuovoElemento);
+	    		fileString.append(riga + "\n");
+	    	};
+		}
+		
+		try {
+			bufferedReader.close();
+		} catch (IOException e) {e.printStackTrace();}
+		System.out.println(fileString);
+		
+		return fileString.toString();
+	}
+	
+	public static boolean riempioInOut(String stringa){
+		String [] result = stringa.split("\n");
+//		boolean fine = false;
+//		while(!fine){
+			for (int i=0; i < result.length; i++){
+		    	 String elem = analisiElemento(result[i]);
+		    	 String idElem = restituisciID(elem);
+		    	 String nomeElem = restituisciNome(elem);
+		    	 Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
+		    	 
+		    	 
+		    	 System.out.println("***");
+		    }
+//			fine=true;
+//		}
+//	    return fine;
+		return true;
+	}
+	
+	//FINE METODI NUOVO ALGORITMO
+    ////////////////////////////////////////////////////////
 	/**
 	 * Metodo che legge le righe di un file.
 	 * Attraverso un BufferedReader viene letto il file riga per riga.
@@ -102,7 +170,6 @@ public class CostruzioneModello {
 	    for(Elemento elem: modelloCaricato.getElementi()){
 	    	System.out.println(elem.toString());
 	    }
-	    modelloCaricato.riempiVectorModello();
 	}
 	
 	private static Elemento restituisciElemento(String elemento){
