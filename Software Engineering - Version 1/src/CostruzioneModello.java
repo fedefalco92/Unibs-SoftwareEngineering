@@ -126,6 +126,7 @@ public class CostruzioneModello {
 	public static void riempimentoRicorsivo(Elemento corrente, Elemento next){
 		if(corrente != null && next != null){
 			
+			/*
 			switch (corrente.getID()) {
 			case "AZIONE":
 				Azione nuovaAzione = (Azione) elemIndex;
@@ -180,6 +181,7 @@ public class CostruzioneModello {
 			default:
 				break;
 			}
+			*/
 		}
 	}
 	
