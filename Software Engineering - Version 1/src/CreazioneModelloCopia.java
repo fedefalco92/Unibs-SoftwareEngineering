@@ -47,7 +47,7 @@ public class CreazioneModelloCopia {
 		"Un nuovo fork (crea automaticamente il join associato)", 
 		};
 
-	private static final String cartellaModelliOggetto = "ModelliDAT";
+
 		
 	
 	/**
@@ -59,13 +59,17 @@ public class CreazioneModelloCopia {
 	 */
 	public static Modello creaModello(String nomeModello){
 		Modello modello = new Modello(nomeModello);
-			
+		gestisciStart(modello, modello.getStart());
+		modello.termina();
+		return modello;
+		/*	
 		boolean fineCreazione = false;
 		do {
 			fineCreazione = menuPrincipaleCreazione(modello);
 		} while (!fineCreazione);
 
 		return modello;
+		*/
 	}
 	
 	
@@ -82,6 +86,7 @@ public class CreazioneModelloCopia {
 	 * 
 	 * @return
 	 */
+	/*
 	private static boolean menuPrincipaleCreazione(Modello modello){
 		final String TITOLO = "MENU CREAZIONE MODELLO " + modello.getNome();;
 		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Salva il modello ed esci"};
@@ -104,85 +109,13 @@ public class CreazioneModelloCopia {
 			case 2:
 				visualizzaModello(modello);
 				break;
-			case 3:
-				salvaModello(modello);
-				break;
 		}
 		return false;
 	}
 	
-	private static void salvaModello(Modello modello) {
-		
-		final String TITOLO = "MENU SALVATAGGIO MODELLO " + modello.getNome();;
-		final String [] VOCI = {"Salva come testo" , "Salva come oggetto"};
-		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
-		menuCreazione.setVoceUscita("0\tTorna indietro");
-		int scelta = menuCreazione.scegli();
-		
-		switch (scelta)
-		{
-			case 0: 
-				return;
-			case 1:				
-				salvaFormatoTestuale(modello);
-				break;
-			case 2:
-				salvaFormatoOggetto(modello);
-				break;
-		}
-	}
-
-	private static void salvaFormatoOggetto(Modello modello) {	
-		
-		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
-		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
-		File modelloFile = new File(loc);
-		if (modelloFile.exists()){
-			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
-					+ "> Vuoi sovrascriverlo? > ");
-			if(sovrascrivi){
-				ServizioFile.confermaSovrascrittura(modelloFile, modello);
-			}
-		} else {
-			ServizioFile.salvaSingoloOggetto(modelloFile, modello);
-		}
-
-	}
 	
-
-	private static void salvaFormatoTestuale(Modello modello) {
-		
-		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
-		String loc = CostruzioneModello.cartella + File.separator + nomeFile + ".txt";
-		File modelloFile = new File(loc);
-		if (modelloFile.exists()){
-			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
-					+ "> Vuoi sovrascriverlo? > ");
-			if(sovrascrivi){
-				ServizioFile.confermaSovrascritturaTesto(modelloFile, modello.stampaModello());
-			}
-		} else {
-			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
-		}
-
-	}
-
+*/
 	
-
-
-	/**
-	 * Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
-	 * 
-	 * Per ora &egrave private, sar&agrave public se i menu verranno esportati nella classe menuClass
-	 */
-	private static void visualizzaModello(Modello _modello) {
-		if(_modello.completo())
-			System.out.println(_modello.stampaModello());
-		else
-			System.out.println("> Modello non ancora creato! <");
-		//precedentemente era System.out.println(modello);
-		//(Sfruttava il toString())
-	}
 
 	/*
 	private static boolean menuInserimento(Modello modello, Elemento elemento){

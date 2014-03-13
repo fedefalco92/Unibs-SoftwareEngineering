@@ -1,3 +1,5 @@
+import java.io.File;
+
 import it.unibs.fp.mylib.*;
 import analisi.*;
 
@@ -6,11 +8,13 @@ public class MenuClass {
 	private static Modello modello;
 	private static TestSuite ts1;
 	private static Distanze dist;
+	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
+	public static final String cartellaModelliOggetto = "ModelliDAT";
 	
 	/*Metodo Boolean: un tipo di possibilita' per creare un menu. Il ciclo deve essere fatto da un metodo esterno*/
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello"};
+		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -26,15 +30,11 @@ public class MenuClass {
 				modello = creaModello();
 				break;
 			case 2:
-				caricaModello();
-				/*
-				modello = CostruzioneModello.caricaModello();
-				if(modello.controllaModello()){
-					System.out.println("Modello corretto");
+				if (modello!=null){
+					boolean prosegui = InputDati.yesOrNo("Proseguendo si perdera' il modello gia' inserito. Proseguire? > ");
+					if(!prosegui) break;
 				}
-				else{
-					System.out.println("Modello errato");
-				}*/
+				caricaModello();
 				break;
 			case 3:
 				//Diagnosi e test
@@ -87,9 +87,12 @@ public class MenuClass {
 					System.out.println(dist);		
 				}
 				break;
-			case 5: System.out.println(modello.stampaModello());
-			default:
-				/*Non entra mai qui*/
+			case 5: 
+				visualizzaModello(modello);
+				break;
+			case 6:
+				salvaModello(modello);
+				break;
 		}
 		
 		return false;
@@ -118,12 +121,6 @@ public class MenuClass {
 
 	private static void caricaOggetto() {
 		modello = CostruzioneModello.caricaModelloOggetto();
-		if(modello.controllaModello()){
-			System.out.println("Modello corretto");
-		}
-		else{
-			System.out.println("Modello errato");
-		}
 	}
 
 	private static void caricaTesto() {
@@ -144,6 +141,76 @@ public class MenuClass {
 		
 	}
 	
+	private static void salvaModello(Modello modello) {
+		
+		final String TITOLO = "MENU SALVATAGGIO MODELLO " + modello.getNome();;
+		final String [] VOCI = {"Salva come testo" , "Salva come oggetto"};
+		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
+		menuCreazione.setVoceUscita("0\tTorna indietro");
+		int scelta = menuCreazione.scegli();
+		
+		switch (scelta)
+		{
+			case 0: 
+				return;
+			case 1:				
+				salvaFormatoTestuale(modello);
+				break;
+			case 2:
+				salvaFormatoOggetto(modello);
+				break;
+		}
+	}
+
+	private static void salvaFormatoOggetto(Modello modello) {	
+		
+		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
+		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
+		File modelloFile = new File(loc);
+		if (modelloFile.exists()){
+			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
+					+ "> Vuoi sovrascriverlo? > ");
+			if(sovrascrivi){
+				ServizioFile.confermaSovrascrittura(modelloFile, modello);
+			}
+		} else {
+			ServizioFile.salvaSingoloOggetto(modelloFile, modello);
+		}
+
+	}
+	
+
+	private static void salvaFormatoTestuale(Modello modello) {
+		
+		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
+		String loc =cartella + File.separator + nomeFile + ".txt";
+		File modelloFile = new File(loc);
+		if (modelloFile.exists()){
+			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
+					+ "> Vuoi sovrascriverlo? > ");
+			if(sovrascrivi){
+				ServizioFile.confermaSovrascritturaTesto(modelloFile, modello.stampaModello());
+			}
+		} else {
+			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
+		}
+
+	}
+	
+
+	/**
+	 * Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
+	 * 
+	 */
+	private static void visualizzaModello(Modello _modello) {
+		if(modello!=null)
+			if(_modello.completo())
+				System.out.println(_modello.stampaModello());
+			else
+				System.out.println("> Modello non ancora creato! <");
+		else
+			System.out.println ("> Nessun modello inserito <");
+	}
 	
 	/*Metodo Void: altro tipo per creare un menu*/
 	/*

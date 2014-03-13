@@ -18,7 +18,6 @@ public class CostruzioneModello {
 	
 	private static File file;
 	private static Modello modelloCaricato;
-	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
 	 * Metodo che carica un file. 
@@ -26,7 +25,7 @@ public class CostruzioneModello {
 	 * Se il file &egrave; stato aperto correttamente invoca un altro metodo per leggere il file.
 	 */
 	public static Modello caricaModello(){
-		String loc = cartella + File.separator; //Location del file
+		String loc = MenuClass.cartella + File.separator; //Location del file
 		try {
 			file = aprifile(loc);
 			if(file != null){
@@ -610,7 +609,7 @@ public class CostruzioneModello {
 	}
 
 	public static Modello caricaModelloOggetto() {
-		String loc = cartella + File.separator; //Location del file
+		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
 		try {
 			file = aprifile(loc);
 			if(file != null){

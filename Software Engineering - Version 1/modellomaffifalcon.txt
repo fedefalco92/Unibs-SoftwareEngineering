@@ -1,0 +1,5 @@
+NOME MODELLO: modello1
+
+[START] Start : out([AZIONE] a1)
+[AZIONE] a1 : in([START] Start) - out([END] End)
+[END] End : in([AZIONE] a1)
