@@ -18,7 +18,7 @@ public class CostruzioneModello {
 	
 	private static File file;
 	private static Modello modelloCaricato;
-	private final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
+	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	
 	/**
 	 * Metodo che carica un file. 
@@ -606,6 +606,19 @@ public class CostruzioneModello {
 		}
 		
 		return nome;
+	}
+
+	public static Modello caricaOggetto() {
+		String loc = cartella + File.separator; //Location del file
+		try {
+			file = aprifile(loc);
+			if(file != null){
+				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
+			}else{
+				System.out.println("Non hai selezionato nessun file");
+			}
+		} catch (FileNotFoundException e) { e.printStackTrace(); }
+		return modelloCaricato;
 	}
 	
 	

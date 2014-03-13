@@ -10,7 +10,7 @@ public class MenuClass {
 	/*Metodo Boolean: un tipo di possibilita' per creare un menu. Il ciclo deve essere fatto da un metodo esterno*/
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'"};
+		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -22,13 +22,15 @@ public class MenuClass {
 				modello = creaModello();
 				break;
 			case 2:
+				caricaModello();
+				/*
 				modello = CostruzioneModello.caricaModello();
 				if(modello.controllaModello()){
 					System.out.println("Modello corretto");
 				}
 				else{
 					System.out.println("Modello errato");
-				}
+				}*/
 				break;
 			case 3:
 				//Diagnosi e test
@@ -81,11 +83,49 @@ public class MenuClass {
 					System.out.println(dist);		
 				}
 				break;
+			case 5: System.out.println(modello.stampaModello());
 			default:
 				/*Non entra mai qui*/
 		}
 		
 		return false;
+	}
+
+	private static void caricaModello() {
+		
+		final String TITOLO = "MENU CARICAMENTO MODELLO";
+		final String [] VOCI = {"Carica da testo" , "Carica da file.dat"};
+		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
+		menuCreazione.setVoceUscita("0\tTorna indietro");
+		int scelta = menuCreazione.scegli();
+		
+		switch (scelta)
+		{
+			case 0: 
+				return;
+			case 1:				
+				caricaTesto();
+				break;
+			case 2:
+				caricaOggetto();
+				break;
+		}
+	
+		
+	}
+
+	private static void caricaOggetto() {
+		modello = CostruzioneModello.caricaOggetto();
+	}
+
+	private static void caricaTesto() {
+		modello = CostruzioneModello.caricaModello();
+		if(modello.controllaModello()){
+			System.out.println("Modello corretto");
+		}
+		else{
+			System.out.println("Modello errato");
+		}
 	}
 
 	//per ora provo a fare tutto static come dice Falcon...

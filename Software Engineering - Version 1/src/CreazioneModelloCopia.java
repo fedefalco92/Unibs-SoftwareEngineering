@@ -1,7 +1,9 @@
+import java.io.File;
 import java.util.Vector;
 
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
+import it.unibs.fp.mylib.ServizioFile;
 
 
 
@@ -129,10 +131,33 @@ public class CreazioneModelloCopia {
 		}
 	}
 
-	private static void salvaFormatoOggetto(Modello modello) {
-		// TODO Auto-generated method stub
+	private static void salvaFormatoOggetto(Modello modello) {	
+		
+		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
+		String loc = CostruzioneModello.cartella + File.separator + nomeFile;
+		File modelloFile = new File(loc);
+		if (modelloFile.exists()){
+			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
+					+ "> Vuoi sovrascriverlo? > ");
+			if(sovrascrivi){
+				confermaSovrascrittura(modelloFile, modello);
+			}
+		} else {
+			ServizioFile.salvaSingoloOggetto(modelloFile, modello);
+		}
+
+	}
+	
+	private static void confermaSovrascrittura(File file, Object object){
+		boolean sovrascrittura = InputDati.yesOrNo("Confermi? > ");
+		
+		if (sovrascrittura) 
+			ServizioFile.salvaSingoloOggetto(file, object);
+		else 
+			System.out.println("> SALVATAGGIO ANNULLATO < ");
 		
 	}
+	
 
 
 	private static void salvaFormatoTestuale(Modello modello) {
