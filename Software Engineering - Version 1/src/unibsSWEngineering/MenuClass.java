@@ -12,7 +12,7 @@ public class MenuClass {
 
 	private static final FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("File .txt","txt");
 	private static final FileNameExtensionFilter filtroDAT = new FileNameExtensionFilter("File .dat","dat");
-	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
+	public static final String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	public static final String cartellaModelliOggetto = "ModelliDAT";
 	
 	private static Modello modello;
@@ -208,6 +208,16 @@ public class MenuClass {
 	    else 
 	    	return null;
 	}
+	
+	//////////////////////////////////
+	// 3 - DIAGNOSI E TEST
+	//////////////////////////////////
+	
+	
+	//////////////////////////////////
+	// 4 - PROBABILITA
+	//////////////////////////////////
+	
 	
 	//////////////////////////////////
 	// 5 - METODI VISUALIZZAZIONE MODELLO
