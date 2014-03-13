@@ -2,6 +2,10 @@ import java.util.Vector;
 
 public class Merge extends Elemento implements ElementoTerminale{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1806920999680349562L;
 	private Vector <Elemento> ingressi;
 	private Elemento uscita;
 	private boolean incompleto;

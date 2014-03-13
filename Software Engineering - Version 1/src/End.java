@@ -1,8 +1,12 @@
 import java.util.Vector;
 
 
-public class End extends Elemento {
+public class End extends Elemento{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8749422570277378920L;
 	private Elemento ingresso;
 	
 	public End (String nome){

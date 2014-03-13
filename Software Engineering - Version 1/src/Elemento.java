@@ -1,11 +1,16 @@
+import java.io.Serializable;
 import java.util.Vector;
 
 /*
  * Classe Astratta Elemento.
  * Da questa derivano le classi Azione, Branch, Merge, Fork, Join, Nodi
  */
-public abstract class Elemento {
+public abstract class Elemento implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7349356455391999378L;
 	private String ID;
 	private String nome;
 	

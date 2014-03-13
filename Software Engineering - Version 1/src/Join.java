@@ -3,6 +3,10 @@ import java.util.Vector;
 
 public class Join extends Elemento implements ElementoTerminale {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5785739028451433157L;
 	private Vector<Elemento> ingressi;
 	private Fork forkAssociato;
 	private Elemento uscita;

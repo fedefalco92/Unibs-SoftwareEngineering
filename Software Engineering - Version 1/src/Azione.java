@@ -3,6 +3,10 @@ import java.util.Vector;
 
 public class Azione extends Elemento{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3006147024509738108L;
 	private Elemento ingresso;
 	private Elemento uscita;
 	

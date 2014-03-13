@@ -8,6 +8,10 @@ import java.util.Vector;
  */
 public class Fork extends Elemento implements ElementoMultiUscita {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8413293322756072945L;
 	private Elemento ingresso;
 	private Vector<Elemento> uscite;
 	private Join joinAssociato;

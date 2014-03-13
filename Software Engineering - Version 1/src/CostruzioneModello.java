@@ -1,5 +1,6 @@
+import it.unibs.fp.mylib.ServizioFile;
+
 import java.io.*;
-import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -613,7 +614,7 @@ public class CostruzioneModello {
 		try {
 			file = aprifile(loc);
 			if(file != null){
-				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
+				modelloCaricato = (Modello) ServizioFile.caricaSingoloOggetto(file); //Magari tolgo estensione?
 			}else{
 				System.out.println("Non hai selezionato nessun file");
 			}

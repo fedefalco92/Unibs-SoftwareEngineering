@@ -1,9 +1,14 @@
-import java.beans.FeatureDescriptor;
+
 import java.util.Vector;
+import java.io.Serializable;
 
-
-public class Modello {
+public class Modello implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4849673407309324003L;
+
 	private String nome;
 	
 	/*AGGIUNGO UN VECTOR DI ELEMENTI! CREDO SIA PIU' COMODO PER IL CARICAMENTO 
@@ -502,6 +507,7 @@ public class Modello {
 	 * Equivale al toString ma ogni riga &egrave preceduta da un \t
 	 * @return
 	 */
+
 	public String toStringINDENTATO() {
 		StringBuffer output=new StringBuffer();
 		

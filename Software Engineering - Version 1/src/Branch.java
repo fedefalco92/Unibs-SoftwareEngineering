@@ -2,6 +2,10 @@ import java.util.Vector;
 
 public class Branch extends Elemento implements ElementoMultiUscita{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8113738236219764986L;
 	private Elemento ingresso;
 	private Vector <Elemento> uscite;
 	private Merge mergePrecedente;
