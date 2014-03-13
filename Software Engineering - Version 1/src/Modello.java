@@ -441,9 +441,9 @@ public class Modello implements Serializable {
 	public String toString() {
 		StringBuffer output=new StringBuffer();
 		
-		//la righe commentate verranno eseguite nel metodo "stampaModello()"
-		//output.append("NOME MODELLO: " + nome + "\n\n");
-		//output.append(start + "\n");
+		
+		output.append("NOME MODELLO: " + nome + "\n\n");
+		output.append(start + "\n");
 		for(Azione azione: azioni)
 			output.append(azione + "\n");
 		for(Branch br: branch)
@@ -456,7 +456,7 @@ public class Modello implements Serializable {
 		for(Join j: join)
 			output.append(j + "\n");
 		
-		//output.append(end);
+		output.append(end);
 		
 
 		return output.toString();
@@ -467,12 +467,15 @@ public class Modello implements Serializable {
 	 * @return
 	 */
 	public String stampaModello() {
+		return this.toString();
+		/*
 		StringBuffer output = new StringBuffer();
 		output.append("NOME MODELLO: " + nome + "\n\n");
 		output.append(start + "\n");
 		output.append(this);
 		output.append(end);
 		return output.toString();
+		*/
 	}
 	
 	/**
@@ -485,19 +488,19 @@ public class Modello implements Serializable {
 	 */
 	public boolean nomeOK(String nome) {
 		for(Azione azione:azioni){
-			if(nome.equals(azione.getNome())) return false;
+			if(nome.equalsIgnoreCase(azione.getNome())) return false;
 		}
 		for(Branch b:branch){
-			if(nome.equals(b.getNome())) return false;
+			if(nome.equalsIgnoreCase(b.getNome())) return false;
 		}
 		for(Merge m:merge){
-			if(nome.equals(m.getNome())) return false;
+			if(nome.equalsIgnoreCase(m.getNome())) return false;
 		}
 		for(Fork f:fork){
-			if(nome.equals(f.getNome())) return false;
+			if(nome.equalsIgnoreCase(f.getNome())) return false;
 		}
 		for(Join j:join){
-			if(nome.equals(j.getNome())) return false;
+			if(nome.equalsIgnoreCase(j.getNome())) return false;
 		} 
 		
 		return true;
@@ -507,7 +510,7 @@ public class Modello implements Serializable {
 	 * Equivale al toString ma ogni riga &egrave preceduta da un \t
 	 * @return
 	 */
-
+	/*
 	public String toStringINDENTATO() {
 		StringBuffer output=new StringBuffer();
 		
@@ -526,7 +529,7 @@ public class Modello implements Serializable {
 
 		return output.toString();
 	}
-	
+	*/
 	public boolean completo(){
 		return completo;
 	}
