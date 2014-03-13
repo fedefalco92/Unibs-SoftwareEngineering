@@ -122,4 +122,14 @@ public class Branch extends Elemento implements ElementoMultiUscita{
 		
 	}
 
+	@Override
+	public Vector<Elemento> getUsciteSenzaAzioni() {
+		Vector<Elemento> out = new Vector<Elemento>();
+		for(Elemento e: uscite){
+			if(!e.getID().equals("AZIONE"))
+				out.add(e);
+		}
+		return out;
+	}
+
 }

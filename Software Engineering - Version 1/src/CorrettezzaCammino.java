@@ -64,12 +64,64 @@ public class CorrettezzaCammino {
 		 * se e' un'azione deve essere uguale ad a2
 		 * se e' un branch deve contenere a2 tra le proprie uscite.
 		 * se e' un merge deve avere a2 come uscita OPPURE avere come uscita un branch che contiene a2 come uscita.
+		 * OPPURE che contiene unfork come uscita e cosi' via..che bel casino! potrebbero esserci componenti intermedi all'infinito
 		 * se e' un fork deve contere a2 come uscita OPPURE un merge o un branch per cui valgono le considerazioni fatte sopra.
-		 * se
 		 * 
+		 * SERVE UNA COSA RICORSIVA
 		 */
 		
-		return false;
+		Elemento uscitaA1 = a1.getUscita();
+		if(uscitaA1.getID().equals("AZIONE")){
+			if (uscitaA1.equals(a2))
+				return true;
+			else return false;
+		} else 
+			return azioneRaggiungibileDaElementoIntermedio(modello, uscitaA1, a2); //di sicuro uscitaA1 non e' un'azione
+			
+		/* OPPURE
+		boolean out = false;
+		Elemento uscitaA1 = a1.getUscita();
+		String ID = uscitaA1.getID();
+		switch(ID){
+			case "AZIONE":
+				if (uscitaA1.equals(a2)){
+					out = true;
+				}
+				break;
+			default: 
+				out = azioneRaggiungibileDaElementoIntermedio(modello, uscitaA1, a2);
+		}
+		
+		return out;
+		*/
+		
+		
+	}
+
+	private static boolean azioneRaggiungibileDaElementoIntermedio(Modello modello, Elemento e, Azione a) {
+		boolean out = false;
+		String ID = e.getID();
+		switch(ID){
+			case "MERGE":
+			case "JOIN":
+				out = azioneRaggiungibileDaElementoIntermedio(modello, e.getUscita() , a);
+				break;
+			case "BRANCH": 
+			case "FORK":
+				Vector<Elemento> usciteSenzaAzioni= ((ElementoMultiUscita) e).getUsciteSenzaAzioni();
+				if(usciteSenzaAzioni != null)
+					for(Elemento el: usciteSenzaAzioni){
+						out = azioneRaggiungibileDaElementoIntermedio(modello, el, a);
+						if (out) break;
+					}
+				break;
+			//ARRIVO A QUESTO CASE SOLO DOPO ESSERE PASSATO ALMENO DA UN ELEMENTO TRA QUELLI SOPRA!
+			case "AZIONE":
+				if(e.equals(a)) out = true;
+				break;
+		}
+		
+		return out;
 	}
 
 	private static Azione trovaAzione(Modello modello, String nome){
