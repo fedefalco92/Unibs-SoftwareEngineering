@@ -1,6 +1,6 @@
 import java.util.Vector;
 
-public class Branch extends Elemento{
+public class Branch extends Elemento implements ElementoMultiUscita{
 
 	private Elemento ingresso;
 	private Vector <Elemento> uscite;
@@ -113,6 +113,13 @@ public class Branch extends Elemento{
 	public Vector<Elemento> getIngressi() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void eliminaUscita(Elemento uscita) {
+		if(uscite.contains(uscita))
+			uscite.remove(uscita);
+		
 	}
 
 }

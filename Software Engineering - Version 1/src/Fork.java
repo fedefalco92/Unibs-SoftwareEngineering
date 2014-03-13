@@ -6,7 +6,7 @@ import java.util.Vector;
  * @author Maff3x
  *
  */
-public class Fork extends Elemento {
+public class Fork extends Elemento implements ElementoMultiUscita {
 	
 	private Elemento ingresso;
 	private Vector<Elemento> uscite;
@@ -103,6 +103,13 @@ public class Fork extends Elemento {
 	@Override
 	public Vector<Elemento> getUscite() {
 		return uscite;
+	}
+
+	@Override
+	public void eliminaUscita(Elemento uscita) {
+		if(uscite.contains(uscita))
+			uscite.remove(uscita);
+		
 	}
 
 	

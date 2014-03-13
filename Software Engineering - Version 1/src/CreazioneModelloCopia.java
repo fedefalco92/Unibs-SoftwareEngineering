@@ -448,11 +448,33 @@ public class CreazioneModelloCopia {
 			String nomeMergePrecedente = acquisizioneNome(modello, 
 					"Inserisci il nome del merge che verra' posto prima del branch > ");
 			Merge mergePrecedente = new Merge(nomeMergePrecedente);
-	
-			//inserisco il merge prima del branch
-			mergePrecedente.aggiungiIngresso(branch.getIngresso());
-			mergePrecedente.aggiungiUscita(branch);
-			branch.setIngresso(mergePrecedente);
+			Elemento ingressoDelBranch = branch.getIngresso();
+			//innesto il merge prima del branch
+			
+			//1) l'ingresso del branch ora deve avere in coda il merge al posto del branch.
+			//ATTENZIONE L'INGRESSO DEL BRANCH POTREBBE ESSERE QUALCOSA CON PIU' USCITE.
+			//in questo caso non basta fare "aggiungiUscita" ma bisogna eliminare il branch dalle uscite!!
+			//questo succede se l'ingresso del branch e' - un branch.
+			//											 - un fork.
+			
+			//scansiono con uno switch.
+			String ID = ingressoDelBranch.getID();
+			switch(ID){
+			case "FORK":
+			case "BRANCH":
+				((ElementoMultiUscita) ingressoDelBranch).eliminaUscita(branch); //non faccio break;
+			default:
+				ingressoDelBranch.aggiungiUscita(mergePrecedente);
+				
+				
+			}
+			//2) il merge deve avere l'ingresso del branch come ingresso 
+			mergePrecedente.aggiungiIngresso(branch.getIngresso()); 
+			//3) il merge deve avere il branch come uscita
+			mergePrecedente.aggiungiUscita(branch); 
+			//4) il branch deve avere il merge come ingresso.
+			branch.setIngresso(mergePrecedente); 
+		
 			modello.aggiungiMerge(mergePrecedente);
 			
 			//avvio le alternative (che potraanno terminare solo sul merge appena creato)
