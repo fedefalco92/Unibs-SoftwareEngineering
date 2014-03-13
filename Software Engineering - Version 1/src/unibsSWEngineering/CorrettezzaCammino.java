@@ -1,6 +1,11 @@
+package unibsSWEngineering;
 import java.util.Vector;
 
-import analisi.Cammino;
+import unibsSWEngineering.analisi.Cammino;
+import unibsSWEngineering.modello.Azione;
+import unibsSWEngineering.modello.Elemento;
+import unibsSWEngineering.modello.ElementoMultiUscita;
+import unibsSWEngineering.modello.Modello;
 
 
 public class CorrettezzaCammino {

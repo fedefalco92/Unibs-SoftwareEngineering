@@ -1,3 +1,4 @@
+package unibsSWEngineering.modello;
 
 import java.util.Vector;
 import java.io.Serializable;

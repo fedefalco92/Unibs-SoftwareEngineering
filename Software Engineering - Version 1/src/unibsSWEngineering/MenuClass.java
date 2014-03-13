@@ -1,7 +1,9 @@
+package unibsSWEngineering;
 import java.io.File;
 
+import unibsSWEngineering.analisi.*;
+import unibsSWEngineering.modello.Modello;
 import it.unibs.fp.mylib.*;
-import analisi.*;
 
 public class MenuClass {
 

@@ -1,3 +1,4 @@
+package unibsSWEngineering;
 import it.unibs.fp.mylib.ServizioFile;
 
 import java.io.*;
@@ -6,6 +7,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
+
+import unibsSWEngineering.modello.Azione;
+import unibsSWEngineering.modello.Branch;
+import unibsSWEngineering.modello.Elemento;
+import unibsSWEngineering.modello.End;
+import unibsSWEngineering.modello.Fork;
+import unibsSWEngineering.modello.Join;
+import unibsSWEngineering.modello.Merge;
+import unibsSWEngineering.modello.Modello;
+import unibsSWEngineering.modello.Start;
 
 /**
  * Classe con metodi static che permette la costruzione del modello, 

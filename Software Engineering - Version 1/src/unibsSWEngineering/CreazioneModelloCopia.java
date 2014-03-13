@@ -1,5 +1,16 @@
+package unibsSWEngineering;
 
 
+import unibsSWEngineering.modello.Azione;
+import unibsSWEngineering.modello.Branch;
+import unibsSWEngineering.modello.Elemento;
+import unibsSWEngineering.modello.ElementoMultiUscita;
+import unibsSWEngineering.modello.ElementoTerminale;
+import unibsSWEngineering.modello.Fork;
+import unibsSWEngineering.modello.Join;
+import unibsSWEngineering.modello.Merge;
+import unibsSWEngineering.modello.Modello;
+import unibsSWEngineering.modello.Start;
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 

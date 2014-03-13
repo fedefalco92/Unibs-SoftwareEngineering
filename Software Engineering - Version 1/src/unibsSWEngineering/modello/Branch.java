@@ -1,3 +1,4 @@
+package unibsSWEngineering.modello;
 import java.util.Vector;
 
 public class Branch extends Elemento implements ElementoMultiUscita{
