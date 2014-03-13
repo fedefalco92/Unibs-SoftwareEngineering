@@ -133,6 +133,7 @@ public class MenuClass {
 			}
 			else{
 				System.out.println("Modello errato");
+				modello = null;
 			}
 		}
 	}
