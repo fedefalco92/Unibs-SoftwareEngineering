@@ -1,7 +1,9 @@
 package unibsSWEngineering;
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import unibsSWEngineering.analisi.*;
 import unibsSWEngineering.modello.Modello;
@@ -9,12 +11,15 @@ import it.unibs.fp.mylib.*;
 
 public class MenuClass {
 
+	private static final FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("File .txt","txt");
+	private static final FileNameExtensionFilter filtroDAT = new FileNameExtensionFilter("File .dat","dat");
+	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
+	public static final String cartellaModelliOggetto = "ModelliDAT";
+	
 	private static Modello modello;
 	private static File file;
 	private static TestSuite ts1;
 	private static Distanze dist;
-	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
-	public static final String cartellaModelliOggetto = "ModelliDAT";
 	
 	//////////////////////////////////
 	// MENU PRINCIPALE
@@ -153,7 +158,7 @@ public class MenuClass {
 	
 	private static void caricaOggetto() {
 		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
-		file = aprifile(loc);
+		file = aprifile(loc, filtroDAT);
 		if(file != null){
 			modello = CostruzioneModello.caricaModelloOggetto(file);
 			checkModello();
@@ -165,7 +170,7 @@ public class MenuClass {
 
 	private static void caricaTesto() {
 		String loc = cartella + File.separator; //Location del file
-		file = aprifile(loc);
+		file = aprifile(loc, filtroTXT);
 		if(file != null){
 			modello = CostruzioneModello.caricaModello(file);
 			checkModello();
@@ -182,10 +187,18 @@ public class MenuClass {
 	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto alcun file.
 	 * @throws FileNotFoundException
 	 */
-	private static File aprifile(String loc) {
+	private static File aprifile(String loc, FileNameExtensionFilter filtro) {
 		JFileChooser chooser = new JFileChooser(new File(loc));
-		chooser.setVisible(true);
-	    int returnVal = chooser.showOpenDialog(null);
+		
+		//Opzioni finestra
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.addChoosableFileFilter(filtro);
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setMultiSelectionEnabled(false);
+		
+	    //int returnVal = chooser.showDialog(null, "Open");
+		int returnVal = chooser.showOpenDialog(null);
+		
 	    if(returnVal == JFileChooser.APPROVE_OPTION){
 	    	return chooser.getSelectedFile();
 	    }
