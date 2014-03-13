@@ -1,5 +1,9 @@
 package unibsSWEngineering;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream.GetField;
+
+import javax.swing.JFileChooser;
 
 import unibsSWEngineering.analisi.*;
 import unibsSWEngineering.modello.Modello;
@@ -8,12 +12,15 @@ import it.unibs.fp.mylib.*;
 public class MenuClass {
 
 	private static Modello modello;
+	private static File file;
 	private static TestSuite ts1;
 	private static Distanze dist;
 	public final static String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	public static final String cartellaModelliOggetto = "ModelliDAT";
 	
-	/*Metodo Boolean: un tipo di possibilita' per creare un menu. Il ciclo deve essere fatto da un metodo esterno*/
+	//////////////////////////////////
+	// MENU PRINCIPALE
+	//////////////////////////////////
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
 		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello"};
@@ -90,15 +97,28 @@ public class MenuClass {
 				}
 				break;
 			case 5: 
-				visualizzaModello(modello);
+				visualizzaModello();
 				break;
 			case 6:
-				salvaModello(modello);
+				salvaModello();
 				break;
 		}
 		
 		return false;
 	}
+	
+	//////////////////////////////////
+	// 1 - METODI CREAZIONE MODELLO
+	//////////////////////////////////
+	private static Modello creaModello() {
+		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
+		return CreazioneModello.creaModello(nomeModello);
+	
+	}
+
+	//////////////////////////////////
+	// 2 - METODI CARICAMENTO MODELLO
+	//////////////////////////////////
 
 	private static void caricaModello() {
 		
@@ -121,12 +141,7 @@ public class MenuClass {
 		}
 	}
 
-	private static void caricaOggetto() {
-		modello = CostruzioneModello.caricaModelloOggetto();
-	}
-
-	private static void caricaTesto() {
-		modello = CostruzioneModello.caricaModello();
+	private static void checkModello(){
 		if(modello!=null){
 			if(modello.controllaModello()){
 				System.out.println("Modello corretto");
@@ -137,17 +152,70 @@ public class MenuClass {
 			}
 		}
 	}
+	
+	private static void caricaOggetto() {
+		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
+		file = aprifile(loc);
+		if(file != null){
+			modello = CostruzioneModello.caricaModelloOggetto(file);
+			checkModello();
+		}
+		else{
+			System.out.println("Non hai selezionato nessun file");
+		}
+	}
 
-	//per ora provo a fare tutto static come dice Falcon...
-	private static Modello creaModello() {
-		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
-		return CreazioneModello.creaModello(nomeModello);
-		
+	private static void caricaTesto() {
+		String loc = cartella + File.separator; //Location del file
+		file = aprifile(loc);
+		if(file != null){
+			modello = CostruzioneModello.caricaModello(file);
+			checkModello();
+		}
+		else{
+			System.out.println("Non hai selezionato nessun file");
+		}
+	}
+
+	/**
+	 * Metodo che permette di aprire un file attraverso un JFileChooser.
+	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
+	 * @param Stringa con la location del file.
+	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto alcun file.
+	 * @throws FileNotFoundException
+	 */
+	private static File aprifile(String loc) {
+		JFileChooser chooser = new JFileChooser(new File(loc));
+	    int returnVal = chooser.showOpenDialog(null);
+	    if(returnVal == JFileChooser.APPROVE_OPTION){
+	    	return chooser.getSelectedFile();
+	    }
+	    else 
+	    	return null;
 	}
 	
-	private static void salvaModello(Modello modello) {
+	//////////////////////////////////
+	// 5 - METODI VISUALIZZAZIONE MODELLO
+	//////////////////////////////////
+	/**
+	* Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
+	* 
+	*/
+	private static void visualizzaModello() {
+		if(modello!=null){
+			System.out.println(modello.stampaModello());
+		}	
+		else{
+			System.out.println ("> Nessun modello inserito <");
+		}
+	}
+
+	//////////////////////////////////
+	// 6 - METODI SALVATAGGIO MODELLO
+	//////////////////////////////////
+	private static void salvaModello() {
 		
-		final String TITOLO = "MENU SALVATAGGIO MODELLO " + modello.getNome();;
+		final String TITOLO = "MENU SALVATAGGIO MODELLO " + modello.getNome();
 		final String [] VOCI = {"Salva come testo" , "Salva come oggetto"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
 		menuCreazione.setVoceUscita("0\tTorna indietro");
@@ -158,15 +226,15 @@ public class MenuClass {
 			case 0: 
 				return;
 			case 1:				
-				salvaFormatoTestuale(modello);
+				salvaFormatoTestuale();
 				break;
 			case 2:
-				salvaFormatoOggetto(modello);
+				salvaFormatoOggetto();
 				break;
 		}
 	}
 
-	private static void salvaFormatoOggetto(Modello modello) {	
+	private static void salvaFormatoOggetto() {	
 		
 		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
 		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
@@ -182,12 +250,11 @@ public class MenuClass {
 		}
 
 	}
-	
 
-	private static void salvaFormatoTestuale(Modello modello) {
+	private static void salvaFormatoTestuale() {
 		
 		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
-		String loc =cartella + File.separator + nomeFile + ".txt";
+		String loc = cartella + File.separator + nomeFile + ".txt";
 		File modelloFile = new File(loc);
 		if (modelloFile.exists()){
 			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
@@ -200,52 +267,5 @@ public class MenuClass {
 		}
 
 	}
-	
-
-	/**
-	 * Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
-	 * 
-	 */
-	private static void visualizzaModello(Modello _modello) {
-		if(modello!=null){
-			System.out.println(_modello.stampaModello());
-		}	
-		else{
-			System.out.println ("> Nessun modello inserito <");
-		}
-	}
-	
-	/*Metodo Void: altro tipo per creare un menu*/
-	/*
-	public static void menuPrincipale2(){
-		boolean fine = false;
-		final String TITOLO = "MENU PRINCIPALE 2";
-		final String [] VOCI = {"SOTTOMENU 1", "SOTTOMENU 2", "SOTTOMENU 3"};
-		MyMenu menuPrincipale = new MyMenu (TITOLO, VOCI);
 		
-		do{
-			int scelta = menuPrincipale.scegli();
-			switch (scelta)
-			{
-				case 0: 
-					fine = true;
-					break;
-				case 1:
-					//Scelta sottomenu 1
-					break;
-				case 2:
-					//Scelta sottomenu 2
-					break;
-				case 3:
-					//Scelta sottomenu 3
-					break;
-				default:
-					//Non entra mai qui
-			}
-			
-		}while(!fine);
-	
-	}
-	*/
-	
 }

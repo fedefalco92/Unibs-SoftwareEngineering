@@ -28,54 +28,65 @@ import unibsSWEngineering.modello.Start;
 
 public class CostruzioneModello {
 	
-	private static File file;
+	//private static File file;
 	private static Modello modelloCaricato;
 	
 	/**
-	 * Metodo che carica un file. 
-	 * Esso invoca un altro metodo per aprire il file attraverso una interfaccia grafica.
-	 * Se il file &egrave; stato aperto correttamente invoca un altro metodo per leggere il file.
+	 * 
 	 */
-	public static Modello caricaModello(){
-		String loc = MenuClass.cartella + File.separator; //Location del file
+	public static Modello caricaModello(File file){
+		modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
 		try {
-			file = aprifile(loc);
-			if(file != null){
-				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
-				//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
-				/*Nuovo Algoritmo*/
-				String fileString = leggoFile(new FileReader(file));
-				stampaModelloCaricato();
-				riempimentoTotale(fileString);
-				stampaModelloCaricato();
-				/*Fine nuove aggiunte*/
-			}else{
-				System.out.println("Non hai selezionato nessun file");
-				return null;
-			}
-		} catch (FileNotFoundException e) { e.printStackTrace(); }
+			//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
+			String fileString;
+			fileString = leggoFile(new FileReader(file));
+			stampaModelloCaricato();
+			riempimentoTotale(fileString);
+			stampaModelloCaricato();
+		} catch (FileNotFoundException e) {e.printStackTrace();}
 		
 		//Riempio i vector specializzati con il modello appena caricato
 		modelloCaricato.riempiVectorModello();
 		return modelloCaricato;
+				
+		
+//		String loc = MenuClass.cartella + File.separator; //Location del file
+//		try {
+//			file = aprifile(loc);
+//			if(file != null){
+//				modelloCaricato = new Modello(file.getName()); //Magari tolgo estensione?
+//				//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
+//				/*Nuovo Algoritmo*/
+//				String fileString = leggoFile(new FileReader(file));
+//				stampaModelloCaricato();
+//				riempimentoTotale(fileString);
+//				stampaModelloCaricato();
+//				/*Fine nuove aggiunte*/
+//			}else{
+//				System.out.println("Non hai selezionato nessun file");
+//				return null;
+//			}
+//		} catch (FileNotFoundException e) { e.printStackTrace(); }
+//		
+		
 	}
 	
-	/**
-	 * Metodo che permette di aprire un file attraverso un JFileChooser.
-	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
-	 * @param Stringa con la location del file.
-	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto alcun file.
-	 * @throws FileNotFoundException
-	 */
-	private static File aprifile(String loc) throws FileNotFoundException{
-		JFileChooser chooser = new JFileChooser(new File(loc));
-	    int returnVal = chooser.showOpenDialog(null);
-	    if(returnVal == JFileChooser.APPROVE_OPTION){
-	    	return chooser.getSelectedFile();
-	    }
-	    else 
-	    	return null;
-	}
+//	/**
+//	 * Metodo che permette di aprire un file attraverso un JFileChooser.
+//	 * Viene aperta una finestra nella cartella predefinita e viene chiesto all'utente di scegliere un file.
+//	 * @param Stringa con la location del file.
+//	 * @return Il file aperto, altrimenti null se non &egrave; stato aperto alcun file.
+//	 * @throws FileNotFoundException
+//	 */
+//	private static File aprifile(String loc) throws FileNotFoundException{
+//		JFileChooser chooser = new JFileChooser(new File(loc));
+//	    int returnVal = chooser.showOpenDialog(null);
+//	    if(returnVal == JFileChooser.APPROVE_OPTION){
+//	    	return chooser.getSelectedFile();
+//	    }
+//	    else 
+//	    	return null;
+//	}
 	
 	////////////////////////////////////////////////////////
 	//METODI DI PROVA NUOVO ALGORITMO
@@ -621,16 +632,17 @@ public class CostruzioneModello {
 		return nome;
 	}
 
-	public static Modello caricaModelloOggetto() {
-		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
-		try {
-			file = aprifile(loc);
-			if(file != null){
-				modelloCaricato = (Modello) ServizioFile.caricaSingoloOggetto(file); //Magari tolgo estensione?
-			}else{
-				System.out.println("Non hai selezionato nessun file");
+	
+	public static Modello caricaModelloOggetto(File file) {
+		
+		if(file.exists()){
+			try{
+				modelloCaricato = (Modello) ServizioFile.caricaSingoloOggetto(file);
 			}
-		} catch (FileNotFoundException e) { e.printStackTrace(); }
+			catch(ClassCastException exc){
+				System.out.println("Errore Cast");
+			}
+		}
 		return modelloCaricato;
 	}
 	
