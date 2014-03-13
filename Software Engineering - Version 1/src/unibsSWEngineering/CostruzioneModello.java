@@ -179,6 +179,7 @@ public class CostruzioneModello {
 		if(corrente != null && next != null){
 			corrente.aggiungiUscita(next);
 			next.aggiungiIngresso(corrente);
+			//ANALISI INGRESSO CORRENTE
 		}
 	}
 	
