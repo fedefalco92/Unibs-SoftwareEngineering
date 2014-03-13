@@ -1,0 +1,5 @@
+NOME MODELLO: mod2
+
+[START] Start : out([AZIONE] a2)
+[AZIONE] a2 : in([START] Start) - out([END] End)
+[END] End : in([AZIONE] a2)

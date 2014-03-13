@@ -86,7 +86,7 @@ public class CreazioneModelloCopia {
 		final String TITOLO = "MENU CREAZIONE MODELLO " + modello.getNome();;
 		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Salva il modello ed esci"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
-		menuCreazione.setVoceUscita("0\tTorna al menu principale (Tutte le modifiche non salvate andranno perse)");
+		menuCreazione.setVoceUscita("0\tTorna al menu principale (NON sara' possibile salvare in seguito)");
 		int scelta = menuCreazione.scegli();
 		
 		switch (scelta)
