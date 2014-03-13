@@ -21,7 +21,7 @@ public class CorrettezzaCammino {
 		
 		//cerco le azioni partendo dal nome scansionando il vector di stringhe
 		for(String nome: nomiAzioni){
-			Azione a = trovaAzione(modello, nome);
+			Azione a = (Azione) modello.ricercaElementoInModello("AZIONE", nome);
 			if (a==null)
 				return 1; //primo codice di errore = azione inesistente
 			else
@@ -113,9 +113,9 @@ public class CorrettezzaCammino {
 				break;
 			case "BRANCH": 
 			case "FORK":
-				Vector<Elemento> usciteSenzaAzioni= ((ElementoMultiUscita) e).getUsciteSenzaAzioni();
-				if(usciteSenzaAzioni != null)
-					for(Elemento el: usciteSenzaAzioni){
+				Vector<Elemento> uscite= ((ElementoMultiUscita) e).getUscite();
+				if(uscite != null)
+					for(Elemento el: uscite){
 						out = azioneRaggiungibileDaElementoIntermedio(modello, el, a);
 						if (out) break;
 					}
@@ -128,7 +128,7 @@ public class CorrettezzaCammino {
 		
 		return out;
 	}
-
+	/*
 	private static Azione trovaAzione(Modello modello, String nome){
 		for(Azione azione: modello.getAzioni()){
 			if (azione.getNome().equals(nome)){
@@ -137,4 +137,5 @@ public class CorrettezzaCammino {
 		}
 		return null;
 	}
+	*/
 }
