@@ -443,6 +443,11 @@ public class Modello implements Serializable {
 		
 		
 		output.append("NOME MODELLO: " + nome + "\n\n");
+		
+		for(Elemento elem: elementi){
+			output.append(elem.toString() + "\n");
+		}
+		/*
 		output.append(start + "\n");
 		for(Azione azione: azioni)
 			output.append(azione + "\n");
@@ -457,7 +462,7 @@ public class Modello implements Serializable {
 			output.append(j + "\n");
 		
 		output.append(end);
-		
+		*/
 
 		return output.toString();
 	}
@@ -536,5 +541,27 @@ public class Modello implements Serializable {
 	
 	public void termina(){
 		completo=true;
+		riempiVectoElementi();
+	}
+
+	private void riempiVectoElementi() {
+		elementi.add(start);
+		for(Azione azione:azioni){
+			elementi.add(azione);
+		}
+		for(Branch b:branch){
+			elementi.add(b);
+		}
+		for(Merge m:merge){
+			elementi.add(m);
+		}
+		for(Fork f:fork){
+			elementi.add(f);
+		}
+		for(Join j:join){
+			elementi.add(j);
+		}
+		elementi.add(end);
+		
 	}
 }
