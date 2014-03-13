@@ -125,6 +125,41 @@ public class CostruzioneModello {
 	    	 }
 	    }
 		System.out.println("***");
+		
+		//Controllo ingressi
+		/*
+		for(int i = result.length; i > 0; i++){
+			String elem = analisiElemento(result[i]);
+			String idElem = restituisciID(elem);
+	    	String nomeElem = restituisciNome(elem);
+	    	Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
+	    	
+	    	for(Elemento before: restituisciEntrate(result[i])){
+	    		before = modelloCaricato.ricercaElemento(before);
+	    		if(before.getIngresso() != null){
+	    			if(!before.getIngresso().equals(corrente))
+	    				return false;
+	    		}
+	    		
+	    		if(before.getIngressi() != null){
+	    			for(int j = 0; j < before.getIngressi().size(); j++){
+	    				
+	    				//Se uguali
+	    				if(before.getIngressi().get(i).equals(corrente))
+	    					break;
+	    				
+	    				//Controlla ultimo elemento
+	    				if( j == before.getIngressi().size()){
+	    					if(before.getIngressi().get(j).equals(corrente))
+	    						return false;
+	    				}	
+	    			}
+	    			
+	    		}
+	    	}
+		}
+		*/
+		
 		return true;
 	}
 	
@@ -233,8 +268,6 @@ public class CostruzioneModello {
 		modelloCaricato.aggiungiElemento(elem);
 	}
 	
-	//Inutile
-	/*
 	private static Vector <Elemento> restituisciEntrate(String stringa){
 		Vector <Elemento> entrate = new Vector <Elemento>();
 		String in = analisiIn(stringa);
@@ -248,7 +281,6 @@ public class CostruzioneModello {
 		}
 		return entrate;
 	}
-	*/
 	
 	private static Vector <Elemento> restisciUscite(String stringa){
 		Vector <Elemento> uscite = new Vector <Elemento>();
@@ -467,12 +499,9 @@ public class CostruzioneModello {
 	 * @param riga
 	 * @return inElem
 	 */
-	//Intuile
-	/*
 	private static String analisiIn(String stringa){
 		return restituisciStringa("in(", ")", stringa);
 	}
-	*/
 	
 	
 	/**
