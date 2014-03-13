@@ -173,7 +173,11 @@ public class MenuClass {
 		file = aprifile(loc, filtroTXT);
 		if(file != null){
 			modello = CostruzioneModello.caricaModello(file);
-			checkModello();
+			if(modello == null){
+				System.out.println("Il file del modello contiene un errore. Modello non corretto");
+			}else{
+				checkModello();
+			}
 		}
 		else{
 			System.out.println("Non hai selezionato nessun file");

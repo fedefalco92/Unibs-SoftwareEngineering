@@ -41,7 +41,8 @@ public class CostruzioneModello {
 			String fileString;
 			fileString = leggoFile(new FileReader(file));
 			stampaModelloCaricato();
-			riempimentoTotale(fileString);
+			if(!riempimentoTotale(fileString))
+				return null;
 			stampaModelloCaricato();
 		} catch (FileNotFoundException e) {e.printStackTrace();}
 		
@@ -144,54 +145,45 @@ public class CostruzioneModello {
 	    	 
 	    	 for (Elemento next: restisciUscite(result[i])){
 	    		 next = modelloCaricato.ricercaElemento(next);
-	    		 riempimentoInOut(corrente, next);
+	    		 if(!riempimentoInOut(stringa, corrente, next))
+	    			 return false;
 	    	 }
 	    }
 		System.out.println("***");
 		
-		//Controllo ingressi
-		/*
-		for(int i = result.length; i > 0; i++){
-			String elem = analisiElemento(result[i]);
-			String idElem = restituisciID(elem);
-	    	String nomeElem = restituisciNome(elem);
-	    	Elemento corrente = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
-	    	
-	    	for(Elemento before: restituisciEntrate(result[i])){
-	    		before = modelloCaricato.ricercaElemento(before);
-	    		if(before.getIngresso() != null){
-	    			if(!before.getIngresso().equals(corrente))
-	    				return false;
-	    		}
-	    		
-	    		if(before.getIngressi() != null){
-	    			for(int j = 0; j < before.getIngressi().size(); j++){
-	    				
-	    				//Se uguali
-	    				if(before.getIngressi().get(i).equals(corrente))
-	    					break;
-	    				
-	    				//Controlla ultimo elemento
-	    				if( j == before.getIngressi().size()){
-	    					if(before.getIngressi().get(j).equals(corrente))
-	    						return false;
-	    				}	
-	    			}
-	    			
-	    		}
-	    	}
-		}
-		*/
-		
 		return true;
 	}
 	
-	public static void riempimentoInOut(Elemento corrente, Elemento next){
+	public static String findRigaElemento(String stringaFile, Elemento elemento){
+		String [] result = stringaFile.split("\n");
+		for (int i=0; i < result.length; i++){
+	    	 String elem = analisiElemento(result[i]);
+	    	 String idElem = restituisciID(elem);
+	    	 String nomeElem = restituisciNome(elem);
+	    	 Elemento trovato = modelloCaricato.ricercaElementoInModello(idElem, nomeElem);
+	    	 
+	    	 //Trova elemento corrispondente
+	    	 if(trovato.equals(elemento))
+	    		 return result[i];
+	    }
+		return null;
+	}
+	
+	public static boolean riempimentoInOut(String stringaFile, Elemento corrente, Elemento next){
 		if(corrente != null && next != null){
-			corrente.aggiungiUscita(next);
-			next.aggiungiIngresso(corrente);
 			//ANALISI INGRESSO CORRENTE
+			String rigaNext = findRigaElemento(stringaFile, next);
+			for ( Elemento e: restituisciEntrate(rigaNext)){
+				e = modelloCaricato.ricercaElemento(e);
+				if(e.equals(corrente)){
+					//AGGIUNTA EFFETTIVA
+					corrente.aggiungiUscita(next);
+					next.aggiungiIngresso(corrente);
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 	
 	//FINE METODI NUOVO ALGORITMO
