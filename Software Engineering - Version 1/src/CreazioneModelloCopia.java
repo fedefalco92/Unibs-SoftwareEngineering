@@ -90,7 +90,11 @@ public class CreazioneModelloCopia {
 		{
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
-			case 1:				
+			case 1:
+				if(modello.completo()){
+					System.out.println("> MODELLO GIA' INSERITO!! <");
+					break;
+				}
 				gestisciStart(modello, modello.getStart());
 				modello.termina();
 				break;
