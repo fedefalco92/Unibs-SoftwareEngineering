@@ -27,7 +27,6 @@ public class Modello implements Serializable {
 	private End end;
 	
 	private Elemento ultimaModifica;
-	private Boolean completo;
 	private Vector<Merge> mergeIncompleti;
 	
 	public Modello(String nome){
@@ -43,7 +42,6 @@ public class Modello implements Serializable {
 		end = new End("End");
 		mergeIncompleti = new Vector<Merge>();
 		
-		completo = false;
 	}
 	
 	public Vector<String> getNomiAzioni(){
@@ -536,12 +534,8 @@ public class Modello implements Serializable {
 		return output.toString();
 	}
 	*/
-	public boolean completo(){
-		return completo;
-	}
 	
 	public void termina(){
-		completo=true;
 		riempiVectoElementi();
 	}
 

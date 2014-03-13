@@ -127,19 +127,20 @@ public class MenuClass {
 
 	private static void caricaTesto() {
 		modello = CostruzioneModello.caricaModello();
-		if(modello!=null)
+		if(modello!=null){
 			if(modello.controllaModello()){
 				System.out.println("Modello corretto");
 			}
 			else{
 				System.out.println("Modello errato");
 			}
+		}
 	}
 
 	//per ora provo a fare tutto static come dice Falcon...
 	private static Modello creaModello() {
 		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
-		return CreazioneModelloCopia.creaModello(nomeModello);
+		return CreazioneModello.creaModello(nomeModello);
 		
 	}
 	
@@ -205,13 +206,12 @@ public class MenuClass {
 	 * 
 	 */
 	private static void visualizzaModello(Modello _modello) {
-		if(modello!=null)
-			if(_modello.completo())
-				System.out.println(_modello.stampaModello());
-			else
-				System.out.println("> Modello non ancora creato! <");
-		else
+		if(modello!=null){
+			System.out.println(_modello.stampaModello());
+		}	
+		else{
 			System.out.println ("> Nessun modello inserito <");
+		}
 	}
 	
 	/*Metodo Void: altro tipo per creare un menu*/
