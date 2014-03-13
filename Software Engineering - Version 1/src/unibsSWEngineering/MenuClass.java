@@ -1,8 +1,6 @@
 package unibsSWEngineering;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.ObjectInputStream.GetField;
-
 import javax.swing.JFileChooser;
 
 import unibsSWEngineering.analisi.*;
@@ -186,6 +184,7 @@ public class MenuClass {
 	 */
 	private static File aprifile(String loc) {
 		JFileChooser chooser = new JFileChooser(new File(loc));
+		chooser.setVisible(true);
 	    int returnVal = chooser.showOpenDialog(null);
 	    if(returnVal == JFileChooser.APPROVE_OPTION){
 	    	return chooser.getSelectedFile();
