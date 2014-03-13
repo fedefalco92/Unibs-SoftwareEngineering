@@ -1,5 +1,4 @@
 import java.io.File;
-import java.util.Vector;
 
 import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
@@ -47,6 +46,8 @@ public class CreazioneModelloCopia {
 		"Un nuovo branch (Crea automaticamente i merge associati)", 
 		"Un nuovo fork (crea automaticamente il join associato)", 
 		};
+
+	private static final String cartellaModelliOggetto = "ModelliDAT";
 		
 	
 	/**
@@ -134,13 +135,13 @@ public class CreazioneModelloCopia {
 	private static void salvaFormatoOggetto(Modello modello) {	
 		
 		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
-		String loc = CostruzioneModello.cartella + File.separator + nomeFile;
+		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
 		File modelloFile = new File(loc);
 		if (modelloFile.exists()){
 			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
 					+ "> Vuoi sovrascriverlo? > ");
 			if(sovrascrivi){
-				confermaSovrascrittura(modelloFile, modello);
+				ServizioFile.confermaSovrascrittura(modelloFile, modello);
 			}
 		} else {
 			ServizioFile.salvaSingoloOggetto(modelloFile, modello);
@@ -148,22 +149,25 @@ public class CreazioneModelloCopia {
 
 	}
 	
-	private static void confermaSovrascrittura(File file, Object object){
-		boolean sovrascrittura = InputDati.yesOrNo("Confermi? > ");
-		
-		if (sovrascrittura) 
-			ServizioFile.salvaSingoloOggetto(file, object);
-		else 
-			System.out.println("> SALVATAGGIO ANNULLATO < ");
-		
-	}
-	
-
 
 	private static void salvaFormatoTestuale(Modello modello) {
-		// TODO Auto-generated method stub
 		
+		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
+		String loc = CostruzioneModello.cartella + File.separator + nomeFile + ".txt";
+		File modelloFile = new File(loc);
+		if (modelloFile.exists()){
+			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
+					+ "> Vuoi sovrascriverlo? > ");
+			if(sovrascrivi){
+				ServizioFile.confermaSovrascritturaTesto(modelloFile, modello.stampaModello());
+			}
+		} else {
+			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
+		}
+
 	}
+
+	
 
 
 	/**
@@ -269,115 +273,6 @@ public class CreazioneModelloCopia {
 		gestisciAzione(modello, primaAzione, null);
 		
 	}
-	
-	/*
-		//ci sono almeno due alternative da inserire obbligatoriamente.
-		int i=1;
-		
-		boolean stop=false;
-		while(!stop){
-			final String TITOLO = "Menu creazione del branch "+ branch.getNome() +" - ALTERNATIVA " + i +
-					"\nCosa vuoi inserire?";
-			final String [] VOCI = {
-					"Una nuova azione", 
-					"Un nuovo branch", 
-					"Un nuovo merge", 
-					"Un merge esistente", 
-					"un nuovo fork (crea automaticamente il join associato)", 
-					"nodo finale"
-					};
-			MyMenu menuAzione = new MyMenu(TITOLO, VOCI);
-			//RENDO "IMPOSSIBILE" O MEGLIO "INVISIBILE" L'USCITA PER EVITARE DI LASCIARE 
-			//IL MODELLO INCOMPLETO E NON POTER PIU' RIPRENDERE L'INSERIMENTO
-			menuAzione.setVoceUscita("");
-			//menuAzione.setVoceUscita("0\tTorna al menu creazione (potrai riprendere l'inserimento in seguito)");
-			int scelta = menuAzione.scegli();
-			
-			switch (scelta)
-			{
-				case 0: 
-					return;
-				case 1:
-					//l'acquisizione nome va fatta in modo che non ci siano doppioni
-					String nomeAzione = acquisizioneNome(modello, "Inserisci il nome della nuova azione > ");
-					Azione nuovaAzione = new Azione(nomeAzione);
-					branch.aggiungiUscita(nuovaAzione);
-					nuovaAzione.setIngresso(branch);
-					modello.aggiungiAzione(nuovaAzione);
-					modello.setUltimaModifica(nuovaAzione);
-					continuaInserimento(modello, null);
-					break;
-		
-				case 2:
-					String nomeBranch = acquisizioneNome(modello, "Inserisci il nome del nuovo branch > ");
-					Branch nuovoBranch = new Branch(nomeBranch);
-					branch.aggiungiUscita(nuovoBranch);
-					nuovoBranch.setIngresso(branch);
-					modello.aggiungiBranch(nuovoBranch);
-					modello.setUltimaModifica(nuovoBranch);
-					continuaInserimento(modello, null);
-					
-					break;
-			
-				case 3:
-					String nomeMerge = acquisizioneNome(modello, "Inserisci il nome del nuovo merge> ");
-					Merge nuovoMerge = new Merge(nomeMerge);
-					branch.aggiungiUscita(nuovoMerge);
-					nuovoMerge.aggiungiIngresso(branch);
-					modello.aggiungiMerge(nuovoMerge);
-					//modello.aggiungiMergeIncompleto(nuovoMerge);
-					modello.setUltimaModifica(nuovoMerge);
-					continuaInserimento(modello, null);
-					break;
-				case 4:if(modello.getMerge().isEmpty()) {
-					System.out.println("ATTENZIONE! Nessun Merge esistente\n");
-					continuaInserimento(modello, null);
-				} else {
-					System.out.println("A quale merge vuoi collegarti?");
-					Merge mergeEsistente= sceltaMerge(modello.getMerge());
-					mergeEsistente.aggiungiIngresso(branch);
-					branch.aggiungiUscita(mergeEsistente);
-					
-					//a questo punto devo decidere dove mandare il programma!!
-					//probabilmente non e' necessario mandarlo da nessuna parte dato che se sono giunto qui
-					//ho quasi sicuramente un branch aperto e quindi riprendera' il menu del branch.
-					//ci devo pensare ancora un pochino
-				}
-					break;
-				case 5: //AGGIUNTA FORK
-					String nomeFork = acquisizioneNome(modello, "Inserisci il nome del nuovo fork > ");
-					Fork nuovoFork = new Fork(nomeFork);
-					String nomeJoin = acquisizioneNome(modello, "Inserisci il nome del join associato > ");
-					Join nuovoJoin = new Join(nomeJoin);
-					
-					nuovoFork.setJoinAssociato(nuovoJoin);
-					nuovoJoin.setForkAssociato(nuovoFork);
-					
-					branch.aggiungiUscita(nuovoFork);
-					nuovoFork.setIngresso(branch);
-					modello.aggiungiFork(nuovoFork);
-					modello.aggiungiJoin(nuovoJoin);
-					modello.setUltimaModifica(nuovoFork);
-					continuaInserimento(modello, null);
-					break;
-				case 6:
-					branch.aggiungiUscita(modello.getEnd());
-					modello.setUltimoElemento(branch);
-					modello.setUltimaModifica(null);
-					break;
-				
-				default:
-					//Non entra mai qui
-			}
-			
-			i++;
-			if (i>2){
-				boolean continua= InputDati.yesOrNo("Il branch " + branch.getNome()
-						+ " e' completo! Vuoi iniziare l'inserimento di un'altra alternativa?");
-				if (!continua) stop=true;
-			}
-		}
-		}*/
 	
 	
 	/**

@@ -40,6 +40,7 @@ public class CostruzioneModello {
 				/*Fine nuove aggiunte*/
 			}else{
 				System.out.println("Non hai selezionato nessun file");
+				return null;
 			}
 		} catch (FileNotFoundException e) { e.printStackTrace(); }
 		
@@ -608,7 +609,7 @@ public class CostruzioneModello {
 		return nome;
 	}
 
-	public static Modello caricaOggetto() {
+	public static Modello caricaModelloOggetto() {
 		String loc = cartella + File.separator; //Location del file
 		try {
 			file = aprifile(loc);

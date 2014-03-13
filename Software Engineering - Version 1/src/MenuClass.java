@@ -19,6 +19,10 @@ public class MenuClass {
 			case 0: 
 				return InputDati.yesOrNo("Vuoi veramente uscire?");
 			case 1:
+				if (modello!=null){
+					boolean prosegui = InputDati.yesOrNo("Proseguendo si perdera' il modello gia' inserito. Proseguire? > ");
+					if(!prosegui) break;
+				}
 				modello = creaModello();
 				break;
 			case 2:
@@ -110,22 +114,27 @@ public class MenuClass {
 				caricaOggetto();
 				break;
 		}
-	
-		
 	}
 
 	private static void caricaOggetto() {
-		modello = CostruzioneModello.caricaOggetto();
-	}
-
-	private static void caricaTesto() {
-		modello = CostruzioneModello.caricaModello();
+		modello = CostruzioneModello.caricaModelloOggetto();
 		if(modello.controllaModello()){
 			System.out.println("Modello corretto");
 		}
 		else{
 			System.out.println("Modello errato");
 		}
+	}
+
+	private static void caricaTesto() {
+		modello = CostruzioneModello.caricaModello();
+		if(modello!=null)
+			if(modello.controllaModello()){
+				System.out.println("Modello corretto");
+			}
+			else{
+				System.out.println("Modello errato");
+			}
 	}
 
 	//per ora provo a fare tutto static come dice Falcon...

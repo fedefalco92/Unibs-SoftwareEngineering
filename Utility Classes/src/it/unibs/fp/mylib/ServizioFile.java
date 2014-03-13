@@ -86,6 +86,60 @@ public class ServizioFile
 
 		 } // metodo salvaSingoloOggetto
 	
+
+	public static void salvaFileTesto (File f, String daSalvare){
+		BufferedWriter uscita = null;
+			
+		 try
+			{
+			 uscita = new BufferedWriter(new FileWriter(f.getName()));
+			 uscita.write(daSalvare);
+				
+			}
+		 catch (IOException excScrittura)
+			{
+			 System.out.println(MSG_NO_SCRITTURA + f.getName() );
+			}
+		 
+  	     finally
+			{
+			 if (uscita != null)
+				{
+				 try 
+				  {
+				   uscita.close();
+				   System.out.println("SALVATAGGIO RIUSCITO");
+				  }
+				 catch (IOException excChiusura)
+					{
+			 			System.out.println(MSG_NO_CHIUSURA + f.getName() );
+					}
+				}
+			} // finally
+
+	} // metodo salvaSingoloOggetto
+	
+	public static void confermaSovrascritturaTesto(File file, String string) {
+		boolean sovrascrittura = InputDati.yesOrNo("Confermi? > ");
+		
+		if (sovrascrittura) 
+			ServizioFile.salvaFileTesto(file, string);
+		else 
+			System.out.println("> SALVATAGGIO ANNULLATO < ");
+		
+		
+	}
+	
+	public static void confermaSovrascrittura(File file, Object object){
+		boolean sovrascrittura = InputDati.yesOrNo("Confermi? > ");
+		
+		if (sovrascrittura) 
+			ServizioFile.salvaSingoloOggetto(file, object);
+		else 
+			System.out.println("> SALVATAGGIO ANNULLATO < ");
+		
+	}
+	
 	
 }
 
