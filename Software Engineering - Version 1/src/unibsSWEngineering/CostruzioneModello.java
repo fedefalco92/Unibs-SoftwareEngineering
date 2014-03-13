@@ -40,10 +40,11 @@ public class CostruzioneModello {
 			//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
 			String fileString;
 			fileString = leggoFile(new FileReader(file));
+			boolean ok = riempimentoTotale(fileString);
 			stampaModelloCaricato();
-			if(!riempimentoTotale(fileString))
+			if(!ok){
 				return null;
-			stampaModelloCaricato();
+			}
 		} catch (FileNotFoundException e) {e.printStackTrace();}
 		
 		//Riempio i vector specializzati con il modello appena caricato
@@ -135,8 +136,8 @@ public class CostruzioneModello {
 		return fileString.toString();
 	}
 	
-	public static boolean riempimentoTotale(String stringa){
-		String [] result = stringa.split("\n");
+	public static boolean riempimentoTotale(String stringaFile){
+		String [] result = stringaFile.split("\n");
 		for (int i=0; i < result.length; i++){
 	    	 String elem = analisiElemento(result[i]);
 	    	 String idElem = restituisciID(elem);
@@ -145,12 +146,10 @@ public class CostruzioneModello {
 	    	 
 	    	 for (Elemento next: restisciUscite(result[i])){
 	    		 next = modelloCaricato.ricercaElemento(next);
-	    		 if(!riempimentoInOut(stringa, corrente, next))
+	    		 if(!riempimentoInOut(stringaFile, corrente, next))
 	    			 return false;
 	    	 }
 	    }
-		System.out.println("***");
-		
 		return true;
 	}
 	
@@ -173,13 +172,15 @@ public class CostruzioneModello {
 		if(corrente != null && next != null){
 			//ANALISI INGRESSO CORRENTE
 			String rigaNext = findRigaElemento(stringaFile, next);
-			for ( Elemento e: restituisciEntrate(rigaNext)){
-				e = modelloCaricato.ricercaElemento(e);
-				if(e.equals(corrente)){
-					//AGGIUNTA EFFETTIVA
-					corrente.aggiungiUscita(next);
-					next.aggiungiIngresso(corrente);
-					return true;
+			if(rigaNext != null){
+				for ( Elemento e: restituisciEntrate(rigaNext)){
+					e = modelloCaricato.ricercaElemento(e);
+					if(e.equals(corrente)){
+						//AGGIUNTA EFFETTIVA
+						corrente.aggiungiUscita(next);
+						next.aggiungiIngresso(corrente);
+						return true;
+					}
 				}
 			}
 		}
