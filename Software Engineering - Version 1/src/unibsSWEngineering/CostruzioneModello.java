@@ -33,14 +33,15 @@ public class CostruzioneModello {
 				return null;
 			}
 			boolean ok = riempimentoTotale(fileString);
-			stampaModelloCaricato();
 			if(!ok){
+				System.out.println("Errore nel modello. Non e' stato possibile caricarlo.");
 				return null;
 			}
 		} catch (FileNotFoundException e) {e.printStackTrace();}
 		
 		//Riempio i vector specializzati con il modello appena caricato
 		modelloCaricato.riempiVectorModello();
+		modelloCaricato.toString();
 		return modelloCaricato;
 				
 		
@@ -84,13 +85,13 @@ public class CostruzioneModello {
 	
 	////////////////////////////////////////////////////////
 	//METODI DI PROVA NUOVO ALGORITMO
-	public static void stampaModelloCaricato(){
-	    for(Elemento elem: modelloCaricato.getElementi()){
-	    	System.out.println(elem.toString());
-	    }
-	}
 	
-	public static String leggoFile(FileReader fileReader){
+	/**
+	 * Legge un file attraverso un BufferedReader e riempie il modello con elementi corretti trovati.
+	 * @param fileReader Il file da leggere
+	 * @return Una stringa contentente gli elementi corretti del file, separati da a capo.
+	 */
+	private static String leggoFile(FileReader fileReader){
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		StringBuffer fileString = new StringBuffer();
 		
@@ -114,7 +115,7 @@ public class CostruzioneModello {
 			String elemento = analisiElemento(riga);
 	    	Elemento nuovoElemento = restituisciElemento(elemento);
 	    	if(nuovoElemento != null){
-	    		aggiungoElemento(nuovoElemento);
+	    		modelloCaricato.aggiungiElemento(nuovoElemento);
 	    		fileString.append(riga + "\n");
 	    	};
 		}
@@ -128,7 +129,12 @@ public class CostruzioneModello {
 		return fileString.toString();
 	}
 	
-	public static boolean controlloIngressiUscite(String stringaFile){
+	/**
+	 * Metodo che assicura che gli elementi descritti nel file abbiano un numero di ingressi e di uscite valido.
+	 * @param stringaFile Stringa che contiene gli elementi corretti del file, separati da un a capo.
+	 * @return True se gli elementi del file contengono entrate e uscite corrette, False altrimenti.
+	 */
+	private static boolean controlloIngressiUscite(String stringaFile){
 		Vector <Elemento> entrate = new Vector <Elemento>();
 		Vector <Elemento> uscite = new Vector <Elemento>();
 		
@@ -183,7 +189,13 @@ public class CostruzioneModello {
 		return true;
 	}
 	
-	public static boolean riempimentoTotale(String stringaFile){
+	/**
+	 * Metodo che filtra gli elementi della stringaFile passata e li confronta con gli elementi caricati.
+	 * Va a cercare le uscite di un elemento e trova la riga dell'elemento corrispondente.
+	 * @param stringaFile Stringa che contiene gli elementi corretti del file, separati da un a capo.
+	 * @return True se &egrave; corretto, false altrimenti.
+	 */
+	private static boolean riempimentoTotale(String stringaFile){
 		String [] result = stringaFile.split("\n");
 		for (int i=0; i < result.length; i++){
 	    	 String elem = analisiElemento(result[i]);
@@ -193,14 +205,21 @@ public class CostruzioneModello {
 	    	 
 	    	 for (Elemento next: restisciUscite(result[i])){
 	    		 next = modelloCaricato.ricercaElemento(next);
-	    		 if(!riempimentoInOut(stringaFile, corrente, next))
+	    		 if(!riempimentoInOut(corrente, next))
 	    			 return false;
 	    	 }
 	    }
 		return true;
 	}
 	
-	public static String findRigaElemento(String stringaFile, Elemento elemento){
+	/**
+	 * Trova la riga corrispondente ad un elemento.
+	 * @param stringaFile Stringa che contiene gli elementi corretti del file, separati da un a capo.
+	 * @param elemento Elemento da cercare nella stringaFile
+	 * @return la Stringa contenente quell'elemento.
+	 */
+	//INUTILIZZATO
+	private static String findRigaElemento(String stringaFile, Elemento elemento){
 		String [] result = stringaFile.split("\n");
 		for (int i=0; i < result.length; i++){
 	    	 String elem = analisiElemento(result[i]);
@@ -215,7 +234,15 @@ public class CostruzioneModello {
 		return null;
 	}
 	
-	public static boolean riempimentoInOut(String stringaFile, Elemento corrente, Elemento next){
+	/**
+	 * Dato un elemento corrente e un elemento next, se questi sono diversi da null e non sono uguali,
+	 * vengono aggiunti alle proprie uscite e ingressi.
+	 * @param stringaFile Stringa che contiene gli elementi corretti del file, separati da un a capo.
+	 * @param corrente Elemento principale, alle sue uscite viene aggiunto next.
+	 * @param next Elemento secondario, ai suoi ingressi viene aggiunto corrente.
+	 * @return
+	 */
+	private static boolean riempimentoInOut(Elemento corrente, Elemento next){
 		if(corrente != null && next != null && !corrente.equals(next)){
 			corrente.aggiungiUscita(next);
 			next.aggiungiIngresso(corrente);
@@ -314,6 +341,11 @@ public class CostruzioneModello {
 	}
 	*/
 	
+	/**
+	 * Restituisce un Elemento nuovo data una stringa che descrive questo elemento.
+	 * @param elemento stringa del formato "[ELEMENTO] Nome"
+	 * @return Elemento con quel determinato ID e Nome
+	 */
 	private static Elemento restituisciElemento(String elemento){
 		Elemento elem = null;
 		if(elemento != null){
@@ -350,10 +382,11 @@ public class CostruzioneModello {
 		return elem;
 	}
 	
-	private static void aggiungoElemento(Elemento elem){
-		modelloCaricato.aggiungiElemento(elem);
-	}
-	
+	/**
+	 * Restituisce un Vector di Elementi di Entrata data una stringa che descrive interamente questo elemento.
+	 * @param stringa Stringa intera che descrive l'elemento.
+	 * @return Vector di Elementi che corrispondono alle Entrate dell'elemento.
+	 */
 	private static Vector <Elemento> restituisciEntrate(String stringa){
 		Vector <Elemento> entrate = new Vector <Elemento>();
 		String in = analisiIn(stringa);
@@ -368,6 +401,11 @@ public class CostruzioneModello {
 		return entrate;
 	}
 	
+	/**
+	 * Restituisce un Vector di Elementi di Uscita data una stringa che descrive interamente questo elemento.
+	 * @param stringa Stringa intera che descrive l'elemento.
+	 * @return Vector di Elementi che corrispondono alle Uscite dell'elemento.
+	 */
 	private static Vector <Elemento> restisciUscite(String stringa){
 		Vector <Elemento> uscite = new Vector <Elemento>();
 		String out = analisiOut(stringa);
@@ -565,7 +603,7 @@ public class CostruzioneModello {
 	/**
 	 * Analizza una stringa e restituisce l'elemento inziale del pattern.
 	 * @param stringa
-	 * @return elemento
+	 * @return elemento Stringa completa che descrive l'elemento del tipo "[ID] nome"
 	 */
 	private static String analisiElemento(String stringa){
 		String elemento = null;
@@ -694,7 +732,11 @@ public class CostruzioneModello {
 		return nome;
 	}
 
-	
+	/**
+	 * Carica un modello salvato come oggetto da File.
+	 * @param file File contentente l'oggetto.
+	 * @return Il modello caricato.
+	 */
 	public static Modello caricaModelloOggetto(File file) {
 		
 		if(file.exists()){
