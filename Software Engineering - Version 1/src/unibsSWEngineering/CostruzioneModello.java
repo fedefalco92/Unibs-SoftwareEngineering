@@ -219,6 +219,7 @@ public class CostruzioneModello {
 		if(corrente != null && next != null && !corrente.equals(next)){
 			corrente.aggiungiUscita(next);
 			next.aggiungiIngresso(corrente);
+			return true;
 			/*
 			//ANALISI INGRESSO CORRENTE
 			String rigaNext = findRigaElemento(stringaFile, next);
