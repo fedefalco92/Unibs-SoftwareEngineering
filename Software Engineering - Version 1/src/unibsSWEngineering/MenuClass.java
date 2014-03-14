@@ -14,18 +14,18 @@ public class MenuClass {
 	private static final FileNameExtensionFilter filtroDAT = new FileNameExtensionFilter("File .dat","dat");
 	public static final String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	public static final String cartellaModelliOggetto = "ModelliDAT";
+	public static final String cartellaStatisticheModello = "Statistiche";
 	
 	private static Modello modello;
 	private static File file;
-	private static TestSuite ts1;
-	private static Distanze dist;
+	private static TestSuite testSuite;
 	
 	//////////////////////////////////
 	// MENU PRINCIPALE
 	//////////////////////////////////
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino"};
+		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino","Carica Statistiche Modello(se esistenti)","Esporta su file Statistiche Modello"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -39,6 +39,7 @@ public class MenuClass {
 					if(!prosegui) break;
 				}
 				modello = creaModello();
+				testSuite = null;
 				break;
 			case 2:
 				if (modello!=null){
@@ -46,57 +47,13 @@ public class MenuClass {
 					if(!prosegui) break;
 				}
 				caricaModello();
+				testSuite = null;
 				break;
 			case 3:
-				//Diagnosi e test
-				if(modello != null){
-					Prova p1 = new Prova("Prova 1");
-					p1.addPercorso(new Cammino("A1,A3,A4,A5",false));
-					p1.addPercorso(new Cammino("A1",true));
-					Prova p2 = new Prova("Prova 2");
-					p2.addPercorso(new Cammino("A1,A3,A4,A5",false));
-					p2.addPercorso(new Cammino("A1",true));		
-					Prova p3 = new Prova("Prova 3");
-					p3.addPercorso(new Cammino("A1,A3,A4,A5",false));
-					p3.addPercorso(new Cammino("A1",true));
-					p3.addPercorso(new Cammino("A1,A3,A4",false));
-					Prova p4 = new Prova("Prova 4");
-					p4.addPercorso(new Cammino("A1,A2,A3,A4,A6",false));
-					p4.addPercorso(new Cammino("A1",true));
-					p4.addPercorso(new Cammino("A1,A2,A3",true));
-				 
-						//classi di equivalenza
-					//QUESTA PARTE DOVRA' ESSERE ORGANIZZATA PER UN RIEMPIMENTO AUTOMATICO
-					ClasseEquivalenza cl1 = new ClasseEquivalenza("Classe 1",modello.getNomiAzioni());
-					cl1.setIstanzaProva(p1);
-					cl1.setCardinalita(2);
-					ClasseEquivalenza cl2 = new ClasseEquivalenza("Classe 2",modello.getNomiAzioni());
-					cl2.setIstanzaProva(p3);	
-					cl2.setCardinalita(1);		
-					ClasseEquivalenza cl3 = new ClasseEquivalenza("Classe 3",modello.getNomiAzioni());
-					cl3.setIstanzaProva(p4);
-					cl3.setCardinalita(1);		
-					
-					//aggiunta ad un test suite 
-					ts1 = new TestSuite(modello.getNomiAzioni());
-					ts1.addNuovaClasseEquivalenza(cl1);
-					ts1.addNuovaClasseEquivalenza(cl2);
-					ts1.addNuovaClasseEquivalenza(cl3);	
-					
-					ts1.calcolaProbabilitaM1();		
-					ts1.calcolaProbabilitaM2();			
-				}
+				gestisciInserimentoClasse();
 				break;
 			case 4:
-				//Probabilita'
-				if(modello != null && ts1 != null){
-					ts1.calcolaProbabilitaM1();		
-					ts1.calcolaProbabilitaM2();
-					System.out.println(ts1);
-					dist = new Distanze(ts1);
-					dist.calcoloDistanze();
-					System.out.println(dist);		
-				}
+				calcolaProbabilita();
 				break;
 			case 5: 
 				visualizzaModello();
@@ -108,6 +65,12 @@ public class MenuClass {
 				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
 						System.out.println("Percorso raggiungibile");
 				break;
+			case 8:
+				caricaStatistiche();
+				break;
+			case 9:
+				salvaStatistiche();
+				break;				
 		}
 		
 		return false;
@@ -217,11 +180,34 @@ public class MenuClass {
 	// 3 - DIAGNOSI E TEST
 	//////////////////////////////////
 	
+	private static void gestisciInserimentoClasse(){
+		if(modello != null){
+			ClasseEquivalenza classeNuova = CostruzioneTest.generaClasseEquivalenza(modello);
+			if(testSuite == null){
+				testSuite = new TestSuite(modello.getNomiAzioni());
+			}
+			testSuite.addNuovaClasseEquivalenza(classeNuova);					
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}			
+	}
 	
 	//////////////////////////////////
 	// 4 - PROBABILITA
 	//////////////////////////////////
 	
+	private static void calcolaProbabilita(){
+		if(modello != null){
+			if(testSuite != null){
+				testSuite.eseguiComputazioni();
+				System.out.println(testSuite);
+			}
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}			
+	}
 	
 	//////////////////////////////////
 	// 5 - METODI VISUALIZZAZIONE MODELLO
@@ -295,6 +281,54 @@ public class MenuClass {
 			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
 		}
 
+	}
+	
+	//////////////////////////////////
+	// 8 - IMPORTAZIONE FILE STATISTICHE
+	//////////////////////////////////	
+	
+	private static void caricaStatistiche(){
+		if(modello != null){
+			File fileStat = new File(CostruzioneTest.patternNome(modello));
+			if(fileStat.exists()){
+				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTest.patternNome(modello)));
+			}
+			else{
+				System.out.println("File con Statistiche non presente!");
+			}
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}
+	}
+	
+	//////////////////////////////////
+	// 9 - SALVATAGGIO FILE STATISTICHE
+	//////////////////////////////////	
+	
+	private static void salvaStatistiche(){
+		if(modello != null){
+			if(testSuite != null){
+				String strDest = CostruzioneTest.patternNome(modello);
+				File fileDest = new File(strDest);
+				if(fileDest.exists()){
+					boolean risposta = InputDati.yesOrNo("File gia' esistente. Sovrascriverlo?");
+					if(risposta){
+						ServizioFile.salvaSingoloOggetto(fileDest, testSuite);
+					}					
+				}
+				else{
+					ServizioFile.salvaSingoloOggetto(fileDest, testSuite);
+				}
+				
+			}
+			else{
+				System.out.println("Test Suite non ancora generato");
+			}					
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}			
 	}
 		
 }

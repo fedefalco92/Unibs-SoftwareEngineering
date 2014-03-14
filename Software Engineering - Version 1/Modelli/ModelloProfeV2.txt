@@ -14,6 +14,6 @@
 [FORK] F2 : in([AZIONE] A7) - out([AZIONE] A8, [AZIONE] A9)
 [AZIONE] A8 : in([FORK] F2) - out([JOIN] J2)
 [AZIONE] A9 : in([FORK] F2) - out([JOIN] J2)
-[JOIN] J1 : in([MERGE] M2, [JOIN] J2) - out([END] e)
 [JOIN] J2 : in([AZIONE] A8, [AZIONE] A9) - out([JOIN] J1)
+[JOIN] J1 : in([MERGE] M2, [JOIN] J2) - out([END] e)
 [END] e : in([JOIN] J1)

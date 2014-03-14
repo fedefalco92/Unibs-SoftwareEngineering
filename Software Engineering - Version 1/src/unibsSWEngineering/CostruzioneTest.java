@@ -2,6 +2,8 @@ package unibsSWEngineering;
 /**
  * 
  */
+import java.io.File;
+
 import unibsSWEngineering.analisi.*;
 import unibsSWEngineering.modello.Modello;
 import it.unibs.fp.mylib.*;
@@ -10,7 +12,7 @@ import it.unibs.fp.mylib.*;
  * @author root
  *
  */
-public class Probabilita {
+public class CostruzioneTest {
 
 	
 	private static Cammino generaCammino(Modello modello){
@@ -28,7 +30,13 @@ public class Probabilita {
 			esito_bool = true;
 		}
 		
-		return new Cammino(percorso,esito_bool); 
+		Cammino camminoTemp = new Cammino(percorso,esito_bool);
+		if(CorrettezzaCammino.camminoCorretto(modello, camminoTemp) == 0){
+			return camminoTemp;
+		}
+		
+		return null;
+		
 	}
 	
 	private static Prova generaProva(Modello modello){
@@ -51,7 +59,12 @@ public class Probabilita {
 				}		
 				case 1:{								
 					Cammino camminoInserito = generaCammino(modello);
-					prova.addPercorso(camminoInserito);		
+					if(camminoInserito != null){
+						prova.addPercorso(camminoInserito);		
+					}
+					else{
+						System.out.println("ATTENZIONE!!! Il cammino non e' valido");
+					}
 					System.out.println("Hai inserito " + prova.numeroCammini() + " cammini nella prova " + "'"+nomeProva+"'");					
 					break;
 				}
@@ -95,6 +108,13 @@ public class Probabilita {
 		}
 		while(scelta != 0);	
 		return clNuova;		
-	}	
+	}
+	
+	public static String patternNome(Modello modello){
+		String nomeModello = modello.getNome();
+		StringBuffer buffer = new StringBuffer(nomeModello);
+		return (MenuClass.cartellaStatisticheModello+File.separator+"rilevazioni"+buffer.substring(0, nomeModello.length()-3)+"dat");
+	}
+
 	
 }

@@ -3,6 +3,7 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -11,18 +12,24 @@ import java.util.Vector;
  * @author Massi
  *
  */
-public class TestSuite {
+public class TestSuite implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1800460151415889151L;
 	private Vector<String> insiemeAzioni;
 	private Vector<ClasseEquivalenza> classiEquivalenza;
 	private Hashtable <String,Double> probabilitaM1;
 	private Hashtable <String,Double> probabilitaM2;
+	private Distanze distanzaElenchi;
 	
 	public TestSuite(Vector<String> insiemeAzioni){
 		classiEquivalenza = new Vector<ClasseEquivalenza>();
 		this.insiemeAzioni = insiemeAzioni;
 		probabilitaM1 = new Hashtable <String,Double>();
 		probabilitaM2 = new Hashtable <String,Double>();
+		distanzaElenchi = null;
 	}
 
 	public void addNuovaClasseEquivalenza(ClasseEquivalenza classe){
@@ -37,7 +44,7 @@ public class TestSuite {
 		return probabilitaM2;
 	}	
 	
-	public void calcolaProbabilitaM1(){
+	private void calcolaProbabilitaM1(){
 		
 		//ciclo su tutte le classi di equivalenza per determinare la somma delle probabilita'
 		double[] probabilitaM1_vec = new double[insiemeAzioni.size()];
@@ -159,12 +166,23 @@ public class TestSuite {
 	 * il metodo 2
 	 */
 	
-	public void calcolaProbabilitaM2(){
+	private void calcolaProbabilitaM2(){
 		Vector<Integer> vettoreM = calcolaVettoreM();
 		for(String azione : insiemeAzioni){
 			double coefficienteOchiaiK = UtilityInsiemi.coeffOchiai(generaColonnaAzioneK(azione), vettoreM);
 			probabilitaM2.put(azione,coefficienteOchiaiK);	
 		}
+	}
+	
+	/**
+	 * Esecuzione delle computazioni su probabilita' ed elenchi(distanze)
+	 */
+	
+	public void eseguiComputazioni(){
+		calcolaProbabilitaM1();
+		calcolaProbabilitaM2();
+		distanzaElenchi = new Distanze(this);
+		distanzaElenchi.calcoloDistanze();
 	}
 		
 	
@@ -187,7 +205,9 @@ public class TestSuite {
 			String azione = iteratore2.nextElement();
 			double probabilita = probabilitaM2.get(azione);
 			buffer.append("Probabilita' " + azione + "\t" + " : " + probabilita+"\n");
-		}			
+		}	
+		buffer.append("\n");
+		buffer.append(distanzaElenchi);
 		return buffer.toString();
 	}
 }

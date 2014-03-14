@@ -3,6 +3,7 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -15,7 +16,11 @@ import java.util.Vector;
  * @author root
  * 
  */
-public class Distanze {
+public class Distanze implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3080770671383154482L;
 	private TestSuite testSuite;
 	private TreeSet<OggettoAnalisi> probabilitaM1Ord;
 	private TreeSet<OggettoAnalisi> probabilitaM2Ord;
@@ -36,7 +41,7 @@ public class Distanze {
 		distanzaMedia = 0.0;		
 	}
 
-	public void riempiElencoM1() {
+	private void riempiElencoM1() {
 		TreeSet<OggettoAnalisi> probabilitaM1Temp = new TreeSet<OggettoAnalisi>();
 		Hashtable<String, Double> probabilitaM1 = testSuite.getProbabilitaM1();
 		Enumeration<String> iteratore = probabilitaM1.keys();
@@ -68,7 +73,7 @@ public class Distanze {
 
 	}
 
-	public void riempiElencoM2() {
+	private void riempiElencoM2() {
 		TreeSet<OggettoAnalisi> probabilitaM2Temp = new TreeSet<OggettoAnalisi>();
 		Hashtable<String, Double> probabilitaM2 = testSuite.getProbabilitaM2();
 		Enumeration<String> iteratore = probabilitaM2.keys();
@@ -100,7 +105,7 @@ public class Distanze {
 		// System.out.println(probabilitaM2Ord.toString());
 	}
 
-	public void generaDistanze() {
+	private void generaDistanze() {
 		riempiElencoM1();
 		riempiElencoM2();
 		Iterator<OggettoAnalisi> itEl1 = probabilitaM1Ord.iterator();

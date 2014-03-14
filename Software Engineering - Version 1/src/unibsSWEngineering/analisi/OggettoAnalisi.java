@@ -3,6 +3,7 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -10,8 +11,12 @@ import java.util.Vector;
  * @author root
  *
  */
-public class OggettoAnalisi implements Comparable<OggettoAnalisi> {
+public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4421149925530403830L;
 	private String identificatori;
 	private double probabilita;
 	private int extInf;

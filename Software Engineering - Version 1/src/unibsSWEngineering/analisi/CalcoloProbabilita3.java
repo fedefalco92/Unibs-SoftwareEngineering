@@ -72,16 +72,10 @@ public class CalcoloProbabilita3 {
 		ts1.addNuovaClasseEquivalenza(cl1);
 		ts1.addNuovaClasseEquivalenza(cl2);
 		ts1.addNuovaClasseEquivalenza(cl3);	
-		//ts1.addNuovaClasseEquivalenza(cl4);	
-		
-		ts1.calcolaProbabilitaM1();		
-		ts1.calcolaProbabilitaM2();
+		ts1.eseguiComputazioni();
 		
 		System.out.println(ts1);
-		
-		Distanze dist = new Distanze(ts1);
-		dist.calcoloDistanze();
-		System.out.println(dist);	
+	
 
 	}
 */
