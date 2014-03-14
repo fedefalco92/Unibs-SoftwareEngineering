@@ -71,7 +71,7 @@ public class CorrettezzaCammino {
 				return false;
 			}
 			
-		}
+		} 
 		else{
 			if(camminoAux(next, eleEnd, blocked))
 				return true;
