@@ -3,6 +3,7 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map.Entry;
@@ -14,7 +15,11 @@ import java.util.Vector;
  */
 
 
-public class ClasseEquivalenza {
+public class ClasseEquivalenza implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2102236797903692153L;
 	/*
 	 Definire bene come e' espresso il concetto di equivalenza, cioe' se basta l'uguaglianza del percorso o e'
 	 necessario tutto

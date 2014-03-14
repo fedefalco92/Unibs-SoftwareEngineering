@@ -3,6 +3,7 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -14,7 +15,11 @@ import java.util.Vector;
 //N.B. Il percorso viene gia' fornito in maniera ordinata e validato dall'apposito metodo che 
 //verra' predisposto nella classe Modello
 
-public class Cammino {
+public class Cammino implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5363675680889278477L;
 	private String path;
 	private boolean esito;
 	

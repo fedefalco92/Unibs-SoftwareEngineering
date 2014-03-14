@@ -3,13 +3,18 @@
  */
 package unibsSWEngineering.analisi;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * @author Massi
  *
  */
-public class Prova {
+public class Prova implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8619453799271123440L;
 	private String idProva;
 	private Vector<Cammino> insiemeCopertura;
 	
