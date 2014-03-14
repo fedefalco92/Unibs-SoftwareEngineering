@@ -1,22 +1,10 @@
 package unibsSWEngineering;
 import it.unibs.fp.mylib.ServizioFile;
-
 import java.io.*;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JFileChooser;
-
-import unibsSWEngineering.modello.Azione;
-import unibsSWEngineering.modello.Branch;
-import unibsSWEngineering.modello.Elemento;
-import unibsSWEngineering.modello.End;
-import unibsSWEngineering.modello.Fork;
-import unibsSWEngineering.modello.Join;
-import unibsSWEngineering.modello.Merge;
-import unibsSWEngineering.modello.Modello;
-import unibsSWEngineering.modello.Start;
+import unibsSWEngineering.modello.*;
 
 /**
  * Classe con metodi static che permette la costruzione del modello, 
@@ -169,17 +157,35 @@ public class CostruzioneModello {
 	}
 	
 	public static boolean riempimentoInOut(String stringaFile, Elemento corrente, Elemento next){
-		if(corrente != null && next != null){
+		if(corrente != null && next != null && !corrente.equals(next)){
+			
 			//ANALISI INGRESSO CORRENTE
 			String rigaNext = findRigaElemento(stringaFile, next);
 			if(rigaNext != null){
 				for ( Elemento e: restituisciEntrate(rigaNext)){
 					e = modelloCaricato.ricercaElemento(e);
 					if(e.equals(corrente)){
+						
 						//AGGIUNTA EFFETTIVA
-						corrente.aggiungiUscita(next);
-						next.aggiungiIngresso(corrente);
-						return true;
+						if(corrente.getUscita() == null){ //Vado a vedere se e' gia' completo
+							corrente.aggiungiUscita(next);
+							if(next.getIngresso() == null){
+								next.aggiungiIngresso(corrente);
+								return true;
+							}
+							else{ //Vado a vedere se e' gia' completo
+								System.out.println("Ricontrolla gli ingressi del seguente elemento:");
+								System.out.println(next.toString());
+								System.out.println();
+								return false;
+							}
+						}
+						else{
+							System.out.println("Ricontrolla le uscite del seguente elemento:");
+							System.out.println(corrente.toString());
+							System.out.println();
+							return false;
+						}
 					}
 				}
 			}
