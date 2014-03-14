@@ -217,7 +217,9 @@ public class CostruzioneModello {
 	
 	public static boolean riempimentoInOut(String stringaFile, Elemento corrente, Elemento next){
 		if(corrente != null && next != null && !corrente.equals(next)){
-			
+			corrente.aggiungiUscita(next);
+			next.aggiungiIngresso(corrente);
+			/*
 			//ANALISI INGRESSO CORRENTE
 			String rigaNext = findRigaElemento(stringaFile, next);
 			if(rigaNext != null){
@@ -248,6 +250,7 @@ public class CostruzioneModello {
 					}
 				}
 			}
+			*/
 		}
 		return false;
 	}
