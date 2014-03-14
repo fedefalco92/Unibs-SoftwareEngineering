@@ -19,12 +19,16 @@ public class CorrettezzaCammino {
 		
 		Elemento next;
 		next = eleStart.getUscita();
+		
+		//Significa che ha piu' uscite
 		if(next == null){
 			for(Elemento e: eleStart.getUscite()){
 				if(camminoOk(e, eleEnd))
 					return true;
 			}
-		}else{
+		}
+		//Un'unica uscita
+		else{
 			if(camminoOk(next, eleEnd))
 				return true;
 		}
