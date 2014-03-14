@@ -25,7 +25,7 @@ public class MenuClass {
 	//////////////////////////////////
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello"};
+		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -103,6 +103,10 @@ public class MenuClass {
 				break;
 			case 6:
 				salvaModello();
+				break;
+			case 7:
+				if(CorrettezzaCammino.camminoOk(modello.getStart(), modello.getEnd()))
+						System.out.println("Corretto");
 				break;
 		}
 		

@@ -10,20 +10,23 @@ import unibsSWEngineering.modello.Modello;
 
 public class CorrettezzaCammino {
 	
-	public static boolean camminoOk(Modello modello, Elemento eleStart, Elemento eleEnd){
+	//Non va una sega! Studio fisica che e' meglio!
+	public static boolean camminoOk(Elemento eleStart, Elemento eleEnd){
+		
+		//Piede della ricorsione
+		if(eleStart.equals(eleEnd))
+			return true;
+		
 		Elemento next;
 		next = eleStart.getUscita();
 		if(next == null){
 			for(Elemento e: eleStart.getUscite()){
-				if(e.equals(eleStart))
+				if(camminoOk(e, eleEnd))
 					return true;
-				else
-					camminoOk(modello, e, eleEnd);
 			}
 		}else{
-			if(! next.equals(eleEnd)){
-				camminoOk(modello, next, eleEnd);
-			}
+			if(camminoOk(next, eleEnd))
+				return true;
 		}
 		return false;
 	}
