@@ -28,6 +28,10 @@ public class CostruzioneModello {
 			//leggoFileOld(new FileReader(file)); //Vecchio algoritmo
 			String fileString;
 			fileString = leggoFile(new FileReader(file));
+			if(!controlloIngressiUscite(fileString)){
+				System.out.println("Elementi entrate o uscite non valide");
+				return null;
+			}
 			boolean ok = riempimentoTotale(fileString);
 			stampaModelloCaricato();
 			if(!ok){
@@ -122,6 +126,61 @@ public class CostruzioneModello {
 		
 		//Restituisco la stringa del file
 		return fileString.toString();
+	}
+	
+	public static boolean controlloIngressiUscite(String stringaFile){
+		Vector <Elemento> entrate = new Vector <Elemento>();
+		Vector <Elemento> uscite = new Vector <Elemento>();
+		
+		String [] result = stringaFile.split("\n");
+		for (int i=0; i < result.length; i++){
+			String id = restituisciID(analisiElemento(result[i]));
+			entrate = restituisciEntrate(result[i]);
+	    	uscite = restisciUscite(result[i]);
+	    	
+	    	switch (id) {
+			case "AZIONE":
+				if(entrate.size() > 1)
+					return false;
+				if(uscite.size() > 1)
+					return false;
+				break;
+				
+			case "BRANCH":
+			case "FORK":
+				if(entrate.size() > 1)
+					return false;
+				if(uscite.size() < 2)
+					return false;
+				break;
+				
+			case "MERGE":
+			case "JOIN":
+				if(entrate.size() < 2)
+					return false;
+				if(uscite.size() > 1)
+					return false;
+				break;
+			
+			case "START":
+				if(!entrate.isEmpty())
+					return false;
+				if(uscite.size() > 1)
+					return false;
+				break;
+				
+			case "END":
+				if(entrate.size() > 1)
+					return false;
+				if(!uscite.isEmpty())
+					return false;
+				break;
+			default:
+				System.out.println("ID non valido");
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public static boolean riempimentoTotale(String stringaFile){
