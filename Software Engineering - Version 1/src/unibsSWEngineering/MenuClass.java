@@ -105,8 +105,8 @@ public class MenuClass {
 				salvaModello();
 				break;
 			case 7:
-				if(CorrettezzaCammino.camminoOk(modello.getStart(), modello.getEnd()))
-						System.out.println("Corretto");
+				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
+						System.out.println("Percorso raggiungibile");
 				break;
 		}
 		

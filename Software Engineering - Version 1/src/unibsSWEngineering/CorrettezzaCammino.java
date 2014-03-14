@@ -11,7 +11,11 @@ import unibsSWEngineering.modello.Modello;
 public class CorrettezzaCammino {
 	
 	//Non va una sega! Studio fisica che e' meglio!
-	public static boolean camminoOk(Elemento eleStart, Elemento eleEnd){
+	//LOOOPPPP DI ECCEZIONIIII
+	public static boolean camminoOkOld(Elemento eleStart, Elemento eleEnd){
+		
+		if(eleStart == null || eleEnd == null)
+			return false;
 		
 		//Piede della ricorsione
 		if(eleStart.equals(eleEnd))
@@ -19,7 +23,7 @@ public class CorrettezzaCammino {
 		
 		Elemento next;
 		next = eleStart.getUscita();
-		
+	
 		//Significa che ha piu' uscite
 		if(next == null){
 			for(Elemento e: eleStart.getUscite()){
@@ -30,6 +34,46 @@ public class CorrettezzaCammino {
 		//Un'unica uscita
 		else{
 			if(camminoOk(next, eleEnd))
+				return true;
+		}
+		return false;
+	}
+	
+	/*SEMBRA FUNZIONARE!!! SIIII*/
+	public static boolean camminoOk(Elemento eleStart, Elemento eleEnd){
+		return camminoAux(eleStart, eleEnd, null);
+	}
+	
+	private static boolean camminoAux(Elemento eleStart, Elemento eleEnd, Elemento blocked){
+		
+		if(eleStart == null || eleEnd == null)
+			return false;
+		
+		//Piede della ricorsione
+		if(eleStart.equals(eleEnd))
+			return true;
+		
+		Elemento next;
+		next = eleStart.getUscita();
+		
+		if(next == null){
+			if(blocked != null){
+				return true;
+			}else{
+				for(Elemento e: eleStart.getUscite()){
+					
+					if(camminoAux(e, eleEnd, eleStart)){
+						if(eleStart.equals(blocked))
+							break;
+					}
+					return true;
+				}
+				return false;
+			}
+			
+		}
+		else{
+			if(camminoAux(next, eleEnd, blocked))
 				return true;
 		}
 		return false;
