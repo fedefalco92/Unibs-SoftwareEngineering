@@ -68,7 +68,7 @@ public class MenuClass {
 			case 8:
 				caricaStatistiche();
 				break;
-			case 9:
+			case 9: 
 				salvaStatistiche();
 				break;				
 		}
