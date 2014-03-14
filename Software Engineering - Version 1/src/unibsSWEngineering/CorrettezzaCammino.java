@@ -10,6 +10,24 @@ import unibsSWEngineering.modello.Modello;
 
 public class CorrettezzaCammino {
 	
+	public static boolean camminoOk(Modello modello, Elemento eleStart, Elemento eleEnd){
+		Elemento next;
+		next = eleStart.getUscita();
+		if(next == null){
+			for(Elemento e: eleStart.getUscite()){
+				if(e.equals(eleStart))
+					return true;
+				else
+					camminoOk(modello, e, eleEnd);
+			}
+		}else{
+			if(! next.equals(eleEnd)){
+				camminoOk(modello, next, eleEnd);
+			}
+		}
+		return false;
+	}
+	
 	/*
 	 * parto dall'ipotesi che un cammino e' fatto di sole azioni, 
 	 * da qui una serie di conseguenze come i nomi dei metodi
