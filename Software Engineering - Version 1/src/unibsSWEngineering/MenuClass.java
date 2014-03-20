@@ -80,7 +80,7 @@ public class MenuClass {
 	// 1 - METODI CREAZIONE MODELLO
 	//////////////////////////////////
 	private static Modello creaModello() {
-		String nomeModello = InputDati.leggiStringa("Inserisci il nome del nuovo modello > ");
+		String nomeModello = InputDati.leggiStringaNonVuota("Inserisci il nome del nuovo modello > ");
 		return CreazioneModello.creaModello(nomeModello);
 	
 	}

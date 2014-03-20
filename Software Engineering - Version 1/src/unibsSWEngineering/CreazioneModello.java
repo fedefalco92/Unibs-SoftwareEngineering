@@ -205,7 +205,7 @@ public class CreazioneModello {
 	 */
 	private static void gestisciStart(Modello modello, Start start) {
 		//acquisizione nome --> non e' necessario controllare che il nome non sia gia' stato inserito
-		String nomePrimaAzione = InputDati.leggiStringa("Inserisci il nome della prima azione > ");
+		String nomePrimaAzione = InputDati.leggiStringaNonVuota("Inserisci il nome della prima azione > ");
 		Azione primaAzione = new Azione (nomePrimaAzione);
 		//la prima azione ha come ingresso lo start
 		primaAzione.setIngresso(start);
@@ -655,7 +655,7 @@ public class CreazioneModello {
 		boolean finito=false;
 		String nome;
 		do {
-			nome=InputDati.leggiStringa(string);
+			nome=InputDati.leggiStringaNonVuota(string);
 			finito=modello.nomeOK(nome);
 			if(!finito)
 				System.out.println("ATTENZIONE! NOME GIA' UTILIZZATO! RIPROVA > ");
