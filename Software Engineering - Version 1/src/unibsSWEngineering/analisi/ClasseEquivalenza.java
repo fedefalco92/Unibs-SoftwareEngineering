@@ -17,74 +17,86 @@ import java.util.Vector;
 
 public class ClasseEquivalenza implements Serializable{
 	/**
+	 * Classe che gestisce la struttura 'Classe di Equivalenza'
 	 * 
 	 */
 	private static final long serialVersionUID = 2102236797903692153L;
-	/*
-	 Definire bene come e' espresso il concetto di equivalenza, cioe' se basta l'uguaglianza del percorso o e'
-	 necessario tutto
-	 */
+
 	private String nome;
 	private Prova istanzaProva;
 	private int cardinalita;
-	private Vector<String> insiemeAzioni;		//Totale delle attivita' prese in ingresso dal modello...sara' tolto!
-	private Vector<String> attivitaCoinvolte;
+	private Vector<String> insiemeAzioni;		
 	private Vector<Vector<String>> diagnosiMinimali;
 	private Hashtable <String,Double> probabilitaProva;
 	private Hashtable <String,Double> probabilitaClasse;
 	
-	public ClasseEquivalenza(String nome){
-		this.nome = nome;
-		istanzaProva = null;
-		cardinalita = 0;
-		diagnosiMinimali = null;
-		attivitaCoinvolte = new Vector<String>();
-		this.insiemeAzioni = null;		
-		probabilitaProva = new Hashtable <String,Double>();
-		probabilitaClasse = new Hashtable <String,Double>();
-	}
-	
-	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita){
-		this.nome = nome;
-		istanzaProva = null;
-		cardinalita = 0;
-		diagnosiMinimali = null;
-		attivitaCoinvolte = new Vector<String>();
-		this.insiemeAzioni = insiemeAttivita;		
-		probabilitaProva = new Hashtable <String,Double>();
-		probabilitaClasse = new Hashtable <String,Double>();
-	}
+	/**
+	 * Costruttore della classe di equivalenza, che accetta il nome identificativo,
+	 * l'insieme delle attivita' e la cardinalita' della classe
+	 * @param nome
+	 * @param insiemeAttivita
+	 * @param cardinalita
+	 */
 	
 	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita, int cardinalita){
 		this.nome = nome;
 		istanzaProva = null;
 		this.cardinalita = cardinalita;
-		diagnosiMinimali = null;
-		attivitaCoinvolte = new Vector<String>();
+		diagnosiMinimali = new Vector<Vector<String>>(); 
 		this.insiemeAzioni = insiemeAttivita;		
 		probabilitaProva = new Hashtable <String,Double>();
 		probabilitaClasse = new Hashtable <String,Double>();
 	}	
 	
+	/**
+	 * Metodo per settare il nome della classe di equivalenza
+	 * @param nome
+	 */
+	
 	public void setNome(String nome){
 		this.nome = nome;
 	}
+	
+	/**
+	 * Ritorna il nome della classe di equivalenza
+	 * @return
+	 */
 	
 	public String getNome(){
 		return nome;
 	}
 	
+	/**
+	 * Setta la prova come appartenente alla classe di equivalenza
+	 * @param _prova
+	 */
+	
 	public void setIstanzaProva(Prova _prova){
 		istanzaProva = _prova;
 	}
+	
+	/**
+	 * Ritorna la cardinalita' della classe
+	 * @return
+	 */
 	
 	public int getCardinalita(){
 		return cardinalita;
 	}
 	
+	/**
+	 * Imposta la cardinalita' della classe
+	 * @param card
+	 */
+	
 	public void setCardinalita(int card){
 		cardinalita = card;
 	}
+	
+	/**
+	 * Ritorna l'oggetto Prova della classe di equivalenza
+	 * @return
+	 */
 
 	public Prova getProva(){
 		return istanzaProva;
@@ -92,7 +104,7 @@ public class ClasseEquivalenza implements Serializable{
 	
 	/**
 	 * Metodo che ritorna un vettore di prove replicate in base alla cardinalita
-	 * (soluzione temporanea...si cerchera' di trovare un modo migliore...)
+	 * per poterne effettuare l'elaborazione
 	 * @return
 	 */
 	
@@ -103,15 +115,17 @@ public class ClasseEquivalenza implements Serializable{
 		}
 		return vettoreProve;
 	}
+
+	/**
+	 * Metodo che calcola la probabilita' della classe, mediante invocazione
+	 * di un metodo interno e ritorna una tabella associativa con le probabilita'
+	 * @return
+	 */
 	
 	public Hashtable <String,Double> getProbabilitaClasse(){
 		this.setProbabilitaClasse();
 		return probabilitaClasse;		
 	}	
-	
-	/**
-	 * Parte aggiunta in data 28/02/2014
-	 */
 
 	/**
 	 * Genera l'insieme di partenza per il calcolo delle diagnosi minimali:
@@ -126,8 +140,7 @@ public class ClasseEquivalenza implements Serializable{
 		Vector<String> elementiDaRimuovere = new  Vector<String>();		
 			//replicazione dell'insieme delle attivita', per poi rimuovere quelle OK
 			//e per trovare cosi' l'HS di diagnosi minimale
-			 //Vector<String> replicaAttivita = (Vector<String>)insiemeAttivita.clone();
-			
+		
 		 Vector<Cammino> percorsoOK = istanzaProva.getEsitoOK();
 			 
 		 for(Cammino perc : percorsoOK){
@@ -139,10 +152,7 @@ public class ClasseEquivalenza implements Serializable{
 					 }
 			 }				 				 				
 		 }	
-		 		 
-		
-		 //System.out.println(elementiDaRimuovere.toString()+"\n\n");
-		 
+	 
 		//ora che ho ricercato in tutte le prove posso eliminare gli elementi OK dalle rilevazioni KO
 		
 		//per ora gestisco la creazione delle diagnosi minimali utilizzando il metodo "a matrice"
@@ -162,10 +172,7 @@ public class ClasseEquivalenza implements Serializable{
 			}
 			if(!elementiAttivita.isEmpty())
 				insiemiBase.add(elementiAttivita);
-		}
-		
-		//System.out.println("Insieme di partenza :" + insiemiBase.toString() + "\n\n");
-		
+		}		
 		return insiemiBase;
 		
 		//--> fino a qui calcola l'insieme di partenza da cui ricavare gli MHS		
@@ -195,7 +202,6 @@ public class ClasseEquivalenza implements Serializable{
 	 * @return 
 	 */
 	
-	//Spostarlo in un'altra classe (e' un metodo che, in teoria e' di validita' generale)
 	
 	private Vector<Vector<Integer>> generazioneCorrispondenze(){
 		//ampiezza della colonna
@@ -238,8 +244,6 @@ public class ClasseEquivalenza implements Serializable{
 				}
 				tabellaCorrispondenze.add(rigaCorrispondenza);
 			}
-							
-			//System.out.println("Tabella delle corrispondenze: " + tabellaCorrispondenze.toString() );
 		}
 		
 		return tabellaCorrispondenze;
@@ -286,12 +290,15 @@ public class ClasseEquivalenza implements Serializable{
 		Vector<String> azioniResidue = istanzaProva.getAzioniCoinvolte();
 
 		if(!azioniResidue.isEmpty()){
-			for(Vector<String> sottoinsieme : diagnosiMinimali){
-				//passo in rassegna ciascun sottoinsieme
-				for(String azione : sottoinsieme){
-					int indiceDaRimuovere = azioniResidue.indexOf(azione);
-					if(indiceDaRimuovere >= 0){
-						azioniResidue.removeElementAt(indiceDaRimuovere);
+			// prevengo dal caso in cui non vi siano diagnosi minimali(esito OK)
+			if(!diagnosiMinimali.isEmpty()){
+				for(Vector<String> sottoinsieme : diagnosiMinimali){
+					//passo in rassegna ciascun sottoinsieme
+					for(String azione : sottoinsieme){
+						int indiceDaRimuovere = azioniResidue.indexOf(azione);
+						if(indiceDaRimuovere >= 0){
+							azioniResidue.removeElementAt(indiceDaRimuovere);
+						}
 					}
 				}
 			}
@@ -307,8 +314,7 @@ public class ClasseEquivalenza implements Serializable{
 		Vector <String> azioniInDiagnosi = UtilityInsiemi.getAzioniInsieme(diagnosiMinimali);
 
 		//se non e' vuoto posso procedere all'elaborazione
-		
-	//	if(!azioniInDiagnosi.isEmpty()){
+			
 			//applicazione della formula dei lucidi per il calcolo della probabilita'
 			//con il metodo 1
 			double probabilitaCumulate[] = new double[azioniInDiagnosi.size()];
@@ -345,6 +351,11 @@ public class ClasseEquivalenza implements Serializable{
 			probabilitaClasse.put(azione, probProva*cardinalita);
 		}
 	}
+	
+	/**
+	 * Metodo per la stampa dei risultati complessivi che richiama altri metodi di stampa
+	 * relativi a prove e test suite
+	 */
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();

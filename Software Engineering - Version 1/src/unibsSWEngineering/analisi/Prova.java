@@ -30,8 +30,7 @@ public class Prova implements Serializable{
 	public String getNome(){
 		return idProva;
 	}
-	
-	//lo chiamiamo addPercorso?
+
 	public void addPercorso(Cammino cammino){
 		insiemeCopertura.add(cammino);
 	}
@@ -48,6 +47,11 @@ public class Prova implements Serializable{
 		return insiemeCopertura.size();
 	}	
 	
+	/**
+	 * Metodo che ritorna i cammini con esito OK
+	 * @return
+	 */
+	
 	public Vector<Cammino> getEsitoOK(){
 		Vector<Cammino> provaOk = new  Vector<Cammino>();
 		for(Cammino p : insiemeCopertura){
@@ -57,6 +61,11 @@ public class Prova implements Serializable{
 		}
 		return provaOk;
 	}
+	
+	/**	
+	 * Metodo che ritorna i cammini con esito KO
+	 * @return
+	 */
 	
 	public Vector<Cammino> getEsitoKO(){
 		Vector<Cammino> provaKo = new  Vector<Cammino>();
@@ -87,10 +96,8 @@ public class Prova implements Serializable{
 		return azioniProva;
 	}
 	
-	/*
-	 N.B:
-	 Definire bene il concetto di appartenenza ad una classe di equivalenza (per ora fatto tramite 
-	 immissione manuale(vedere la classe main di prova)
+	/**
+	 * Stampa dei risultati
 	 */
 	
 	public String toString(){

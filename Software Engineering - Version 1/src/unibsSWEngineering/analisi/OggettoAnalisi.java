@@ -14,8 +14,13 @@ import java.util.Vector;
 public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 	
 	/**
+	 * OggettoAnalisi e' l'intervallo di valori che appare nell'elenco
+	 * ordinato, utilizzato per il calcolo della distanza fra gli intervalli
+	 * degli elenchi calcolati con i due metodi
 	 * 
+	 * Ogni intervallo ha associati un estremo inferiore ed un estremo superiore
 	 */
+	
 	private static final long serialVersionUID = -4421149925530403830L;
 	private String identificatori;
 	private double probabilita;
@@ -65,21 +70,13 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 		extSup = ext;
 	}
 	
-	public void incrementaSup(){
-		extSup++;
-	}
-	
-	public void incrementaInf(){
-		extInf++;	
-	}	
-	
-	public void shiftIntevallo(int offset){
-		extInf += offset;
-		extSup += offset;
-	}
+	/**
+	 * Metodo override per stabilire come ordinare gli intervalli,
+	 * in base alla loro probabilita', per ordinarli nell'elenco
+	 * @param altroOgg
+	 * @return
+	 */
 
-	
-	@Override
 	public int compareTo(OggettoAnalisi altroOgg) {
 		
 		if(probabilita > altroOgg.getProbabilita()){
@@ -93,6 +90,10 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 			return 0; //---> questa va aggiunta quando non si vogliono replicati!!!
 		}
 	}
+	
+	/**
+	 * Stampa dell'intervallo e della sua probabilita'
+	 */
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();

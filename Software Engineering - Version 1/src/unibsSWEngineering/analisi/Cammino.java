@@ -44,6 +44,11 @@ public class Cammino implements Serializable{
 		return esito;
 	}
 	
+	/**
+	 * Estrazione degli elementi dall'insieme del cammino
+	 * @return
+	 */
+	
 	public Vector<String> estraiElementi(){
 		Vector<String> elementi = new Vector<String>();
 		StringTokenizer analizzatore = new StringTokenizer(getPath(),",");
@@ -52,6 +57,10 @@ public class Cammino implements Serializable{
 		}
 		return elementi;
 	}
+	
+	/**
+	 * Stampa degli esiti del cammino
+	 */
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();

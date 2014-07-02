@@ -59,7 +59,6 @@ public class TestSuite implements Serializable{
 				String azione = iteratore.nextElement();
 				double probabilita = probabilitaSingolaClasse.get(azione);
 				int posizioneRelativa = insiemeAzioni.indexOf(azione);
-				//System.out.println(posizioneRelativa);
 				if (probabilita >= 0){
 					//o e' nulla o e' diversa da zero(comunque non IGNOTA)
 					if(posizioneRelativa >= 0){
@@ -184,6 +183,10 @@ public class TestSuite implements Serializable{
 		distanzaElenchi = new Distanze(this);
 		distanzaElenchi.calcoloDistanze();
 	}
+	
+	/**
+	 * Stampa globale dei risultati del test suite
+	 */
 		
 	
 	public String toString(){

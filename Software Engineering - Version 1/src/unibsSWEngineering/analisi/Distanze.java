@@ -29,6 +29,12 @@ public class Distanze implements Serializable{
 	private TreeMap<String, Integer> distanzaPerAzione;
 	private int distanzaTotale;
 	private double distanzaMedia;	
+	
+	/**
+	 * Costruttore per il calcolo delle distanze secondo i due metodi di calcolo
+	 * della probabilita', avendo ricevuto un test suite
+	 * @param testSuite
+	 */
 
 	public Distanze(TestSuite testSuite) {
 		this.testSuite = testSuite;
@@ -40,6 +46,10 @@ public class Distanze implements Serializable{
 		distanzaTotale = 0;
 		distanzaMedia = 0.0;		
 	}
+	
+	/**
+	 * Riempimento dell'elenco con le probabilita' derivanti dal primo metodo
+	 */
 
 	private void riempiElencoM1() {
 		TreeSet<OggettoAnalisi> probabilitaM1Temp = new TreeSet<OggettoAnalisi>();
@@ -50,12 +60,6 @@ public class Distanze implements Serializable{
 			double probabilita = probabilitaM1.get(azione);
 			probabilitaM1Temp.add(new OggettoAnalisi(azione, probabilita));
 		}
-		/*
-		 * Verranno rimpiazzate poi le stringhe con un vector di stringhe, in
-		 * modo da eliminare anche la storia del contare i token, separati dalla
-		 * virgola...(sostituito dalla dimensione del vector)
-		 */
-
 		int endAdd = 0;
 		while (!probabilitaM1Temp.isEmpty()) {
 			OggettoAnalisi testa = probabilitaM1Temp.pollFirst();
@@ -69,9 +73,11 @@ public class Distanze implements Serializable{
 			probabilitaM1Ord.add(testa);
 
 		}
-		// System.out.println(probabilitaM1Ord.toString());
-
 	}
+	
+	/**
+	 * Riempimento dell'elenco con le probabilita' derivanti dal secondo metodo
+	 */	
 
 	private void riempiElencoM2() {
 		TreeSet<OggettoAnalisi> probabilitaM2Temp = new TreeSet<OggettoAnalisi>();
@@ -82,12 +88,6 @@ public class Distanze implements Serializable{
 			double probabilita = probabilitaM2.get(azione);
 			probabilitaM2Temp.add(new OggettoAnalisi(azione, probabilita));
 		}
-		/*
-		 * Verranno rimpiazzate poi le stringhe con un vector di stringhe, in
-		 * modo da eliminare anche la storia del contare i token, separati dalla
-		 * virgola...(sostituito dalla dimensione del vector)
-		 */
-
 		int endAdd = 0;
 		while (!probabilitaM2Temp.isEmpty()) {
 			OggettoAnalisi testa = probabilitaM2Temp.pollFirst();
@@ -101,10 +101,13 @@ public class Distanze implements Serializable{
 			probabilitaM2Ord.add(testa);
 
 		}
-
-		// System.out.println(probabilitaM2Ord.toString());
 	}
 
+	/**
+	 * Calcolo delle distanze fra i due elenchi, calcolati secondo i due metodi
+	 * (metodo privato)
+	 */
+	
 	private void generaDistanze() {
 		riempiElencoM1();
 		riempiElencoM2();
@@ -120,8 +123,7 @@ public class Distanze implements Serializable{
 				nbr.add(elemento.getExtSup());
 				elencoM1.put(analyzer.nextToken(), nbr);
 			}
-		}
-		//System.out.println(elencoM1.toString());
+		}	
 		while (itEl2.hasNext()) {
 			OggettoAnalisi elemento = itEl2.next();
 			StringTokenizer analyzer = new StringTokenizer(elemento.getIDs(),
@@ -133,8 +135,6 @@ public class Distanze implements Serializable{
 				elencoM2.put(analyzer.nextToken(), nbr);
 			}
 		}
-		// System.out.println(elencoM1.toString());
-		// System.out.println(elencoM2.toString());
 		
 		TreeMap<String, Vector<Integer>> copiaM1 = (TreeMap<String, Vector<Integer>>)elencoM1.clone();
 		TreeMap<String, Vector<Integer>> copiaM2 = (TreeMap<String, Vector<Integer>>)elencoM2.clone();
@@ -150,16 +150,16 @@ public class Distanze implements Serializable{
 					intervalloAttualeM1.lastElement(),
 					intervalloAttualeM2.firstElement(),
 					intervalloAttualeM2.lastElement());
-			// System.out.println(intersezione);
-			// System.out.println(intervalloAttualeM1.toString() + "\t" +
-			// intervalloAttualeM2.toString());
 			copiaM1.pollFirstEntry();
 			copiaM2.pollFirstEntry();
 			distanzaPerAzione.put(chiaveAttuale, intersezione);
 		}
-		//System.out.println(distanzaPerAzione.toString());
-
 	}
+	
+	/**
+	 * Calcolo effettivo delle distanze
+	 * 
+	 */
 
 	public void calcoloDistanze() {
 		generaDistanze();
@@ -176,6 +176,10 @@ public class Distanze implements Serializable{
 		distanzaTotale = valori;
 		distanzaMedia = (double)valori/quantita;		
 	}
+	
+	/**
+	 * Stampa dei risultati
+	 */
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();

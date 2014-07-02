@@ -13,7 +13,7 @@ import java.util.Vector;
  */
 public class UtilityInsiemi {
 	
-	private static final int DELIM = 1; //Per estensioni future, ma e' da rivedere
+	private static final int DELIM = 1; //Delimitatore, per estensioni future
 	
 	/**
 	 * Generazione effettiva MHS, implementando l'algoritmo visto nei lucidi
@@ -370,10 +370,7 @@ public class UtilityInsiemi {
 			int el = sommaColonne.get(i);
 			if(el == 0){
 				return false;
-			}
-		/*	if(el == 0){
-				return false;
-			}	*/		
+			}	
 		}		
 		return true;
 	}
@@ -392,15 +389,6 @@ public class UtilityInsiemi {
 			}
 		}
 		return true;
-		
-		/*
-			for(Integer elem : colonna){
-				if(elem == 0){
-					return false;
-				}
-			}
-			return true;		 
-		 */
 	}
 	
 	/**
@@ -417,14 +405,6 @@ public class UtilityInsiemi {
 				return true;
 		}
 		return false;
-		
-		/*
-		 
-			if(v1.indexOf(elem) == -1)
-				return false;	
-			else
-				return true;
-		 */
 	}
 	
 	/**
@@ -441,14 +421,6 @@ public class UtilityInsiemi {
 				return true;
 		}
 		return false;
-		
-		/*
-		 
-			if(v1.indexOf(elem) == -1)
-				return false;	
-			else
-				return true;
-		 */
 	}	
 	
 	/**
@@ -565,37 +537,7 @@ public class UtilityInsiemi {
 	 * @return
 	 */
 	
-	//N.B: NON FUNZIONA, DA SISTEMARE!!!!!!
 	public static int intersecaIntervallo(int infE1,int supE1,int infE2, int supE2){
-		int d1 = Math.abs(infE1 - infE2);
-		int d2 = Math.abs(supE1 - supE2);
-		/*if(d1 == d2){
-			return 0;
-		}
-		else{
-			if(infE1 == supE2)
-				return 0;
-			else
-				return Math.min(d1, d2);
-		}*/
-		/*if(infE1<=infE2 && supE1<=infE2)
-			return Math.min(d1, d2);
-		if(infE1>= supE2 && supE1>=infE2)
-			//return Math.min(d1, d2);
-			return 0;
-		
-			return 0;*/
-		//intersezioni
-		/*if(infE1>=infE2)
-			return 0;
-		if(supE1<=supE2)
-			return 0;
-		return Math.abs(infE2-supE1);
-		*/
-		/*if((infE2>=infE1 && supE2<=supE1) || (infE1<=infE2 && infE2<=supE1) || (infE1<=infE2 && supE1<=supE2))
-			return 0;
-		else
-			return Math.min(d1, d2);*/
 		if(infE1<infE2 && infE1<supE2 && supE1<infE2 && supE1<supE2){
 			return Math.abs(infE2-supE1);
 		}
