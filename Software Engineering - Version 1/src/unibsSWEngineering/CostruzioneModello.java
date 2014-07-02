@@ -6,11 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import unibsSWEngineering.modello.*;
 
+/* NOTA: I FILE CON COMMENTI "INUTILE" ASPETTIAMO A CANCELLARLI"!!!!*/
+
 /**
  * Classe con metodi static che permette la costruzione del modello, 
  * partendo dall'apertura di un file e arrivando al caricamento completo.
- * 
- * NOTA: I FILE CON COMMENTI "INUTILE" ASPETTIAMO A CANCELLARLI"!!!!
  *
  */
 
