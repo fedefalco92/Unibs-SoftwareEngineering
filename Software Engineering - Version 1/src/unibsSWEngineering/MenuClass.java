@@ -23,6 +23,10 @@ public class MenuClass {
 	//////////////////////////////////
 	// MENU PRINCIPALE
 	//////////////////////////////////
+	/**
+	 * Metodo per il menu principale dell'applicazione.
+	 * @return True se &egrave; stata selezionata l'uscita, altrimenti False.
+	 */
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
 		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino","Carica Statistiche Modello(se esistenti)","Esporta su file Statistiche Modello"};
@@ -79,6 +83,10 @@ public class MenuClass {
 	//////////////////////////////////
 	// 1 - METODI CREAZIONE MODELLO
 	//////////////////////////////////
+	/**
+	 * Metodo che permette di richiamare la classe Creazione Modello per creare un nuovo modello.
+	 * @return Il nuovo modello creato.
+	 */
 	private static Modello creaModello() {
 		String nomeModello = InputDati.leggiStringaNonVuota("Inserisci il nome del nuovo modello > ");
 		return CreazioneModello.creaModello(nomeModello);
@@ -88,7 +96,10 @@ public class MenuClass {
 	//////////////////////////////////
 	// 2 - METODI CARICAMENTO MODELLO
 	//////////////////////////////////
-
+	/**
+	 * Metodo che permette di caricare un modello. 
+	 * &Egrave; possibile scegliere se caricare il modello da un file di testo o un file salvato in formato .dat.
+	 */
 	private static void caricaModello() {
 		
 		final String TITOLO = "MENU CARICAMENTO MODELLO";
@@ -109,7 +120,12 @@ public class MenuClass {
 				break;
 		}
 	}
-
+	
+	/**
+	 * Metodo controlla il modello. 
+	 * Se il modello $egrave; stato caricato correttamente allora richiama un metodo che controlla la correttezza del modello.
+	 * @see Modello
+	 */
 	private static void checkModello(){
 		if(modello!=null){
 			if(modello.controllaModello()){
@@ -122,6 +138,9 @@ public class MenuClass {
 		}
 	}
 	
+	/**
+	 * Metodo che permette il caricamento di un modello da un file Oggetto.
+	 */
 	private static void caricaOggetto() {
 		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
 		file = aprifile(loc, filtroDAT);
@@ -134,6 +153,10 @@ public class MenuClass {
 		}
 	}
 
+	/**
+	 * Metodo che permette il caricamento di un modello da un file di Testo. 
+	 * Se il modello caricato &egrave; null viene stampato a video un errore.
+	 */
 	private static void caricaTesto() {
 		String loc = cartella + File.separator; //Location del file
 		file = aprifile(loc, filtroTXT);
