@@ -146,7 +146,7 @@ public class MenuClass {
 		file = aprifile(loc, filtroDAT);
 		if(file != null){
 			modello = CostruzioneModello.caricaModelloOggetto(file);
-			checkModello();
+			//checkModello();
 		}
 		else{
 			System.out.println("Non hai selezionato nessun file");
