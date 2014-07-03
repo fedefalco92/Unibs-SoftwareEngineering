@@ -225,10 +225,12 @@ public class MenuClass {
 			if(testSuite != null){
 				testSuite.eseguiComputazioni();
 				System.out.println(testSuite);
+			} else {
+				System.out.println(" > Nessun test suite inserito");
 			}
 		}
 		else{
-			System.out.println("Modello non ancora caricato");
+			System.out.println(" > Modello non ancora caricato");
 		}			
 	}
 	
