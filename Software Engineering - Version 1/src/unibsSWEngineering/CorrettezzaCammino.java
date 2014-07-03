@@ -10,6 +10,7 @@ import unibsSWEngineering.modello.Modello;
 
 public class CorrettezzaCammino {
 	
+	/*Fatti da Fede*/
 	//Non va una sega! Studio fisica che e' meglio!
 	//LOOOPPPP DI ECCEZIONIIII
 	public static boolean camminoOkOld(Elemento eleStart, Elemento eleEnd){
@@ -79,6 +80,9 @@ public class CorrettezzaCammino {
 		return false;
 	}
 	
+	
+	
+	/*Fatto da Maffi*/
 	/*
 	 * parto dall'ipotesi che un cammino e' fatto di sole azioni, 
 	 * da qui una serie di conseguenze come i nomi dei metodi
