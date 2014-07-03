@@ -29,7 +29,7 @@ public class MenuClass {
 	 */
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino","Carica Statistiche Modello(se esistenti)","Esporta su file Statistiche Modello"};
+		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Inserimento test suite", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino","Carica Statistiche Modello(se esistenti)","Esporta su file Statistiche Modello"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
