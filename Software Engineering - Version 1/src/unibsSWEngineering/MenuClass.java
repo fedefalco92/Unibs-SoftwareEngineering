@@ -29,7 +29,16 @@ public class MenuClass {
 	 */
 	public static boolean menuPrincipale(){
 		final String TITOLO = "MENU PRINCIPALE";
-		final String [] VOCI = {"Creazione Modello", "Caricamento Modello", "Diagnosi e Test", "Probabilita'", "Visualizza modello", "Salva modello", "Prova Cammino","Carica Statistiche Modello(se esistenti)","Esporta su file Statistiche Modello"};
+		final String [] VOCI = {
+				"Creazione Modello", 
+				"Caricamento Modello", 
+				"Creazione test suite",
+				"Caricamento test suite",
+				"Stampa diagnosi", 
+				"Visualizza modello", 
+				"Esporta modello",
+				"Esporta test suite",
+				"Prova Cammino"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -57,24 +66,26 @@ public class MenuClass {
 				gestisciInserimentoClasse();
 				break;
 			case 4:
+				caricaStatistiche();
+				break;
+			case 5:
 				calcolaProbabilita();
 				break;
-			case 5: 
+								
+			case 6:
 				visualizzaModello();
 				break;
-			case 6:
+				
+			case 7:
 				salvaModello();
 				break;
-			case 7:
+			case 8: 
+				salvaStatistiche();
+				break;
+			case 9:
 				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
 						System.out.println("Percorso raggiungibile");
 				break;
-			case 8:
-				caricaStatistiche();
-				break;
-			case 9: 
-				salvaStatistiche();
-				break;				
 		}
 		
 		return false;
