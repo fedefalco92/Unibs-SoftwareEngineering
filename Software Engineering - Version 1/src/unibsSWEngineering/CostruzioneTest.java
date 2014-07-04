@@ -41,13 +41,13 @@ public class CostruzioneTest {
 	}
 	
 	private static Prova generaProva(Modello modello){
-		final String VOCE_PROVA = "Inserire il nome della prova >";
+	//	final String VOCE_PROVA = "Inserire il nome della prova >";
 		final String TITOLO_MENU = "INSERIMENTO PERCORSI";
 		
-		String nomeProva = InputDati.leggiStringaNonVuota(VOCE_PROVA);
-		Prova prova = new Prova(nomeProva);
+	//	String nomeProva = InputDati.leggiStringaNonVuota(VOCE_PROVA);
+		Prova prova = new Prova();
 		
-		final String[] VOCI_MENU = {"Aggiungi nuovo percorso alla prova '"+ nomeProva+"'"};
+		final String[] VOCI_MENU = {"Aggiungi nuovo percorso alla prova "};
 		MyMenu menuInserimentoPercorsi = new MyMenu(TITOLO_MENU,VOCI_MENU);
 		menuInserimentoPercorsi.setVoceUscita("0\t Torna indietro");
 		
@@ -66,7 +66,7 @@ public class CostruzioneTest {
 					else{
 						System.out.println("ATTENZIONE!!! Il cammino non e' valido");
 					}
-					System.out.println("Hai inserito " + prova.numeroCammini() + " cammini nella prova " + "'"+nomeProva+"'");					
+					System.out.println("Hai inserito " + prova.numeroCammini() + " cammini nella prova");					
 					break;
 				}
 				

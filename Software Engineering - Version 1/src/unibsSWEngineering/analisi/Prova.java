@@ -24,7 +24,7 @@ public class Prova implements Serializable{
 	}
 	
 	public Prova(){
-		idProva = null;
+		idProva = "";
 		insiemeCopertura = new Vector<Cammino>();
 	}	
 	
@@ -107,7 +107,8 @@ public class Prova implements Serializable{
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Prova : " + getNome() + "\n\n");
+		if(!getNome().equals(""))
+			buffer.append("Prova : " + getNome() + "\n\n");
 		for(Cammino p : insiemeCopertura){
 			buffer.append(p.toString()+ "\n");
 		}
