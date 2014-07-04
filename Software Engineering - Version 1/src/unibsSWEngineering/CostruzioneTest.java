@@ -3,6 +3,7 @@ package unibsSWEngineering;
  * 
  */
 import java.io.File;
+import java.util.Vector;
 
 import unibsSWEngineering.analisi.*;
 import unibsSWEngineering.modello.Modello;
@@ -16,7 +17,7 @@ public class CostruzioneTest {
 
 	
 	private static Cammino generaCammino(Modello modello){
-		final String TITOLO = "INSERIMENTO CAMMINO";
+		final String TITOLO = "INSERIMENTO PERCORSO";
 		final String VOCE_1  = "Inserisci percorso separato da ',' >";
 		final String VOCE_2  = "Inserisci esito(0-KO\t1-OK) >";
 	
@@ -40,15 +41,15 @@ public class CostruzioneTest {
 	}
 	
 	private static Prova generaProva(Modello modello){
-		final String VOCE_PROVA = "Inserire il nome della prova >";
+	//	final String VOCE_PROVA = "Inserire il nome della prova >";
 		final String TITOLO_MENU = "INSERIMENTO PERCORSI";
 		
-		String nomeProva = InputDati.leggiStringaNonVuota(VOCE_PROVA);
-		Prova prova = new Prova(nomeProva);
+	//	String nomeProva = InputDati.leggiStringaNonVuota(VOCE_PROVA);
+		Prova prova = new Prova();
 		
-		final String[] VOCI_MENU = {"Aggiungi nuovo percorso alla prova '"+ nomeProva+"'"};
+		final String[] VOCI_MENU = {"Aggiungi nuovo percorso "};
 		MyMenu menuInserimentoPercorsi = new MyMenu(TITOLO_MENU,VOCI_MENU);
-		menuInserimentoPercorsi.setVoceUscita("0\t Ritorna al menu principale");
+		menuInserimentoPercorsi.setVoceUscita("0\t Torna indietro");
 		
 		int scelta;
 		do{
@@ -65,7 +66,7 @@ public class CostruzioneTest {
 					else{
 						System.out.println("ATTENZIONE!!! Il cammino non e' valido");
 					}
-					System.out.println("Hai inserito " + prova.numeroCammini() + " cammini nella prova " + "'"+nomeProva+"'");					
+					System.out.println("Hai inserito " + prova.numeroCammini() + " cammini nella prova");					
 					break;
 				}
 				
@@ -75,7 +76,7 @@ public class CostruzioneTest {
 		return prova;		
 	}
 	
-	public static ClasseEquivalenza generaClasseEquivalenza(Modello modello){
+	private static ClasseEquivalenza generaClasseEquivalenza(Modello modello){
 		final String VOCE_CLASSE = "Inserire il nome della classe di equivalenza >";
 		final String VOCE_CARDINALITA = "Inserire la cardinalita' della classe di equivalenza >";
 		final String TITOLO_MENU = "INSERIMENTO CLASSE DI EQUIVALENZA";
@@ -89,7 +90,7 @@ public class CostruzioneTest {
 		
 		final String[] VOCI_MENU = {"Riempi la classe :  '"+ nomeClasse+"'"};
 		MyMenu menuInserimento = new MyMenu(TITOLO_MENU,VOCI_MENU);
-		menuInserimento.setVoceUscita("0\t Ritorna al menu principale");
+		menuInserimento.setVoceUscita("0\t Torna indietro");
 		
 		int scelta;
 		do{
@@ -108,6 +109,29 @@ public class CostruzioneTest {
 		}
 		while(scelta != 0);	
 		return clNuova;		
+	}
+	
+	public static void inserimentoClassiEquivalenza(Modello modello, TestSuite test_suite){
+		final String TITOLO_MENU = "CREAZIONE CLASSI DI EQUIVALENZA";			
+		final String[] VOCI_MENU = {"Aggiungi nuova classe di equivalenza"};
+		MyMenu menuInserimentoClassiEq = new MyMenu(TITOLO_MENU,VOCI_MENU);
+		menuInserimentoClassiEq.setVoceUscita("0\t Torna indietro");
+		int scelta;
+		do{
+			scelta = menuInserimentoClassiEq.scegli();
+			switch(scelta){
+				case 0:{					
+					break;
+				}		
+				case 1:{	
+					ClasseEquivalenza classeNuova = generaClasseEquivalenza(modello);
+					test_suite.addNuovaClasseEquivalenza(classeNuova);
+					break;
+				}
+				
+			}
+		}
+		while(scelta != 0);			
 	}
 	
 	public static String patternNome(Modello modello){

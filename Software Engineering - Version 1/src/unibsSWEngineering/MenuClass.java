@@ -215,12 +215,11 @@ public class MenuClass {
 	//////////////////////////////////
 	
 	private static void gestisciInserimentoClasse(){
-		if(modello != null){
-			ClasseEquivalenza classeNuova = CostruzioneTest.generaClasseEquivalenza(modello);
+		if(modello != null){			
 			if(testSuite == null){
 				testSuite = new TestSuite(modello.getNomiAzioni());
 			}
-			testSuite.addNuovaClasseEquivalenza(classeNuova);					
+			CostruzioneTest.inserimentoClassiEquivalenza(modello, testSuite);				
 		}
 		else{
 			System.out.println("Modello non ancora caricato");
@@ -328,9 +327,10 @@ public class MenuClass {
 			File fileStat = new File(CostruzioneTest.patternNome(modello));
 			if(fileStat.exists()){
 				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTest.patternNome(modello)));
+				System.out.println("File con Test Suite caricato");
 			}
 			else{
-				System.out.println("File con Statistiche non presente!");
+				System.out.println("File con Test Suite non presente");
 			}
 		}
 		else{

@@ -23,6 +23,11 @@ public class Prova implements Serializable{
 		insiemeCopertura = new Vector<Cammino>();
 	}
 	
+	public Prova(){
+		idProva = "";
+		insiemeCopertura = new Vector<Cammino>();
+	}	
+	
 	public void setNome(String nome){
 		idProva = nome;
 	}
@@ -33,7 +38,7 @@ public class Prova implements Serializable{
 
 	public void addPercorso(Cammino cammino){
 		insiemeCopertura.add(cammino);
-	}
+	}	
 	
 	public Vector<Cammino> getInsiemeCopertura(){
 		return insiemeCopertura;
@@ -102,7 +107,8 @@ public class Prova implements Serializable{
 	
 	public String toString(){
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Prova : " + getNome() + "\n\n");
+		if(!getNome().equals(""))
+			buffer.append("Prova : " + getNome() + "\n\n");
 		for(Cammino p : insiemeCopertura){
 			buffer.append(p.toString()+ "\n");
 		}
