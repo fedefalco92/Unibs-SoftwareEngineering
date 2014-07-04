@@ -23,6 +23,11 @@ public class Prova implements Serializable{
 		insiemeCopertura = new Vector<Cammino>();
 	}
 	
+	public Prova(){
+		idProva = null;
+		insiemeCopertura = new Vector<Cammino>();
+	}	
+	
 	public void setNome(String nome){
 		idProva = nome;
 	}
@@ -33,7 +38,7 @@ public class Prova implements Serializable{
 
 	public void addPercorso(Cammino cammino){
 		insiemeCopertura.add(cammino);
-	}
+	}	
 	
 	public Vector<Cammino> getInsiemeCopertura(){
 		return insiemeCopertura;

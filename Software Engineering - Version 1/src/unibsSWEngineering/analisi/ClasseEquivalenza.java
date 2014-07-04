@@ -38,6 +38,24 @@ public class ClasseEquivalenza implements Serializable{
 	 * @param cardinalita
 	 */
 	
+	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita){
+		this.nome = nome;
+		istanzaProva = null;
+		this.cardinalita = 0;
+		diagnosiMinimali = new Vector<Vector<String>>(); 
+		this.insiemeAzioni = insiemeAttivita;		
+		probabilitaProva = new Hashtable <String,Double>();
+		probabilitaClasse = new Hashtable <String,Double>();
+	}		
+	
+	/**
+	 * Costruttore della classe di equivalenza, che accetta il nome identificativo,
+	 * l'insieme delle attivita' e la cardinalita' della classe
+	 * @param nome
+	 * @param insiemeAttivita
+	 * @param cardinalita
+	 */
+	
 	public ClasseEquivalenza(String nome,Vector<String> insiemeAttivita, int cardinalita){
 		this.nome = nome;
 		istanzaProva = null;
@@ -91,6 +109,15 @@ public class ClasseEquivalenza implements Serializable{
 	
 	public void setCardinalita(int card){
 		cardinalita = card;
+	}
+	
+	/**
+	 * Incrementa la cardinalita' della classe
+	 * @param card
+	 */
+	
+	public void incrementaCardinalita(){
+		cardinalita++;
 	}
 	
 	/**

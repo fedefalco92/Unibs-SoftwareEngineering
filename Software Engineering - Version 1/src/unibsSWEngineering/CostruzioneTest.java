@@ -3,6 +3,7 @@ package unibsSWEngineering;
  * 
  */
 import java.io.File;
+import java.util.Vector;
 
 import unibsSWEngineering.analisi.*;
 import unibsSWEngineering.modello.Modello;
@@ -48,7 +49,7 @@ public class CostruzioneTest {
 		
 		final String[] VOCI_MENU = {"Aggiungi nuovo percorso alla prova '"+ nomeProva+"'"};
 		MyMenu menuInserimentoPercorsi = new MyMenu(TITOLO_MENU,VOCI_MENU);
-		menuInserimentoPercorsi.setVoceUscita("0\t Ritorna al menu principale");
+		menuInserimentoPercorsi.setVoceUscita("0\t Torna indietro");
 		
 		int scelta;
 		do{
@@ -75,7 +76,7 @@ public class CostruzioneTest {
 		return prova;		
 	}
 	
-	public static ClasseEquivalenza generaClasseEquivalenza(Modello modello){
+	private static ClasseEquivalenza generaClasseEquivalenza(Modello modello){
 		final String VOCE_CLASSE = "Inserire il nome della classe di equivalenza >";
 		final String VOCE_CARDINALITA = "Inserire la cardinalita' della classe di equivalenza >";
 		final String TITOLO_MENU = "INSERIMENTO CLASSE DI EQUIVALENZA";
@@ -89,7 +90,7 @@ public class CostruzioneTest {
 		
 		final String[] VOCI_MENU = {"Riempi la classe :  '"+ nomeClasse+"'"};
 		MyMenu menuInserimento = new MyMenu(TITOLO_MENU,VOCI_MENU);
-		menuInserimento.setVoceUscita("0\t Ritorna al menu principale");
+		menuInserimento.setVoceUscita("0\t Torna indietro");
 		
 		int scelta;
 		do{
@@ -108,6 +109,29 @@ public class CostruzioneTest {
 		}
 		while(scelta != 0);	
 		return clNuova;		
+	}
+	
+	public static void inserimentoClassiEquivalenza(Modello modello, TestSuite test_suite){
+		final String TITOLO_MENU = "CREAZIONE CLASSI DI EQUIVALENZA";			
+		final String[] VOCI_MENU = {"Aggiungi nuova classe di equivalenza"};
+		MyMenu menuInserimentoClassiEq = new MyMenu(TITOLO_MENU,VOCI_MENU);
+		menuInserimentoClassiEq.setVoceUscita("0\t Torna indietro");
+		int scelta;
+		do{
+			scelta = menuInserimentoClassiEq.scegli();
+			switch(scelta){
+				case 0:{					
+					break;
+				}		
+				case 1:{	
+					ClasseEquivalenza classeNuova = generaClasseEquivalenza(modello);
+					test_suite.addNuovaClasseEquivalenza(classeNuova);
+					break;
+				}
+				
+			}
+		}
+		while(scelta != 0);			
 	}
 	
 	public static String patternNome(Modello modello){

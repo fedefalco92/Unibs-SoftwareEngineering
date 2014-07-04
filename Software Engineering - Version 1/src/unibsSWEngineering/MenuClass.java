@@ -215,12 +215,11 @@ public class MenuClass {
 	//////////////////////////////////
 	
 	private static void gestisciInserimentoClasse(){
-		if(modello != null){
-			ClasseEquivalenza classeNuova = CostruzioneTest.generaClasseEquivalenza(modello);
+		if(modello != null){			
 			if(testSuite == null){
 				testSuite = new TestSuite(modello.getNomiAzioni());
 			}
-			testSuite.addNuovaClasseEquivalenza(classeNuova);					
+			CostruzioneTest.inserimentoClassiEquivalenza(modello, testSuite);				
 		}
 		else{
 			System.out.println("Modello non ancora caricato");
