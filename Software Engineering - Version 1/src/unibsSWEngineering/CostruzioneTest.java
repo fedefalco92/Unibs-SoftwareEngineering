@@ -17,7 +17,7 @@ public class CostruzioneTest {
 
 	
 	private static Cammino generaCammino(Modello modello){
-		final String TITOLO = "INSERIMENTO CAMMINO";
+		final String TITOLO = "INSERIMENTO PERCORSO";
 		final String VOCE_1  = "Inserisci percorso separato da ',' >";
 		final String VOCE_2  = "Inserisci esito(0-KO\t1-OK) >";
 	
@@ -47,7 +47,7 @@ public class CostruzioneTest {
 	//	String nomeProva = InputDati.leggiStringaNonVuota(VOCE_PROVA);
 		Prova prova = new Prova();
 		
-		final String[] VOCI_MENU = {"Aggiungi nuovo percorso alla prova "};
+		final String[] VOCI_MENU = {"Aggiungi nuovo percorso "};
 		MyMenu menuInserimentoPercorsi = new MyMenu(TITOLO_MENU,VOCI_MENU);
 		menuInserimentoPercorsi.setVoceUscita("0\t Torna indietro");
 		
