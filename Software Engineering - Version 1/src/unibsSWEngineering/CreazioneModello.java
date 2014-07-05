@@ -409,6 +409,10 @@ public class CreazioneModello {
 						break;
 				}					
 			}
+			
+			//aggiungo il merge al modello
+			modello.aggiungiMerge(mergeFinaleDelBranchCorrente);
+			//passo alla gestione del merge appena inserito
 			gestisciMerge(modello, mergeFinaleDelBranchCorrente, terminale);
 		} else {
 			String TITOLO = "BRANCH " + 
