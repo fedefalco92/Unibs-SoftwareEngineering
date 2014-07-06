@@ -81,7 +81,9 @@
   </class>  
   <association id="9">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="modelloCaricato"/>      
+      <attribute id="10" name="modelloCaricato">        
+        <position height="18" width="98" x="882" y="427"/>      
+      </attribute>      
       <multiplicity id="11" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
@@ -114,7 +116,7 @@
   <association id="18">    
     <end type="SOURCE" refId="4" navigable="false">      
       <attribute id="19" name="testSuite">        
-        <position height="18" width="55" x="381" y="-35"/>      
+        <position height="18" width="55" x="382" y="-76"/>      
       </attribute>      
       <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
