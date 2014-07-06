@@ -409,13 +409,29 @@ public class CreazioneModello {
 						break;
 				}					
 			}
+			
+			//aggiungo il merge al modello
+			modello.aggiungiMerge(mergeFinaleDelBranchCorrente);
+			//passo alla gestione del merge appena inserito
 			gestisciMerge(modello, mergeFinaleDelBranchCorrente, terminale);
-		} else {
+		} else { //IN QUESTO CASO C'E' SOLO UN'ALTERNATIVA CHE PROSEGUE...PU0' TERMINARE SUL NODO FINALE O SULL'ELEMENTO TERMINALE
 			String TITOLO = "BRANCH " + 
 					branch.getNome() +
 					" Alternativa " + numeroAlternative + //oppure (numeroWhile + 1)
 					"\nCosa vuoi inserire come primo elemento? > ";
-			String [] vociMenu = VOCI_SCELTA_PRIMO_ELEMENTO;
+			String [] vociMenu = VOCI_SCELTA_NODO_FINALE;
+			if (terminale == null)
+				vociMenu = VOCI_SCELTA_NODO_FINALE;
+			else {
+				String ID = terminale.getID();
+				switch (ID){
+				case "MERGE":
+					vociMenu = VOCI_SCELTA_MERGE_FINALE;
+					break;
+				case "JOIN":
+					vociMenu= VOCI_SCELTA_JOIN_FINALE;
+				}
+			}
 			MyMenu menuBranch = new MyMenu(TITOLO, vociMenu);
 			int scelta = menuBranch.scegliSenzaUscita();
 			
@@ -432,6 +448,21 @@ public class CreazioneModello {
 				case 3: //AGGIUNTA FORK
 					Fork nuovoFork = nuovoFork(modello, branch);
 					gestisciFork(modello, nuovoFork, terminale);
+					break;
+				case 4:
+					if (terminale==null){
+						branch.aggiungiUscita(modello.getEnd());
+						modello.getEnd().setIngresso(branch);
+					} else {String ID = terminale.getID();
+					switch (ID){
+					case "MERGE":
+						branch.aggiungiUscita((Merge) terminale);
+						break;
+					case "JOIN":
+						branch.aggiungiUscita((Join) terminale);
+					}
+						terminale.aggiungiIngresso(branch);
+					}
 					break;
 			}					
 			
