@@ -11,8 +11,7 @@ import unibsSWEngineering.modello.Modello;
 public class CorrettezzaCammino {
 	
 	/*Fatti da Fede*/
-	//Non va una sega! Studio fisica che e' meglio!
-	//LOOOPPPP DI ECCEZIONIIII
+	//Controllo vecchio con qualche bug
 	public static boolean camminoOkOld(Elemento eleStart, Elemento eleEnd){
 		
 		if(eleStart == null || eleEnd == null)
@@ -40,7 +39,7 @@ public class CorrettezzaCammino {
 		return false;
 	}
 	
-	/*SEMBRA FUNZIONARE!!! SIIII*/
+	/*Controllo risolto e funzionante*/
 	public static boolean camminoOk(Elemento eleStart, Elemento eleEnd){
 		return camminoAux(eleStart, eleEnd, null);
 	}
