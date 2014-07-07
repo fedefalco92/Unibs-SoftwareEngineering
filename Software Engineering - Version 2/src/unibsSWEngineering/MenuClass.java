@@ -37,8 +37,7 @@ public class MenuClass {
 				"Stampa diagnosi", 
 				"Visualizza modello", 
 				"Esporta modello",
-				"Esporta test suite",
-				"Prova Cammino"};
+				"Esporta test suite"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -70,21 +69,15 @@ public class MenuClass {
 				break;
 			case 5:
 				calcolaProbabilita();
-				break;
-								
+				break;				
 			case 6:
 				visualizzaModello();
-				break;
-				
+				break;	
 			case 7:
 				salvaModello();
 				break;
 			case 8: 
 				salvaStatistiche();
-				break;
-			case 9:
-				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
-						System.out.println("Percorso raggiungibile");
 				break;
 		}
 		
@@ -211,7 +204,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 3 - DIAGNOSI E TEST
+	// 3 - CREAZIONE TEST SUITE
 	//////////////////////////////////
 	
 	private static void gestisciInserimentoClasse(){
@@ -227,7 +220,27 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 4 - PROBABILITA
+	// 4 - CARICAMENTO TEST SUITE
+	//////////////////////////////////	
+	
+	private static void caricaStatistiche(){
+		if(modello != null){
+			File fileStat = new File(CostruzioneTest.patternNome(modello));
+			if(fileStat.exists()){
+				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTest.patternNome(modello)));
+				System.out.println("File con Test Suite caricato");
+			}
+			else{
+				System.out.println("File con Test Suite non presente");
+			}
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}
+	}
+
+	//////////////////////////////////
+	// 5 - STAMPA DIAGNOSI
 	//////////////////////////////////
 	
 	private static void calcolaProbabilita(){
@@ -245,7 +258,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 5 - METODI VISUALIZZAZIONE MODELLO
+	// 6 - VISUALIZZA MODELLO
 	//////////////////////////////////
 	/**
 	* Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
@@ -261,7 +274,7 @@ public class MenuClass {
 	}
 
 	//////////////////////////////////
-	// 6 - METODI SALVATAGGIO MODELLO
+	// 7 - ESPORTA MODELLO
 	//////////////////////////////////
 	private static void salvaModello() {
 		
@@ -318,28 +331,9 @@ public class MenuClass {
 
 	}
 	
-	//////////////////////////////////
-	// 8 - IMPORTAZIONE FILE STATISTICHE
-	//////////////////////////////////	
-	
-	private static void caricaStatistiche(){
-		if(modello != null){
-			File fileStat = new File(CostruzioneTest.patternNome(modello));
-			if(fileStat.exists()){
-				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTest.patternNome(modello)));
-				System.out.println("File con Test Suite caricato");
-			}
-			else{
-				System.out.println("File con Test Suite non presente");
-			}
-		}
-		else{
-			System.out.println("Modello non ancora caricato");
-		}
-	}
 	
 	//////////////////////////////////
-	// 9 - SALVATAGGIO FILE STATISTICHE
+	// 8 - SALVATAGGIO FILE STATISTICHE
 	//////////////////////////////////	
 	
 	private static void salvaStatistiche(){
