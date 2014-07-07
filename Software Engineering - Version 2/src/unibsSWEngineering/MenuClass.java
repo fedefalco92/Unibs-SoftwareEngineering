@@ -37,8 +37,7 @@ public class MenuClass {
 				"Stampa diagnosi", 
 				"Visualizza modello", 
 				"Esporta modello",
-				"Esporta test suite",
-				"Prova Cammino"};
+				"Esporta test suite"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -82,17 +81,13 @@ public class MenuClass {
 			case 8: 
 				salvaStatistiche();
 				break;
-			case 9:
-				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
-						System.out.println("Percorso raggiungibile");
-				break;
 		}
 		
 		return false;
 	}
 	
 	//////////////////////////////////
-	// 1 - METODI CREAZIONE MODELLO
+	// 1 - CREAZIONE MODELLO
 	//////////////////////////////////
 	/**
 	 * Metodo che permette di richiamare la classe Creazione Modello per creare un nuovo modello.
@@ -105,7 +100,7 @@ public class MenuClass {
 	}
 
 	//////////////////////////////////
-	// 2 - METODI CARICAMENTO MODELLO
+	// 2 - CARICAMENTO MODELLO
 	//////////////////////////////////
 	/**
 	 * Metodo che permette di caricare un modello. 
@@ -217,7 +212,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 3 - DIAGNOSI E TEST
+	// 3 - CREAZIONE TEST SUITE
 	//////////////////////////////////
 	
 	private static void gestisciInserimentoClasse(){
@@ -233,7 +228,27 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 4 - PROBABILITA
+	// 4 - CARICAMENTO TEST SUITE
+	//////////////////////////////////	
+	
+	private static void caricaStatistiche(){
+		if(modello != null){
+			File fileStat = new File(CostruzioneTestSuite.patternNome(modello));
+			if(fileStat.exists()){
+				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTestSuite.patternNome(modello)));
+				System.out.println("File con Test Suite caricato");
+			}
+			else{
+				System.out.println("File con Test Suite non presente");
+			}
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}
+	}
+
+	//////////////////////////////////
+	// 5 - STAMPA DIAGNOSI
 	//////////////////////////////////
 	
 	private static void calcolaProbabilita(){
@@ -251,7 +266,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 5 - METODI VISUALIZZAZIONE MODELLO
+	// 6 - VISUALIZZA MODELLO
 	//////////////////////////////////
 	/**
 	* Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
@@ -267,7 +282,7 @@ public class MenuClass {
 	}
 
 	//////////////////////////////////
-	// 6 - METODI SALVATAGGIO MODELLO
+	// 7 - ESPORTA MODELLO
 	//////////////////////////////////
 	private static void salvaModello() {
 		
@@ -325,27 +340,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 8 - IMPORTAZIONE FILE STATISTICHE
-	//////////////////////////////////	
-	
-	private static void caricaStatistiche(){
-		if(modello != null){
-			File fileStat = new File(CostruzioneTestSuite.patternNome(modello));
-			if(fileStat.exists()){
-				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTestSuite.patternNome(modello)));
-				System.out.println("File con Test Suite caricato");
-			}
-			else{
-				System.out.println("File con Test Suite non presente");
-			}
-		}
-		else{
-			System.out.println("Modello non ancora caricato");
-		}
-	}
-	
-	//////////////////////////////////
-	// 9 - SALVATAGGIO FILE STATISTICHE
+	// 8 - ESPORTA STATISTICHE
 	//////////////////////////////////	
 	
 	private static void salvaStatistiche(){
