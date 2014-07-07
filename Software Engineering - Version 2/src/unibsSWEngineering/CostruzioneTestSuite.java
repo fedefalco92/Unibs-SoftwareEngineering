@@ -6,14 +6,14 @@ import java.io.File;
 import java.util.Vector;
 
 import unibsSWEngineering.analisi.*;
-import unibsSWEngineering.modello.Modello;
+import unibsSWEngineering.modello.*;
 import it.unibs.fp.mylib.*;
 
 /**
  * @author root
  *
  */
-public class CostruzioneTest {
+public class CostruzioneTestSuite {
 
 	
 	private static Cammino generaCammino(Modello modello){
@@ -32,11 +32,11 @@ public class CostruzioneTest {
 		}
 		
 		Cammino camminoTemp = new Cammino(percorso,esito_bool);
-		if(CorrettezzaCammino.camminoCorretto(modello, camminoTemp) == 0){
+		//if(CorrettezzaCammino.camminoOkOld(new Azione(camminoTemp.estraiPrimo()),new Azione(camminoTemp.estraiUltimo()))){
 			return camminoTemp;
-		}
+		//}
 		
-		return null;
+		//return null;
 		
 	}
 	
@@ -137,7 +137,7 @@ public class CostruzioneTest {
 	public static String patternNome(Modello modello){
 		String nomeModello = modello.getNome();
 		StringBuffer buffer = new StringBuffer(nomeModello);
-		return (MenuClass.cartellaStatisticheModello+File.separator+"rilevazioni"+buffer.substring(0, nomeModello.length()-3)+"dat");
+		return (MenuClass.cartellaStatisticheModello+File.separator+"rilevazioni"+buffer.substring(0, nomeModello.length())+".dat");
 	}
 
 	

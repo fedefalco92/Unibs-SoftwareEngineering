@@ -6,12 +6,14 @@ package unibsSWEngineering.analisi;
 import java.util.Iterator;
 import java.util.Vector;
 
+import unibsSWEngineering.analisi.ClasseEquivalenza;
+
 
 /**
  * @author Massi
  *
  */
-public class UtilityInsiemi {
+public class FunzioniGenerali {
 	
 	private static final int DELIM = 1; //Delimitatore, per estensioni future
 	
@@ -516,27 +518,6 @@ public class UtilityInsiemi {
 	 * @return
 	 */
 	
-	public static int intersecaIntervallo(OggettoAnalisi e1, OggettoAnalisi e2){
-		int infE1 = e1.getExtInf();
-		int supE1 = e1.getExtSup();
-		int infE2 = e2.getExtInf();
-		int supE2 = e2.getExtSup();
-		int d1 = Math.abs(infE1 - infE2);
-		int d2 = Math.abs(supE1 - supE2);
-		if(d1 <= d2){	//posizione dell' = ???
-			return d1;
-		}
-		return d2;
-	}
-	
-	/**
-	 * Calcolo dell'intersezione fra due intervalli
-	 * (da controllare)
-	 * @param e1
-	 * @param e2
-	 * @return
-	 */
-	
 	public static int intersecaIntervallo(int infE1,int supE1,int infE2, int supE2){
 		if(infE1<infE2 && infE1<supE2 && supE1<infE2 && supE1<supE2){
 			return Math.abs(infE2-supE1);
@@ -547,7 +528,112 @@ public class UtilityInsiemi {
 		return 0;
 	}	
 	
-
+	/**
+	 * Genera l'insieme di partenza per il calcolo delle diagnosi minimali:
+	 * analizza tutte le azioni che fanno parte dei vari cammini e "rimuove"
+	 * dalle rilevazioni KO le azioni che sono presenti nelle rilevazioni OK
+	 * @return
+	 * @param classe_in
+	 */
+	
+	public static Vector<Vector<String>> generaInsiemePartenza(ClasseEquivalenza classe_in){
+		//algoritmo per generare degli HS minimali
+		Vector<Vector<String>> minimalHS = new Vector<Vector<String>>();
+		Vector<String> elementiDaRimuovere = new  Vector<String>();		
+			//replicazione dell'insieme delle attivita', per poi rimuovere quelle OK
+			//e per trovare cosi' l'HS di diagnosi minimale
+		
+		 Vector<Cammino> percorsoOK = classe_in.getProva().getEsitoOK();
+			 
+		 for(Cammino perc : percorsoOK){
+			 //preparo gli elementi delle rilevazioni OK che andranno rimossi da ogni K0
+			 Vector<String> elementiPercorso = perc.estraiElementi();
+			 for(String elem : elementiPercorso){
+					 if(elementiDaRimuovere.indexOf(elem) < 0){
+						 elementiDaRimuovere.add(elem);
+					 }
+			 }				 				 				
+		 }	
+	 
+		//ora che ho ricercato in tutte le prove posso eliminare gli elementi OK dalle rilevazioni KO
+		
+		//per ora gestisco la creazione delle diagnosi minimali utilizzando il metodo "a matrice"
+		//da ottimizzare
+		
+		Vector <Vector<Integer>> corrispondenze = new Vector<Vector<Integer>>();
+		
+		//determino l'insieme di insiemi su cui effettuare l'analisi del calcolo degli MHS
+		
+		Vector<Vector<String>> insiemiBase = new Vector<Vector<String>>();
+		
+		Vector<Cammino> percorsoKO = classe_in.getProva().getEsitoKO();
+		for(int i=0;i<percorsoKO.size();i++){
+			Vector<String> elementiAttivita = percorsoKO.get(i).estraiElementi();
+			for(String rim : elementiDaRimuovere){
+				elementiAttivita.remove(rim);
+			}
+			if(!elementiAttivita.isEmpty())
+				insiemiBase.add(elementiAttivita);
+		}		
+		return insiemiBase;
+		
+		//--> fino a qui calcola l'insieme di partenza da cui ricavare gli MHS		
+	}	
+	
+	/**
+	 * Questo metodo costruisce la tabella binaria delle corrispondenze
+	 * valida per qualsiasi vettore in generale
+	 * @return 
+	 * @param insiemeAzioni
+	 * @param cl_eq
+	 */
+	
+	
+	public static Vector<Vector<Integer>> generazioneCorrispondenze(Vector<String> insiemeAzioni,ClasseEquivalenza cl_eq){
+		//ampiezza della colonna
+		int numeroColonne = insiemeAzioni.size();
+		
+		Vector<Vector<Integer>> tabellaCorrispondenze = new Vector<Vector<Integer>>();
+		
+		//Parto dal vettore esterno
+				
+		Vector<Vector<String>> insiemiPartenza = FunzioniGenerali.generaInsiemePartenza(cl_eq);
+		
+		
+		if(insiemiPartenza.isEmpty()){
+			//N.B: se non ho attivita di partenza come mi comporto??
+			return null;
+		}
+		
+		else{
+			for(Vector<String> sottoinsieme : insiemiPartenza){
+				//inizializzazione della riga nella matrice delle corrispondenze
+				
+				Vector<Integer> rigaCorrispondenza = new Vector<Integer>();
+				for(int i=0;i<numeroColonne;i++){
+					rigaCorrispondenza.add(0);
+				}
+				
+				//analisi di ciascun sottoinsieme per verificare dove mettere a "1" la posizione
+				for(String elemento : sottoinsieme){
+					//recupero la posizione dell'attivita' nell'elenco(vector) presente nello stato dell'oggetto
+					
+					int posizioneInElencoGenerale = insiemeAzioni.indexOf(elemento);
+					
+					//System.out.println("Posizione in elenco: " + posizioneInElencoGenerale);
+					
+					//se lo trovo allora setto a 1 la sua posizione, altrimenti no
+					
+					if(posizioneInElencoGenerale != -1){
+						rigaCorrispondenza.setElementAt(1, posizioneInElencoGenerale);					
+					}
+				}
+				tabellaCorrispondenze.add(rigaCorrispondenza);
+			}
+		}
+		
+		return tabellaCorrispondenze;
+	}	
 	
 
 }

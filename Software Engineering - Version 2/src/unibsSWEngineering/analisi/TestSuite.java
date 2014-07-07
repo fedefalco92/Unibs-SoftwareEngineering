@@ -22,7 +22,7 @@ public class TestSuite implements Serializable{
 	private Vector<ClasseEquivalenza> classiEquivalenza;
 	private Hashtable <String,Double> probabilitaM1;
 	private Hashtable <String,Double> probabilitaM2;
-	private Distanze distanzaElenchi;
+	private DistanzaElenchi distanzaElenchi;
 	
 	public TestSuite(Vector<String> insiemeAzioni){
 		classiEquivalenza = new Vector<ClasseEquivalenza>();
@@ -168,7 +168,7 @@ public class TestSuite implements Serializable{
 	private void calcolaProbabilitaM2(){
 		Vector<Integer> vettoreM = calcolaVettoreM();
 		for(String azione : insiemeAzioni){
-			double coefficienteOchiaiK = UtilityInsiemi.coeffOchiai(generaColonnaAzioneK(azione), vettoreM);
+			double coefficienteOchiaiK = FunzioniGenerali.coeffOchiai(generaColonnaAzioneK(azione), vettoreM);
 			probabilitaM2.put(azione,coefficienteOchiaiK);	
 		}
 	}
@@ -180,7 +180,7 @@ public class TestSuite implements Serializable{
 	public void eseguiComputazioni(){
 		calcolaProbabilitaM1();
 		calcolaProbabilitaM2();
-		distanzaElenchi = new Distanze(this);
+		distanzaElenchi = new DistanzaElenchi(this);
 		distanzaElenchi.calcoloDistanze();
 	}
 	

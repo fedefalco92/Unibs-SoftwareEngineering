@@ -14,7 +14,7 @@ public class MenuClass {
 	private static final FileNameExtensionFilter filtroDAT = new FileNameExtensionFilter("File .dat","dat");
 	public static final String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
 	public static final String cartellaModelliOggetto = "ModelliDAT";
-	public static final String cartellaStatisticheModello = "Statistiche";
+	public static final String cartellaStatisticheModello = "Rilevazioni";
 	
 	private static Modello modello;
 	private static File file;
@@ -37,7 +37,8 @@ public class MenuClass {
 				"Stampa diagnosi", 
 				"Visualizza modello", 
 				"Esporta modello",
-				"Esporta test suite"};
+				"Esporta test suite",
+				"Prova Cammino"};
 		MyMenu menuPrincipale = new MyMenu(TITOLO, VOCI);
 		int scelta = menuPrincipale.scegli();
 		
@@ -69,15 +70,21 @@ public class MenuClass {
 				break;
 			case 5:
 				calcolaProbabilita();
-				break;				
+				break;
+								
 			case 6:
 				visualizzaModello();
-				break;	
+				break;
+				
 			case 7:
 				salvaModello();
 				break;
 			case 8: 
 				salvaStatistiche();
+				break;
+			case 9:
+				if(CorrettezzaCammino.camminoOk(modello.getStart(),modello.getEnd()))
+						System.out.println("Percorso raggiungibile");
 				break;
 		}
 		
@@ -105,6 +112,12 @@ public class MenuClass {
 	 * &Egrave; possibile scegliere se caricare il modello da un file di testo o un file salvato in formato .dat.
 	 */
 	private static void caricaModello() {
+		//per il modello
+		File folderDest = new File(cartellaStatisticheModello);
+		if(!folderDest.exists()){
+			folderDest.mkdirs();
+			
+		}
 		
 		final String TITOLO = "MENU CARICAMENTO MODELLO";
 		final String [] VOCI = {"Carica da testo" , "Carica da file.dat"};
@@ -204,7 +217,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 3 - CREAZIONE TEST SUITE
+	// 3 - DIAGNOSI E TEST
 	//////////////////////////////////
 	
 	private static void gestisciInserimentoClasse(){
@@ -212,7 +225,7 @@ public class MenuClass {
 			if(testSuite == null){
 				testSuite = new TestSuite(modello.getNomiAzioni());
 			}
-			CostruzioneTest.inserimentoClassiEquivalenza(modello, testSuite);				
+			CostruzioneTestSuite.inserimentoClassiEquivalenza(modello, testSuite);				
 		}
 		else{
 			System.out.println("Modello non ancora caricato");
@@ -220,27 +233,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 4 - CARICAMENTO TEST SUITE
-	//////////////////////////////////	
-	
-	private static void caricaStatistiche(){
-		if(modello != null){
-			File fileStat = new File(CostruzioneTest.patternNome(modello));
-			if(fileStat.exists()){
-				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTest.patternNome(modello)));
-				System.out.println("File con Test Suite caricato");
-			}
-			else{
-				System.out.println("File con Test Suite non presente");
-			}
-		}
-		else{
-			System.out.println("Modello non ancora caricato");
-		}
-	}
-
-	//////////////////////////////////
-	// 5 - STAMPA DIAGNOSI
+	// 4 - PROBABILITA
 	//////////////////////////////////
 	
 	private static void calcolaProbabilita(){
@@ -258,7 +251,7 @@ public class MenuClass {
 	}
 	
 	//////////////////////////////////
-	// 6 - VISUALIZZA MODELLO
+	// 5 - METODI VISUALIZZAZIONE MODELLO
 	//////////////////////////////////
 	/**
 	* Il metodo mette in output il modello sfruttando il metodo Modello.stampaModello()
@@ -274,7 +267,7 @@ public class MenuClass {
 	}
 
 	//////////////////////////////////
-	// 7 - ESPORTA MODELLO
+	// 6 - METODI SALVATAGGIO MODELLO
 	//////////////////////////////////
 	private static void salvaModello() {
 		
@@ -331,15 +324,34 @@ public class MenuClass {
 
 	}
 	
+	//////////////////////////////////
+	// 8 - IMPORTAZIONE FILE STATISTICHE
+	//////////////////////////////////	
+	
+	private static void caricaStatistiche(){
+		if(modello != null){
+			File fileStat = new File(CostruzioneTestSuite.patternNome(modello));
+			if(fileStat.exists()){
+				testSuite = (TestSuite)ServizioFile.caricaSingoloOggetto(new File(CostruzioneTestSuite.patternNome(modello)));
+				System.out.println("File con Test Suite caricato");
+			}
+			else{
+				System.out.println("File con Test Suite non presente");
+			}
+		}
+		else{
+			System.out.println("Modello non ancora caricato");
+		}
+	}
 	
 	//////////////////////////////////
-	// 8 - SALVATAGGIO FILE STATISTICHE
+	// 9 - SALVATAGGIO FILE STATISTICHE
 	//////////////////////////////////	
 	
 	private static void salvaStatistiche(){
 		if(modello != null){
 			if(testSuite != null){
-				String strDest = CostruzioneTest.patternNome(modello);
+				String strDest = CostruzioneTestSuite.patternNome(modello);
 				File fileDest = new File(strDest);
 				if(fileDest.exists()){
 					boolean risposta = InputDati.yesOrNo("File gia' esistente. Sovrascriverlo?");

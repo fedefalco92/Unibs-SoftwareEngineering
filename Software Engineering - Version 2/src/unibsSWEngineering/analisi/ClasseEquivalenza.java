@@ -110,16 +110,7 @@ public class ClasseEquivalenza implements Serializable{
 	public void setCardinalita(int card){
 		cardinalita = card;
 	}
-	
-	/**
-	 * Incrementa la cardinalita' della classe
-	 * @param card
-	 */
-	
-	public void incrementaCardinalita(){
-		cardinalita++;
-	}
-	
+		
 	/**
 	 * Ritorna l'oggetto Prova della classe di equivalenza
 	 * @return
@@ -154,56 +145,7 @@ public class ClasseEquivalenza implements Serializable{
 		return probabilitaClasse;		
 	}	
 
-	/**
-	 * Genera l'insieme di partenza per il calcolo delle diagnosi minimali:
-	 * analizza tutte le azioni che fanno parte dei vari cammini e "rimuove"
-	 * dalle rilevazioni KO le azioni che sono presenti nelle rilevazioni OK
-	 * @return
-	 */
 	
-	private Vector<Vector<String>> generaInsiemePartenza(){
-		//algoritmo per generare degli HS minimali
-		Vector<Vector<String>> minimalHS = new Vector<Vector<String>>();
-		Vector<String> elementiDaRimuovere = new  Vector<String>();		
-			//replicazione dell'insieme delle attivita', per poi rimuovere quelle OK
-			//e per trovare cosi' l'HS di diagnosi minimale
-		
-		 Vector<Cammino> percorsoOK = istanzaProva.getEsitoOK();
-			 
-		 for(Cammino perc : percorsoOK){
-			 //preparo gli elementi delle rilevazioni OK che andranno rimossi da ogni K0
-			 Vector<String> elementiPercorso = perc.estraiElementi();
-			 for(String elem : elementiPercorso){
-					 if(elementiDaRimuovere.indexOf(elem) < 0){
-						 elementiDaRimuovere.add(elem);
-					 }
-			 }				 				 				
-		 }	
-	 
-		//ora che ho ricercato in tutte le prove posso eliminare gli elementi OK dalle rilevazioni KO
-		
-		//per ora gestisco la creazione delle diagnosi minimali utilizzando il metodo "a matrice"
-		//da ottimizzare
-		
-		Vector <Vector<Integer>> corrispondenze = new Vector<Vector<Integer>>();
-		
-		//determino l'insieme di insiemi su cui effettuare l'analisi del calcolo degli MHS
-		
-		Vector<Vector<String>> insiemiBase = new Vector<Vector<String>>();
-		
-		Vector<Cammino> percorsoKO = istanzaProva.getEsitoKO();
-		for(int i=0;i<percorsoKO.size();i++){
-			Vector<String> elementiAttivita = percorsoKO.get(i).estraiElementi();
-			for(String rim : elementiDaRimuovere){
-				elementiAttivita.remove(rim);
-			}
-			if(!elementiAttivita.isEmpty())
-				insiemiBase.add(elementiAttivita);
-		}		
-		return insiemiBase;
-		
-		//--> fino a qui calcola l'insieme di partenza da cui ricavare gli MHS		
-	}	
 	
 	/**
 	 * Generazione delle diagnosi minimali relative alla classe di equivalenza considerata
@@ -212,69 +154,18 @@ public class ClasseEquivalenza implements Serializable{
 	private void generaDiagnosi(){
 		
 		//Applicazione dei metodi creati per trovare l'insieme di diagnosi minimali		
-		Vector<Vector<Integer>> corrispondenze = generazioneCorrispondenze();
+		Vector<Vector<Integer>> corrispondenze = FunzioniGenerali.generazioneCorrispondenze(insiemeAzioni, this);
 	
 		//se ho corrispondenze su cui calcolare le diagnosi minimali...
 		
 		if(corrispondenze != null){
 		
-			diagnosiMinimali = UtilityInsiemi.generaMHS(corrispondenze,insiemeAzioni);		
+			diagnosiMinimali = FunzioniGenerali.generaMHS(corrispondenze,insiemeAzioni);		
 		}
 
 	}
 	
-	/**
-	 * Questo metodo costruisce la tabella binaria delle corrispondenze
-	 * valida per qualsiasi vettore in generale
-	 * @return 
-	 */
 	
-	
-	private Vector<Vector<Integer>> generazioneCorrispondenze(){
-		//ampiezza della colonna
-		int numeroColonne = insiemeAzioni.size();
-		
-		Vector<Vector<Integer>> tabellaCorrispondenze = new Vector<Vector<Integer>>();
-		
-		//Parto dal vettore esterno
-				
-		Vector<Vector<String>> insiemiPartenza = generaInsiemePartenza();
-		
-		
-		if(insiemiPartenza.isEmpty()){
-			//N.B: se non ho attivita di partenza come mi comporto??
-			return null;
-		}
-		
-		else{
-			for(Vector<String> sottoinsieme : insiemiPartenza){
-				//inizializzazione della riga nella matrice delle corrispondenze
-				
-				Vector<Integer> rigaCorrispondenza = new Vector<Integer>();
-				for(int i=0;i<numeroColonne;i++){
-					rigaCorrispondenza.add(0);
-				}
-				
-				//analisi di ciascun sottoinsieme per verificare dove mettere a "1" la posizione
-				for(String elemento : sottoinsieme){
-					//recupero la posizione dell'attivita' nell'elenco(vector) presente nello stato dell'oggetto
-					
-					int posizioneInElencoGenerale = insiemeAzioni.indexOf(elemento);
-					
-					//System.out.println("Posizione in elenco: " + posizioneInElencoGenerale);
-					
-					//se lo trovo allora setto a 1 la sua posizione, altrimenti no
-					
-					if(posizioneInElencoGenerale != -1){
-						rigaCorrispondenza.setElementAt(1, posizioneInElencoGenerale);					
-					}
-				}
-				tabellaCorrispondenze.add(rigaCorrispondenza);
-			}
-		}
-		
-		return tabellaCorrispondenze;
-	}
 		
 	/**
 	 * Generazione delle probabilita' relative alla prova di cui fa parte la classe di equivalenza
@@ -338,7 +229,7 @@ public class ClasseEquivalenza implements Serializable{
 		}			
 	
 		//Recupero tutte le azioni coinvolte nelle diagnosi minimali(in generale)
-		Vector <String> azioniInDiagnosi = UtilityInsiemi.getAzioniInsieme(diagnosiMinimali);
+		Vector <String> azioniInDiagnosi = FunzioniGenerali.getAzioniInsieme(diagnosiMinimali);
 
 		//se non e' vuoto posso procedere all'elaborazione
 			
@@ -361,13 +252,13 @@ public class ClasseEquivalenza implements Serializable{
 				//se l'azione e' presente nel sottoinsieme faccio 1/cardinalita' del sottoinsieme
 				//e la sommo nell'array delle probabilita' cumulate, creato sulla dimensione delle
 				//attivita' considerate
-				if(UtilityInsiemi.member(singleAction, diagnosi_sing)){
+				if(FunzioniGenerali.member(singleAction, diagnosi_sing)){
 					probabilitaCumulate[posizioneInElenco] += (1/(double)dimensioneSingola);
 				}
 			}
 			//se arrivo qui ho finito di passare in rassegna i sottoinsiemi e posso calcolare la 
 			//probabilita' definitiva
-			int contaOccorrenzeAttivita = UtilityInsiemi.contaPresenze(singleAction, diagnosiMinimali);
+			int contaOccorrenzeAttivita = FunzioniGenerali.contaPresenze(singleAction, diagnosiMinimali);
 			probabilitaProva.put(singleAction, probabilitaCumulate[posizioneInElenco]/(double)contaOccorrenzeAttivita);
 		}
 
@@ -389,37 +280,39 @@ public class ClasseEquivalenza implements Serializable{
 		buffer.append("Nome classe di equivalenza : " + nome + "\n");
 		buffer.append(istanzaProva.toString() + "\n");
 		buffer.append("Cardinalita' della classe : " + cardinalita + "\n");
+	if(!diagnosiMinimali.isEmpty()){		
 		buffer.append("Diagnosi minimali : " + diagnosiMinimali.toString() + "\n");
-		buffer.append("\nPROBABILITA' PROVA : \n");
-		//Iteratore sulla tabella delle probabilita' della prova
-		Enumeration<String> iteratore = probabilitaProva.keys();
-		while(iteratore.hasMoreElements()){
-			String azione = iteratore.nextElement();
-			double probabilita = probabilitaProva.get(azione);
-			if (probabilita >= 0){
-				//per evitare la stampa di valori negativi(IGNOTA)
-				buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
-			}
-			else{
-				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
-			}
-		}	
-	 if(cardinalita > 1){
-		buffer.append("\nPROBABILITA' CLASSE DI EQUIVALENZA : \n");
-		//Iteratore sulla tabella delle probabilita' della classe di equivalenza
-		Enumeration<String> iteratore2 = probabilitaClasse.keys();
-		while(iteratore2.hasMoreElements()){
-			String azione = iteratore2.nextElement();
-			double probabilita = probabilitaClasse.get(azione);
-			if (probabilita >= 0){
-				//per evitare la stampa di valori negativi(IGNOTA)
-				buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
-			}
-			else{
-				buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
-			}
-		}		
-	 }
+			buffer.append("\nPROBABILITA' PROVA : \n");
+			//Iteratore sulla tabella delle probabilita' della prova
+			Enumeration<String> iteratore = probabilitaProva.keys();
+			while(iteratore.hasMoreElements()){
+				String azione = iteratore.nextElement();
+				double probabilita = probabilitaProva.get(azione);
+				if (probabilita >= 0){
+					//per evitare la stampa di valori negativi(IGNOTA)
+					buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
+				}
+				else{
+					buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
+				}
+			}	
+		 if(cardinalita > 1){
+			buffer.append("\nPROBABILITA' CLASSE DI EQUIVALENZA : \n");
+			//Iteratore sulla tabella delle probabilita' della classe di equivalenza
+			Enumeration<String> iteratore2 = probabilitaClasse.keys();
+			while(iteratore2.hasMoreElements()){
+				String azione = iteratore2.nextElement();
+				double probabilita = probabilitaClasse.get(azione);
+				if (probabilita >= 0){
+					//per evitare la stampa di valori negativi(IGNOTA)
+					buffer.append("Azione " + azione + "\t" + "Probabilita': " + probabilita+"\n");
+				}
+				else{
+					buffer.append("Azione " + azione + "\t" + "Probabilita': " +"IGNOTA" +"\n");
+				}
+			}		
+		 }
+	   }
 		return buffer.toString();
 	}
 	

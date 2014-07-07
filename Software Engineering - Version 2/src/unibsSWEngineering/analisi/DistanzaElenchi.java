@@ -16,14 +16,14 @@ import java.util.Vector;
  * @author root
  * 
  */
-public class Distanze implements Serializable{
+public class DistanzaElenchi implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3080770671383154482L;
 	private TestSuite testSuite;
-	private TreeSet<OggettoAnalisi> probabilitaM1Ord;
-	private TreeSet<OggettoAnalisi> probabilitaM2Ord;
+	private TreeSet<IntervalloProbabilita> probabilitaM1Ord;
+	private TreeSet<IntervalloProbabilita> probabilitaM2Ord;
 	private TreeMap<String, Vector<Integer>> elencoM1;
 	private TreeMap<String, Vector<Integer>> elencoM2;
 	private TreeMap<String, Integer> distanzaPerAzione;
@@ -36,10 +36,10 @@ public class Distanze implements Serializable{
 	 * @param testSuite
 	 */
 
-	public Distanze(TestSuite testSuite) {
+	public DistanzaElenchi(TestSuite testSuite) {
 		this.testSuite = testSuite;
-		probabilitaM1Ord = new TreeSet<OggettoAnalisi>();
-		probabilitaM2Ord = new TreeSet<OggettoAnalisi>();
+		probabilitaM1Ord = new TreeSet<IntervalloProbabilita>();
+		probabilitaM2Ord = new TreeSet<IntervalloProbabilita>();
 		elencoM1 = new TreeMap<String, Vector<Integer>>();
 		elencoM2 = new TreeMap<String, Vector<Integer>>();
 		distanzaPerAzione = new TreeMap<String, Integer>();
@@ -52,17 +52,17 @@ public class Distanze implements Serializable{
 	 */
 
 	private void riempiElencoM1() {
-		TreeSet<OggettoAnalisi> probabilitaM1Temp = new TreeSet<OggettoAnalisi>();
+		TreeSet<IntervalloProbabilita> probabilitaM1Temp = new TreeSet<IntervalloProbabilita>();
 		Hashtable<String, Double> probabilitaM1 = testSuite.getProbabilitaM1();
 		Enumeration<String> iteratore = probabilitaM1.keys();
 		while (iteratore.hasMoreElements()) {
 			String azione = iteratore.nextElement();
 			double probabilita = probabilitaM1.get(azione);
-			probabilitaM1Temp.add(new OggettoAnalisi(azione, probabilita));
+			probabilitaM1Temp.add(new IntervalloProbabilita(azione, probabilita));
 		}
 		int endAdd = 0;
 		while (!probabilitaM1Temp.isEmpty()) {
-			OggettoAnalisi testa = probabilitaM1Temp.pollFirst();
+			IntervalloProbabilita testa = probabilitaM1Temp.pollFirst();
 			int starter = testa.getExtInf() + endAdd;
 			StringTokenizer analyzer = new StringTokenizer(testa.getIDs(), ",");
 			int contaToken = analyzer.countTokens();
@@ -80,17 +80,17 @@ public class Distanze implements Serializable{
 	 */	
 
 	private void riempiElencoM2() {
-		TreeSet<OggettoAnalisi> probabilitaM2Temp = new TreeSet<OggettoAnalisi>();
+		TreeSet<IntervalloProbabilita> probabilitaM2Temp = new TreeSet<IntervalloProbabilita>();
 		Hashtable<String, Double> probabilitaM2 = testSuite.getProbabilitaM2();
 		Enumeration<String> iteratore = probabilitaM2.keys();
 		while (iteratore.hasMoreElements()) {
 			String azione = iteratore.nextElement();
 			double probabilita = probabilitaM2.get(azione);
-			probabilitaM2Temp.add(new OggettoAnalisi(azione, probabilita));
+			probabilitaM2Temp.add(new IntervalloProbabilita(azione, probabilita));
 		}
 		int endAdd = 0;
 		while (!probabilitaM2Temp.isEmpty()) {
-			OggettoAnalisi testa = probabilitaM2Temp.pollFirst();
+			IntervalloProbabilita testa = probabilitaM2Temp.pollFirst();
 			int starter = testa.getExtInf() + endAdd;
 			StringTokenizer analyzer = new StringTokenizer(testa.getIDs(), ",");
 			int contaToken = analyzer.countTokens();
@@ -111,10 +111,10 @@ public class Distanze implements Serializable{
 	private void generaDistanze() {
 		riempiElencoM1();
 		riempiElencoM2();
-		Iterator<OggettoAnalisi> itEl1 = probabilitaM1Ord.iterator();
-		Iterator<OggettoAnalisi> itEl2 = probabilitaM2Ord.iterator();
+		Iterator<IntervalloProbabilita> itEl1 = probabilitaM1Ord.iterator();
+		Iterator<IntervalloProbabilita> itEl2 = probabilitaM2Ord.iterator();
 		while (itEl1.hasNext()) {
-			OggettoAnalisi elemento = itEl1.next();
+			IntervalloProbabilita elemento = itEl1.next();
 			StringTokenizer analyzer = new StringTokenizer(elemento.getIDs(),
 					",");
 			while (analyzer.hasMoreTokens()) {
@@ -125,7 +125,7 @@ public class Distanze implements Serializable{
 			}
 		}	
 		while (itEl2.hasNext()) {
-			OggettoAnalisi elemento = itEl2.next();
+			IntervalloProbabilita elemento = itEl2.next();
 			StringTokenizer analyzer = new StringTokenizer(elemento.getIDs(),
 					",");
 			while (analyzer.hasMoreTokens()) {
@@ -145,7 +145,7 @@ public class Distanze implements Serializable{
 			String chiaveAttuale = copiaM1.firstKey();
 			Vector<Integer> intervalloAttualeM1 = copiaM1.get(chiaveAttuale);
 			Vector<Integer> intervalloAttualeM2 = copiaM2.get(chiaveAttuale);
-			int intersezione = UtilityInsiemi.intersecaIntervallo(
+			int intersezione = FunzioniGenerali.intersecaIntervallo(
 					intervalloAttualeM1.firstElement(),
 					intervalloAttualeM1.lastElement(),
 					intervalloAttualeM2.firstElement(),

@@ -11,7 +11,7 @@ import java.util.Vector;
  * @author root
  *
  */
-public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
+public class IntervalloProbabilita implements Comparable<IntervalloProbabilita>,Serializable {
 	
 	/**
 	 * OggettoAnalisi e' l'intervallo di valori che appare nell'elenco
@@ -27,14 +27,14 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 	private int extInf;
 	private int extSup;
 	
-	public OggettoAnalisi(String identificatore, double probabilita){
+	public IntervalloProbabilita(String identificatore, double probabilita){
 		identificatori = identificatore;
 		this.probabilita = probabilita;
 		this.extInf = 1;
 		extSup = 1;
 	}	
 	
-	public OggettoAnalisi(String identificatore, double probabilita,int extInf){
+	public IntervalloProbabilita(String identificatore, double probabilita,int extInf){
 		identificatori = identificatore;
 		this.probabilita = probabilita;
 		this.extInf = extInf;
@@ -77,7 +77,7 @@ public class OggettoAnalisi implements Comparable<OggettoAnalisi>,Serializable {
 	 * @return
 	 */
 
-	public int compareTo(OggettoAnalisi altroOgg) {
+	public int compareTo(IntervalloProbabilita altroOgg) {
 		
 		if(probabilita > altroOgg.getProbabilita()){
 			return -1;		
