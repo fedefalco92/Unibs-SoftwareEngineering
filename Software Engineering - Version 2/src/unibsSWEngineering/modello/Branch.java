@@ -9,8 +9,6 @@ public class Branch extends Elemento implements ElementoMultiUscita{
 	private static final long serialVersionUID = -8113738236219764986L;
 	private Elemento ingresso;
 	private Vector <Elemento> uscite;
-	private Merge mergePrecedente;
-	private Merge mergeSeguente;
 	private boolean incompleto;
 	
 	public Branch (String nome){
@@ -22,22 +20,6 @@ public class Branch extends Elemento implements ElementoMultiUscita{
 	
 	public boolean incompleto(){
 		return incompleto;
-	}
-	
-	public Merge getMergePrecedente() {
-		return mergePrecedente;
-	}
-
-	public void setMergePrecedente(Merge mergePrecedente) {
-		this.mergePrecedente = mergePrecedente;
-	}
-
-	public Merge getMergeSeguente() {
-		return mergeSeguente;
-	}
-
-	public void setMergeSeguente(Merge mergeSeguente) {
-		this.mergeSeguente = mergeSeguente;
 	}
 	
 	public void setIngresso(Elemento ingresso) {
@@ -73,28 +55,13 @@ public class Branch extends Elemento implements ElementoMultiUscita{
 				output.append(", ");
 			}
 			output.append(uscite.lastElement().getElementoString());
-			/* BUG VIRGOLA
-			for(Elemento elemento:uscite){
-				output.append(elemento.getElementoString());
-				output.append(", ");
-			}
-			*/
+		
 			if(incompleto)
 				output.append("incompleto");
 		}
 		else output.append("empty");
 		
 		output.append(")");
-		
-		/*
-		
-		if(ingresso !=null && !uscite.isEmpty()){
-			output.append("in(" +ingresso.getElementoString() +  ") - out(");
-			for(Elemento elemento:uscite)
-				output.append( "[" + elemento.getElementoString() +", ");
-			output.append(")");
-		}
-		*/
 		return output.toString();
 	}
 

@@ -9,25 +9,17 @@ public class Merge extends Elemento implements ElementoTerminale{
 	private static final long serialVersionUID = 1806920999680349562L;
 	private Vector <Elemento> ingressi;
 	private Elemento uscita;
-	private boolean incompleto;
 	
 	public Merge (String nome){
 		super("MERGE", nome);
 		this.ingressi = new Vector <Elemento>();
 		this.uscita = null;
-		this.incompleto=true;
-	}
-	
-	public boolean incompleto(){
-		return incompleto;
 	}
 	
 	//METODI EREDITATI DALLA CLASSE PADRE
 	@Override
 	public void aggiungiIngresso(Elemento elem){
 		ingressi.add(elem);
-		if(ingressi.size()>=2)
-			incompleto=false;
 	}
 	
 	@Override
@@ -50,14 +42,6 @@ public class Merge extends Elemento implements ElementoTerminale{
 			}
 			output.append(ingressi.lastElement().getElementoString());
 			
-			/* BUG VIRGOLA
-			for(Elemento elemento:ingressi){
-				output.append(elemento.getElementoString());
-				output.append(", ");
-			}
-			*/
-			if(incompleto)
-				output.append("incompleto");
 		}
 		else output.append("empty");
 		output.append(") - out(");
@@ -65,14 +49,6 @@ public class Merge extends Elemento implements ElementoTerminale{
 		else output.append("null");
 		output.append(")");
 		
-		/*
-		if (!ingressi.isEmpty() && uscita!=null){
-			output.append("in(");
-			for(Elemento elemento:ingressi)
-				output.append(elemento.getElementoString()+  ", ");
-			output.append(") - out(" + uscita.getElementoString() +")");
-		}
-		*/
 		return output.toString();
 	}
 

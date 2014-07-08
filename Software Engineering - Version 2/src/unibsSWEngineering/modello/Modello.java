@@ -12,10 +12,8 @@ public class Modello implements Serializable {
 
 	private String nome;
 	
-	/*AGGIUNGO UN VECTOR DI ELEMENTI! CREDO SIA PIU' COMODO PER IL CARICAMENTO 
-	 * Si delega un metodo nella classe modello per riempire tutti gli altri vector partendo da questo
-	 * Per ora e' un'idea che quando maffi finisce di fare le sue modifiche implemento :)
-	 */
+	//AGGIUNGO UN VECTOR DI ELEMENTI 
+	 
 	private Vector <Elemento> elementi; 
 
 	private Start start;
@@ -25,9 +23,6 @@ public class Modello implements Serializable {
 	private Vector<Fork> fork;
 	private Vector<Join> join;
 	private End end;
-	
-	private Elemento ultimaModifica;
-	private Vector<Merge> mergeIncompleti;
 	
 	public Modello(String nome){
 		this.nome = nome;
@@ -40,8 +35,6 @@ public class Modello implements Serializable {
 		fork = new Vector<Fork>();
 		join = new Vector<Join>();
 		end = new End("End");
-		mergeIncompleti = new Vector<Merge>();
-		
 	}
 	
 	public Vector<String> getNomiAzioni(){
@@ -77,15 +70,8 @@ public class Modello implements Serializable {
 		join.add(_join);
 	}
 	
-	public void aggiungiMergeIncompleto(Merge m){
-		mergeIncompleti.add(m);
-	}
 	
 	//METODI SETTER//
-	public void setUltimaModifica(Elemento e){
-		ultimaModifica=e;
-	}
-	
 	public void setPrimaAzione(Azione azione){
 		start.setUscita(azione);
 	}
@@ -107,14 +93,6 @@ public class Modello implements Serializable {
 	}
 	
 	//METODI GETTER//
-	public Elemento getUltimaModifica(){
-		return ultimaModifica;
-	}
-	
-	public Vector<Merge> getMergeIncompleti() {
-		return mergeIncompleti;
-	}
-	
 	public Vector<Elemento> getElementi() {
 		return elementi;
 	}
@@ -233,7 +211,6 @@ public class Modello implements Serializable {
 	 * @return TRUE se ok, altrimenti FALSE.
 	 * @author federicofalcone
 	 */
-	//TO DO: REFACTORING 
 	public boolean controlloInOutReciproci(){
 		for(Elemento e: elementi){
 			//Per ogni iterazione controllo che l'ingresso e l'uscita reciproci siano corretti
@@ -446,22 +423,6 @@ public class Modello implements Serializable {
 		for(Elemento elem: elementi){
 			output.append(elem.toString() + "\n");
 		}
-		/*
-		output.append(start + "\n");
-		for(Azione azione: azioni)
-			output.append(azione + "\n");
-		for(Branch br: branch)
-			output.append(br + "\n");
-		for(Merge mr: merge)
-			output.append(mr + "\n");
-		//AGGIUNTI FORK E JOIN
-		for(Fork fr: fork)
-			output.append(fr + "\n");
-		for(Join j: join)
-			output.append(j + "\n");
-		
-		output.append(end);
-		*/
 
 		return output.toString();
 	}
@@ -472,14 +433,6 @@ public class Modello implements Serializable {
 	 */
 	public String stampaModello() {
 		return this.toString();
-		/*
-		StringBuffer output = new StringBuffer();
-		output.append("NOME MODELLO: " + nome + "\n\n");
-		output.append(start + "\n");
-		output.append(this);
-		output.append(end);
-		return output.toString();
-		*/
 	}
 	
 	/**
@@ -510,36 +463,11 @@ public class Modello implements Serializable {
 		return true;
 	}
 	
-	/**
-	 * Equivale al toString ma ogni riga &egrave preceduta da un \t
-	 * @return
-	 */
-	/*
-	public String toStringINDENTATO() {
-		StringBuffer output=new StringBuffer();
-		
-		
-		for(Azione azione: azioni)
-			output.append("\t" + azione + "\n");
-		for(Branch br: branch)
-			output.append("\t" + br + "\n");
-		for(Merge mr: merge)
-			output.append("\t" + mr + "\n");
-		for(Fork fr: fork)
-			output.append("\t" + fr + "\n");
-		for(Join j: join)
-			output.append("\t" + j + "\n");
-
-
-		return output.toString();
-	}
-	*/
-	
 	public void termina(){
-		riempiVectoElementi();
+		riempiVectorElementi();
 	}
 
-	private void riempiVectoElementi() {
+	private void riempiVectorElementi() {
 		elementi.add(start);
 		for(Azione azione:azioni){
 			elementi.add(azione);

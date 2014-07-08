@@ -46,13 +46,6 @@ public class Azione extends Elemento{
 		if(uscita!=null) output.append(uscita.getElementoString());
 		else output.append("null");
 		output.append(")");
-		
-		/*
-		if (ingresso == null ) output.append("null)");
-		else output.append("[" +ingresso.getID() + "] " + ingresso.getNome() +  ") - out(" );
-		if (uscita==null) output.append("null)");
-		else output.append("[" + uscita.getID() + "] " + uscita.getNome() + ")");
-		*/
 		return output.toString();
 	}
 
