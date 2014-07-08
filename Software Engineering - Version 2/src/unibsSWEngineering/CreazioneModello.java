@@ -17,21 +17,14 @@ import it.unibs.fp.mylib.MyMenu;
 
 
 /** 
- * Questa classe contiene i menu per gestire la creazione di un nuovo modello.
- * Permette di
- * -iniziare la creazione
- * -visualizzare il modello una volta terminato l'inserimento
- * -salvare il modello
- * --come testo
- * --come oggetto
- * 
+ * Questa classe contiene i menu per gestire la creazione di un nuovo modello. 
  * L'inserimento del modello &egrave forzato in modo che non si possano commettere errori semantici.
  * 
- * @author Maffi
+ * @author Alessandro Maffi
  */
 public class CreazioneModello {
 	
-	private final static String [] VOCI_SCELTA_NODO_FINALE = {
+	private final static String [] VOCI_SCELTA_CON_NODO_FINALE = {
 		
 		"Una nuova azione", 
 		"Un nuovo branch (Crea automaticamente i merge associati)", 
@@ -39,19 +32,19 @@ public class CreazioneModello {
 		"Nodo finale"
 		};
 
-	private final static String [] VOCI_SCELTA_MERGE_FINALE = {
+	private final static String [] VOCI_SCELTA_CON_MERGE_FINALE = {
 		"Una nuova azione", 
 		"Un nuovo branch (Crea automaticamente i merge associati)", 
 		"Un nuovo fork (crea automaticamente il join associato)", 
 		"Merge"
 		};
-	private final static String [] VOCI_SCELTA_JOIN_FINALE = {
+	private final static String [] VOCI_SCELTA_CON_JOIN_FINALE = {
 		"Una nuova azione", 
 		"Un nuovo branch (Crea automaticamente i merge associati)", 
 		"Un nuovo fork (crea automaticamente il join associato)", 
 		"Join"
 		};
-	private final static String [] VOCI_SCELTA_PRIMO_ELEMENTO = {
+	private final static String [] VOCI_SCELTA_FORZATA = {
 		"Una nuova azione", 
 		"Un nuovo branch (Crea automaticamente i merge associati)", 
 		"Un nuovo fork (crea automaticamente il join associato)", 
@@ -62,8 +55,8 @@ public class CreazioneModello {
 	
 	/**
 	 * Metodo principale della classe.
-	 * Crea il modello e lancia il menu creazione.
-	 * 
+	 * Crea il modello e lancia la gestione del primo elemento.
+	 * Verranno ricorsivamente gestiti tutti gli elementi successivi fino all'ultimo.	 * 
 	 * @param nomeModello
 	 * @return 
 	 */
@@ -72,130 +65,11 @@ public class CreazioneModello {
 		gestisciStart(modello, modello.getStart());
 		modello.termina();
 		return modello;
-		/*	
-		boolean fineCreazione = false;
-		do {
-			fineCreazione = menuPrincipaleCreazione(modello);
-		} while (!fineCreazione);
-
-		return modello;
-		*/
-	}
-	
-	
-	/**
-	 * Menu principale (boolean)
-	 * Permette di
-	 * 1) iniziare la creazione
-	 * 		(si uscir&agrave da questo metodo solo a creazione ultimata)
-	 * 2) visualizzare il modello (possibile solamente a creazione ultimata)
-	 * 3) salvare il modello
-	 * 
-	 * oppure uscire senza salvare.
-	 * Le opzioni 1 e 3 si appoggiano su altri menu void.
-	 * 
-	 * @return
-	 */
-	/*
-	private static boolean menuPrincipaleCreazione(Modello modello){
-		final String TITOLO = "MENU CREAZIONE MODELLO " + modello.getNome();;
-		final String [] VOCI = {"Inizia inserimento", "Visualizza il modello", "Salva il modello ed esci"};
-		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
-		menuCreazione.setVoceUscita("0\tTorna al menu principale (NON sara' possibile salvare in seguito)");
-		int scelta = menuCreazione.scegli();
-		
-		switch (scelta)
-		{
-			case 0: 
-				return InputDati.yesOrNo("Vuoi veramente uscire?");
-			case 1:
-				if(modello.completo()){
-					System.out.println("> MODELLO GIA' INSERITO!! <");
-					break;
-				}
-				gestisciStart(modello, modello.getStart());
-				modello.termina();
-				break;
-			case 2:
-				visualizzaModello(modello);
-				break;
-		}
-		return false;
-	}
-	
-	
-*/
-	
-
-	/*
-	private static boolean menuInserimento(Modello modello, Elemento elemento){
-		final String TITOLO = "Cosa vuoi inserire in coda?";
-		final String [] VOCI = {"Una nuova azione", "Un nuovo branch", "Un nuovo merge"};
-		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI);
-		//nuova funzione-permette di cambiare VOCE_USCITA 
-		menuCreazione.setVoceUscita("0\tTorna al menu creazione (Tutte le modifiche non salvate andranno perse)");
-		int scelta = menuCreazione.scegli();
-		
-		switch (scelta)
-		{
-			case 0: 
-				return InputDati.yesOrNo("Vuoi veramente uscire?");
-			case 1:
-				
-				break;
-			case 2:
-				//si puo' migliorare
-				System.out.println(modello);
-				break;
-			case 3:
-				//a questo punto aprirei un altro menu che chiede di salvare come testo o come oggetto...
-				//il menu dovra' essere aperto solo se il modello e' corretto!
-				//prima vediamo cosa si riesce a fare con la classe CostruzioneModello...
-				break;
-			default:
-				//Non entra mai qui
-		}
-		
-		return false;
-	}
-	*/
-	/*
-	/**
-	 * Permette di riprendere l'inserimento dopo che lo si e' interrotto per visualizzare il modello.
-	 * Non permette di riprendere l'inserimento se l'inserimento &egrave gi&agrave stato ultimato.
-	 * @param elemento TODO
-	 */
-	/*
-	private static void continuaInserimento(Modello modello, Elemento elemento) {
-
-		String tipo = elemento.getID();
-		switch(tipo){
-			case "START":
-				gestisciStart(modello, (Start) elemento);
-				break;
-			case "AZIONE":
-				gestisciAzione(modello, (Azione) elemento, null);				
-				break;
-			case "BRANCH":
-				gestisciBranch(modello, (Branch) elemento, null);
-				break;
-			case "MERGE":
-				gestisciMerge(modello, (Merge) elemento, null);
-				break;
-			case "FORK":
-				gestisciFork(modello, (Fork) elemento, null);
-				break;
-			case "JOIN":
-				gestisciJoin(modello, (Join) elemento);
-				break;
-			default:
-				//
-			
-		}
-		
 		
 	}
-	*/
+	
+	
+	
 	
 	/**
 	 * Gestisce l'inserimento del primo elemento del modello.
@@ -233,19 +107,8 @@ public class CreazioneModello {
 	 */
 	private static void gestisciAzione(Modello modello, Azione azione, ElementoTerminale terminale) {
 		final String TITOLO = "Cosa vuoi inserire in coda all'azione "+ azione.getNome()+ "?";
-		String [] vociMenu = {};
-		if (terminale == null)
-			vociMenu = VOCI_SCELTA_NODO_FINALE;
-		else {
-			String ID = terminale.getID();
-			switch (ID){
-			case "MERGE":
-				vociMenu = VOCI_SCELTA_MERGE_FINALE;
-				break;
-			case "JOIN":
-				vociMenu= VOCI_SCELTA_JOIN_FINALE;
-			}
-		}
+		String [] vociMenu = sceltaVociMenu(terminale);
+		
 		
 		MyMenu menuAzione = new MyMenu(TITOLO, vociMenu);
 		int scelta = menuAzione.scegliSenzaUscita();
@@ -282,6 +145,27 @@ public class CreazioneModello {
 				break;
 		}
 	}
+
+
+	private static String[] sceltaVociMenu(ElementoTerminale terminale) {
+		String [] vociMenu = {};
+		if (terminale == null)
+			vociMenu = VOCI_SCELTA_CON_NODO_FINALE;
+		else {
+			String ID = terminale.getID();
+			switch (ID){
+			case "MERGE":
+				vociMenu = VOCI_SCELTA_CON_MERGE_FINALE;
+				break;
+			case "JOIN":
+				vociMenu= VOCI_SCELTA_CON_JOIN_FINALE;
+			}
+		}
+		
+		return vociMenu;
+	}
+
+
 
 
 	/**
@@ -327,13 +211,11 @@ public class CreazioneModello {
 			//scansiono con uno switch.
 			String ID = ingressoDelBranch.getID();
 			switch(ID){
-			case "FORK":
-			case "BRANCH":
-				((ElementoMultiUscita) ingressoDelBranch).eliminaUscita(branch); //non faccio break;
-			default:
-				ingressoDelBranch.aggiungiUscita(mergePrecedente);
-				
-				
+				case "FORK":
+				case "BRANCH":
+					((ElementoMultiUscita) ingressoDelBranch).eliminaUscita(branch); //non faccio break;
+				default:
+					ingressoDelBranch.aggiungiUscita(mergePrecedente);
 			}
 			//2) il merge deve avere l'ingresso del branch come ingresso 
 			mergePrecedente.aggiungiIngresso(branch.getIngresso()); 
@@ -352,7 +234,7 @@ public class CreazioneModello {
 										" Alternativa " + i + 
 										" - TERMINA SUL MERGE " + mergePrecedente.getNome() +
 										"\nCosa vuoi inserire come primo elemento? > ";
-				String [] vociMenu = VOCI_SCELTA_PRIMO_ELEMENTO;
+				String [] vociMenu = VOCI_SCELTA_FORZATA;
 				MyMenu menuBranch = new MyMenu(TITOLO, vociMenu);
 				int scelta = menuBranch.scegliSenzaUscita();
 				
@@ -389,7 +271,7 @@ public class CreazioneModello {
 										branch.getNome() +
 										" Alternativa " + i + " - TERMINA SUL MERGE" + mergeFinaleDelBranchCorrente.getNome() +
 										"\nCosa vuoi inserire come primo elemento? > ";
-				String [] vociMenu = VOCI_SCELTA_PRIMO_ELEMENTO;
+				String [] vociMenu = VOCI_SCELTA_FORZATA;
 				MyMenu menuBranch = new MyMenu(TITOLO, vociMenu);
 				int scelta = menuBranch.scegliSenzaUscita();
 				
@@ -419,19 +301,7 @@ public class CreazioneModello {
 					branch.getNome() +
 					" Alternativa " + numeroAlternative + //oppure (numeroWhile + 1)
 					"\nCosa vuoi inserire come primo elemento? > ";
-			String [] vociMenu = VOCI_SCELTA_NODO_FINALE;
-			if (terminale == null)
-				vociMenu = VOCI_SCELTA_NODO_FINALE;
-			else {
-				String ID = terminale.getID();
-				switch (ID){
-				case "MERGE":
-					vociMenu = VOCI_SCELTA_MERGE_FINALE;
-					break;
-				case "JOIN":
-					vociMenu= VOCI_SCELTA_JOIN_FINALE;
-				}
-			}
+			String [] vociMenu = sceltaVociMenu(terminale);
 			MyMenu menuBranch = new MyMenu(TITOLO, vociMenu);
 			int scelta = menuBranch.scegliSenzaUscita();
 			
@@ -498,7 +368,7 @@ public class CreazioneModello {
 									fork.getNome() +
 									" FLUSSO " + i + 
 									"\nCosa vuoi inserire come primo elemento? > ";
-			String [] vociMenu = VOCI_SCELTA_PRIMO_ELEMENTO;
+			String [] vociMenu = VOCI_SCELTA_FORZATA;
 			MyMenu menuBranch = new MyMenu(TITOLO, vociMenu);
 			int scelta = menuBranch.scegliSenzaUscita();
 			
@@ -533,28 +403,14 @@ public class CreazioneModello {
 	 * @param terminale: serve per gestire l'innestamento.
 	 */
 	private static void gestisciMerge(Modello modello, Merge merge, ElementoTerminale terminale) {
-		final String TITOLO = "Cosa vuoi inserire in coda al merge "+ merge.getNome()+ "?";
-		String [] vociMenu = {};
-		if (terminale == null)
-			vociMenu = VOCI_SCELTA_NODO_FINALE;
-		else {
-			String ID = terminale.getID();
-			switch (ID){
-			case "MERGE":
-				vociMenu = VOCI_SCELTA_MERGE_FINALE;
-				break;
-			case "JOIN":
-				vociMenu= VOCI_SCELTA_JOIN_FINALE;
-			}
-		}
+		final String TITOLO = "Cosa vuoi inserire in coda al merge "+ merge.getNome()+ "? > ";
+		String [] vociMenu = sceltaVociMenu(terminale);
 		MyMenu menuMerge = new MyMenu(TITOLO, vociMenu);
 		int scelta = menuMerge.scegliSenzaUscita();
 		
 	
 		switch (scelta)
 		{
-			case 0: 
-				return;
 			case 1:
 				Azione nuovaAzione = nuovaAzione(modello, merge);
 				gestisciAzione(modello, nuovaAzione, terminale);
@@ -598,20 +454,8 @@ public class CreazioneModello {
 	 * @param terminale: serve per gestire l'innestamento.
 	 */
 	private static void gestisciJoin(Modello modello, Join join, ElementoTerminale terminale) {
-		final String TITOLO = "Cosa vuoi inserire in coda al join "+ join.getNome()+ "?";
-		String [] vociMenu ={};
-		if (terminale == null)
-			vociMenu = VOCI_SCELTA_NODO_FINALE;
-		else {
-			String ID = terminale.getID();
-			switch (ID){
-			case "MERGE":
-				vociMenu = VOCI_SCELTA_MERGE_FINALE;
-				break;
-			case "JOIN":
-				vociMenu= VOCI_SCELTA_JOIN_FINALE;
-			}
-		}
+		final String TITOLO = "Cosa vuoi inserire in coda al join "+ join.getNome()+ "? > ";
+		String [] vociMenu = sceltaVociMenu(terminale);
 		MyMenu menuJoin = new MyMenu(TITOLO, vociMenu);
 		int scelta = menuJoin.scegliSenzaUscita();
 		
@@ -754,11 +598,4 @@ public class CreazioneModello {
 		return nuovoFork;
 		
 	}
-	
-	/* io (maffi) preferirei fare una cosa meno static e piu' istanziata
-	 * 
-	public CreazioneModello(String nomemodello){
-		modello = new Modello(nomemodello);
-	}
-	*/
 }
