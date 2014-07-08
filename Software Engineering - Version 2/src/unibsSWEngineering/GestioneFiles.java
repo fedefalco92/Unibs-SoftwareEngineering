@@ -94,7 +94,10 @@ public class GestioneFiles {
 		}
 		return CostruzioneModello.modelloCaricato;
 	}
-
+	
+	/**
+	 * Crea le cartelle di default.
+	 */
 	public static void creazioneCartelleDefault() {
 		File folderDest = new File(cartellaStatisticheModello);
 		if(!folderDest.exists()){
