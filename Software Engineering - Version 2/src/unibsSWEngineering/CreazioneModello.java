@@ -355,12 +355,7 @@ public class CreazioneModello {
 	private static void gestisciFork(Modello modello, Fork fork, ElementoTerminale terminale) {
 		int numeroFlussi = InputDati.leggiInteroConMinimo("Quanti flussi paralleli vuoi inserire in coda al fork " + fork.getNome() + "? > ",
 				2);
-		/*
-		String nomeJoinTerminale = acquisizioneNome(modello, 
-				"Inserisci il nome del Join sul quale termineranno i flussi > ");
-		Join joinTerminale = new Join(nomeJoinTerminale);
 		
-	*/
 		//avvio la creazione dei flussi (che potraanno terminare solo sul join appena creato)
 		for(int i = 1; i <= numeroFlussi; i++){
 			
@@ -497,28 +492,6 @@ public class CreazioneModello {
 		}
 	}
 	
-	
-	
-	
-	
-	
-		
-	
-		/*
-	private static Merge sceltaMerge(Vector<Merge> merge) {
-		System.out.println("A quale merge esistente vuoi collegarti? > \n");
-		
-		 for (int n=0; n < merge.size() ; n++)
-		 {
-		  System.out.println( n + "\t" + merge.elementAt(n));
-		 }
-		 System.out.println();
-		int scelta = InputDati.leggiIntero("Digita il numero dell'opzione desiderata > ",0, merge.size());
-		
-		return merge.elementAt(scelta);
-		
-	}
-	*/
 	
 	/**
 	 * Verifica che il nome inserito non sia gi&agrave stato utilizzato.
