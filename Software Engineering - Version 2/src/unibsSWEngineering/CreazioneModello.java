@@ -22,7 +22,7 @@ import it.unibs.fp.mylib.MyMenu;
  * 
  * @author Alessandro Maffi
  */
-public class CreazioneModello {
+public class CreazioneModello { 
 	
 	private final static String [] VOCI_SCELTA_CON_NODO_FINALE = {
 		
