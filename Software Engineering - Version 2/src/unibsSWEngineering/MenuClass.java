@@ -337,7 +337,7 @@ public class MenuClass {
 			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
 		}
 
-	}
+	} 
 	
 	//////////////////////////////////
 	// 8 - ESPORTA STATISTICHE
