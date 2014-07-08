@@ -297,15 +297,15 @@ public class MenuClass {
 			case 0: 
 				return;
 			case 1:				
-				salvaFormatoTestuale();
+				salvaModelloTesto();
 				break;
 			case 2:
-				salvaFormatoOggetto();
+				salvaModelloOggetto();
 				break;
 		}
 	}
 
-	private static void salvaFormatoOggetto() {	
+	private static void salvaModelloOggetto() {	
 		
 		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
 		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
@@ -322,7 +322,7 @@ public class MenuClass {
 
 	}
 
-	private static void salvaFormatoTestuale() {
+	private static void salvaModelloTesto() {
 		
 		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
 		String loc = cartella + File.separator + nomeFile + ".txt";
