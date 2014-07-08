@@ -136,7 +136,7 @@ public class CostruzioneTestSuite {
 	public static String patternNome(Modello modello){
 		String nomeModello = modello.getNome();
 		StringBuffer buffer = new StringBuffer(nomeModello);
-		return (MenuClass.cartellaStatisticheModello+File.separator+"rilevazioni"+buffer.substring(0, nomeModello.length())+".dat");
+		return (GestioneFiles.cartellaStatisticheModello+File.separator+"rilevazioni"+buffer.substring(0, nomeModello.length())+".dat");
 	}
 
 	

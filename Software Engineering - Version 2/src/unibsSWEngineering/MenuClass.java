@@ -1,6 +1,7 @@
 package unibsSWEngineering;
 import java.io.File;
 import java.io.FileNotFoundException;
+
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -10,12 +11,6 @@ import it.unibs.fp.mylib.*;
 
 public class MenuClass {
 
-	private static final FileNameExtensionFilter filtroTXT = new FileNameExtensionFilter("File .txt","txt");
-	private static final FileNameExtensionFilter filtroDAT = new FileNameExtensionFilter("File .dat","dat");
-	public static final String cartella = "Modelli"; //La cartella dove risiederanno i file modelli salvati. Magari cambiata
-	public static final String cartellaModelliOggetto = "ModelliDAT";
-	public static final String cartellaStatisticheModello = "Rilevazioni";
-	
 	private static Modello modello;
 	private static File file;
 	private static TestSuite testSuite;
@@ -79,7 +74,7 @@ public class MenuClass {
 				salvaModello();
 				break;
 			case 8: 
-				salvaTestSuite();
+				GestioneFiles.salvaTestSuite(modello, testSuite);
 				break;
 		}
 		
@@ -107,13 +102,6 @@ public class MenuClass {
 	 * &Egrave; possibile scegliere se caricare il modello da un file di testo o un file salvato in formato .dat.
 	 */
 	private static void caricaModello() {
-		//per il modello
-		File folderDest = new File(cartellaStatisticheModello);
-		if(!folderDest.exists()){
-			folderDest.mkdirs();
-			
-		}
-		
 		final String TITOLO = "MENU CARICAMENTO MODELLO";
 		final String [] VOCI = {"Carica da testo" , "Carica da file.dat"};
 		MyMenu menuCreazione = new MyMenu(TITOLO, VOCI); 
@@ -132,10 +120,10 @@ public class MenuClass {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Metodo controlla il modello. 
-	 * Se il modello $egrave; stato caricato correttamente allora richiama un metodo che controlla la correttezza del modello.
+	 * Se il modello &egrave; stato caricato correttamente allora richiama un metodo che controlla la correttezza del modello.
 	 * @see Modello
 	 */
 	private static void checkModello(){
@@ -154,10 +142,10 @@ public class MenuClass {
 	 * Metodo che permette il caricamento di un modello da un file Oggetto.
 	 */
 	private static void caricaModelloOggetto() {
-		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
-		file = aprifile(loc, filtroDAT);
+		String loc = GestioneFiles.cartellaModelliOggetto + File.separator; //Location del file
+		file = aprifile(loc, GestioneFiles.filtroDAT);
 		if(file != null){
-			modello = CostruzioneModello.caricaModelloOggetto(file);
+			modello = GestioneFiles.caricaModelloOggetto(file);
 			//checkModello();
 		}
 		else{
@@ -170,10 +158,10 @@ public class MenuClass {
 	 * Se il modello caricato &egrave; null viene stampato a video un errore.
 	 */
 	private static void caricaModelloTesto() {
-		String loc = cartella + File.separator; //Location del file
-		file = aprifile(loc, filtroTXT);
+		String loc = GestioneFiles.cartellaModelliTesto + File.separator; //Location del file
+		file = aprifile(loc, GestioneFiles.filtroTXT);
 		if(file != null){
-			modello = CostruzioneModello.caricaModello(file);
+			modello = CostruzioneModello.caricaModelloTesto(file);
 			if(modello == null){
 				System.out.println("Il file del modello contiene un errore. Modello non corretto");
 			}else{
@@ -297,75 +285,12 @@ public class MenuClass {
 			case 0: 
 				return;
 			case 1:				
-				salvaModelloTesto();
+				GestioneFiles.salvaModelloTesto(modello);
 				break;
 			case 2:
-				salvaModelloOggetto();
+				GestioneFiles.salvaModelloOggetto(modello);
 				break;
 		}
-	}
-
-	private static void salvaModelloOggetto() {	
-		
-		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .DAT) > ");
-		String loc = cartellaModelliOggetto + File.separator + nomeFile + ".dat";
-		File modelloFile = new File(loc);
-		if (modelloFile.exists()){
-			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
-					+ "> Vuoi sovrascriverlo? > ");
-			if(sovrascrivi){
-				ServizioFile.confermaSovrascrittura(modelloFile, modello);
-			}
-		} else {
-			ServizioFile.salvaSingoloOggetto(modelloFile, modello);
-		}
-
-	}
-
-	private static void salvaModelloTesto() {
-		
-		String nomeFile = InputDati.leggiStringa("Quale nome vuoi dare al file da salvare? (ESTENSIONE APPLICATA AUTOMATICAMENTE .TXT) > ");
-		String loc = cartella + File.separator + nomeFile + ".txt";
-		File modelloFile = new File(loc);
-		if (modelloFile.exists()){
-			boolean sovrascrivi = InputDati.yesOrNo("> ATTENZIONE! Esiste gia' un file con il nome inserito!! <\n"
-					+ "> Vuoi sovrascriverlo? > ");
-			if(sovrascrivi){
-				ServizioFile.confermaSovrascritturaTesto(modelloFile, modello.stampaModello());
-			}
-		} else { 
-			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
-		}
-
 	} 
 	
-	//////////////////////////////////
-	// 8 - ESPORTA STATISTICHE
-	//////////////////////////////////	
-	
-	private static void salvaTestSuite(){
-		if(modello != null){
-			if(testSuite != null){
-				String strDest = CostruzioneTestSuite.patternNome(modello);
-				File fileDest = new File(strDest);
-				if(fileDest.exists()){
-					boolean risposta = InputDati.yesOrNo("File gia' esistente. Sovrascriverlo?");
-					if(risposta){
-						ServizioFile.salvaSingoloOggetto(fileDest, testSuite);
-					}					
-				}
-				else{
-					ServizioFile.salvaSingoloOggetto(fileDest, testSuite);
-				}
-				
-			}
-			else{
-				System.out.println("Test Suite non ancora generato");
-			}					
-		}
-		else{
-			System.out.println("Modello non ancora caricato");
-		}			
-	}
-		
 }

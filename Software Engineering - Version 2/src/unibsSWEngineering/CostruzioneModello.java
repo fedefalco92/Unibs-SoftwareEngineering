@@ -1,9 +1,9 @@
 package unibsSWEngineering;
-import it.unibs.fp.mylib.ServizioFile;
 import java.io.*;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import unibsSWEngineering.modello.*;
 
 
@@ -14,13 +14,13 @@ import unibsSWEngineering.modello.*;
  */
 public class CostruzioneModello {
 	
-	private static Modello modelloCaricato;
+	static Modello modelloCaricato;
 	
 	/**
 	 * Metodo che carica il modello da un file di testo.
 	 * @return il modello caricato
 	 */
-	public static Modello caricaModello(File file){
+	public static Modello caricaModelloTesto(File file){
 		modelloCaricato = new Modello(file.getName());
 		try {
 			String fileString;
@@ -400,23 +400,5 @@ public class CostruzioneModello {
 		}
 		
 		return nome;
-	}
-
-	/**
-	 * Carica un modello salvato come oggetto da File.
-	 * @param file File contentente l'oggetto.
-	 * @return Il modello caricato.
-	 */
-	public static Modello caricaModelloOggetto(File file) {
-		
-		if(file.exists()){
-			try{
-				modelloCaricato = (Modello) ServizioFile.caricaSingoloOggetto(file);
-			}
-			catch(ClassCastException exc){
-				System.out.println("Errore Cast");
-			}
-		}
-		return modelloCaricato;
 	}
 }
