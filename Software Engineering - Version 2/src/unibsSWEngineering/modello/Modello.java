@@ -256,12 +256,22 @@ public class Modello implements Serializable {
 					
 					//Controllo sugli elementi con piu' ingressi (Merge, Join)
 					if(elemFindOut.getIngressi() != null){
-						for(Elemento elemInt: elemFindOut.getIngressi()){
+						/*for(Elemento elemInt: elemFindOut.getIngressi()){
 							//auxIn = elemInt;
 							elemFindIn = ricercaElemento(elemInt);
 							if(! elemFindIn.equals(e)){
 								return false;
 							}
+						}*/
+						for(Elemento elemInt: elemFindOut.getIngressi()){
+							//auxIn = elemInt;
+							elemFindIn = ricercaElemento(elemInt);
+							if(elemFindIn.equals(e)){
+								break;
+							}
+						}
+						if(! elemFindIn.equals(e)){
+							return false;
 						}
 					}
 				}

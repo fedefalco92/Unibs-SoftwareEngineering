@@ -148,7 +148,7 @@ public class MenuClass {
 		if(file != null){
 
 			modello = GestioneFiles.caricaModelloOggetto(file);
-			//checkModello();
+			checkModello();
 		}
 		else{
 			System.out.println("Non hai selezionato nessun file");
