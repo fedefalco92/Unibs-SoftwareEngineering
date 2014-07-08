@@ -333,7 +333,7 @@ public class MenuClass {
 			if(sovrascrivi){
 				ServizioFile.confermaSovrascritturaTesto(modelloFile, modello.stampaModello());
 			}
-		} else {
+		} else { 
 			ServizioFile.salvaFileTesto(modelloFile, modello.stampaModello());
 		}
 
