@@ -10,7 +10,6 @@ import unibsSWEngineering.modello.*;
 import it.unibs.fp.mylib.*;
 
 /**
- * @author root
  *
  */
 public class CostruzioneTestSuite {
