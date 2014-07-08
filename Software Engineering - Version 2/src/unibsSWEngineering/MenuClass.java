@@ -152,13 +152,14 @@ public class MenuClass {
 	
 	/**
 	 * Metodo che permette il caricamento di un modello da un file Oggetto.
+	 * Viene controllato che il modello sia corretto.
 	 */
 	private static void caricaModelloOggetto() {
 		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
 		file = aprifile(loc, filtroDAT);
 		if(file != null){
 			modello = CostruzioneModello.caricaModelloOggetto(file);
-			//checkModello();
+			checkModello();
 		}
 		else{
 			System.out.println("Non hai selezionato nessun file");
