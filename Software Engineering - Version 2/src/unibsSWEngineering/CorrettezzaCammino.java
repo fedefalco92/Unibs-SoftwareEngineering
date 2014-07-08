@@ -11,34 +11,6 @@ import unibsSWEngineering.modello.Modello;
 public class CorrettezzaCammino {
 	
 	/*Fatti da Fede*/
-	//Controllo vecchio con qualche bug
-	public static boolean camminoOkOld(Elemento eleStart, Elemento eleEnd){
-		
-		if(eleStart == null || eleEnd == null)
-			return false;
-		
-		//Piede della ricorsione
-		if(eleStart.equals(eleEnd))
-			return true;
-		
-		Elemento next;
-		next = eleStart.getUscita();
-	
-		//Significa che ha piu' uscite
-		if(next == null){
-			for(Elemento e: eleStart.getUscite()){
-				if(camminoOk(e, eleEnd))
-					return true;
-			}
-		}
-		//Un'unica uscita
-		else{
-			if(camminoOk(next, eleEnd))
-				return true;
-		}
-		return false;
-	}
-	
 	/*Controllo risolto e funzionante*/
 	public static boolean camminoOk(Elemento eleStart, Elemento eleEnd){
 		return camminoAux(eleStart, eleEnd, null);
