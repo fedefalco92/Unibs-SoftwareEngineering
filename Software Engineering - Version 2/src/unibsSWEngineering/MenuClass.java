@@ -79,7 +79,7 @@ public class MenuClass {
 				salvaModello();
 				break;
 			case 8: 
-				salvaStatistiche();
+				salvaTestSuite();
 				break;
 		}
 		
@@ -343,7 +343,7 @@ public class MenuClass {
 	// 8 - ESPORTA STATISTICHE
 	//////////////////////////////////	
 	
-	private static void salvaStatistiche(){
+	private static void salvaTestSuite(){
 		if(modello != null){
 			if(testSuite != null){
 				String strDest = CostruzioneTestSuite.patternNome(modello);
