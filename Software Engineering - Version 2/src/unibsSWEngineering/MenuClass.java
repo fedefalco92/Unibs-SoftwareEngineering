@@ -125,10 +125,10 @@ public class MenuClass {
 			case 0: 
 				return;
 			case 1:				
-				caricaTesto();
+				caricaModelloTesto();
 				break;
 			case 2:
-				caricaOggetto();
+				caricaModelloOggetto();
 				break;
 		}
 	}
@@ -153,7 +153,7 @@ public class MenuClass {
 	/**
 	 * Metodo che permette il caricamento di un modello da un file Oggetto.
 	 */
-	private static void caricaOggetto() {
+	private static void caricaModelloOggetto() {
 		String loc = MenuClass.cartellaModelliOggetto + File.separator; //Location del file
 		file = aprifile(loc, filtroDAT);
 		if(file != null){
@@ -169,7 +169,7 @@ public class MenuClass {
 	 * Metodo che permette il caricamento di un modello da un file di Testo. 
 	 * Se il modello caricato &egrave; null viene stampato a video un errore.
 	 */
-	private static void caricaTesto() {
+	private static void caricaModelloTesto() {
 		String loc = cartella + File.separator; //Location del file
 		file = aprifile(loc, filtroTXT);
 		if(file != null){
