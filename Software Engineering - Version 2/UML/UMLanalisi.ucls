@@ -1,185 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
   associations="true" dependencies="true" nesting-relationships="true">  
-  <class id="1" language="java" name="unibsSWEngineering.analisi.Prova" project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/Prova.java" binary="false" 
+  <class id="1" language="java" name="unibsSWEngineering.analisi.TestSuite" project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/TestSuite.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="314" width="254" x="400" y="883"/>    
+    <position height="-1" width="-1" x="534" y="491"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="unibsSWEngineering.analisi.OggettoAnalisi" 
-    project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/OggettoAnalisi.java" binary="false" 
+  <class id="2" language="java" name="unibsSWEngineering.analisi.IntervalloProbabilita" 
+    project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/IntervalloProbabilita.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="350" width="203" x="-154" y="1399"/>    
+    <position height="-1" width="-1" x="158" y="300"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="unibsSWEngineering.analisi.Distanze" project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/Distanze.java" binary="false" 
+  <class id="3" language="java" name="unibsSWEngineering.analisi.FunzioniGenerali" 
+    project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/FunzioniGenerali.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="278" width="271" x="-154" y="367"/>    
+    <position height="-1" width="-1" x="1054" y="407"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="unibsSWEngineering.analisi.ClasseEquivalenza" 
-    project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/ClasseEquivalenza.java" binary="false" 
+  <class id="4" language="java" name="unibsSWEngineering.analisi.DistanzaElenchi" 
+    project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/DistanzaElenchi.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="476" width="330" x="178" y="367"/>    
+    <position height="-1" width="-1" x="505" y="155"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="unibsSWEngineering.analisi.Cammino" project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/Cammino.java" binary="false" 
+  <class id="5" language="java" name="unibsSWEngineering.analisi.ClasseEquivalenza" 
+    project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/ClasseEquivalenza.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="242" width="196" x="400" y="1399"/>    
+    <position height="-1" width="-1" x="610" y="892"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="unibsSWEngineering.analisi.UtilityInsiemi" 
-    project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/UtilityInsiemi.java" binary="false" 
+  <class id="6" language="java" name="unibsSWEngineering.analisi.Prova" project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/Prova.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="136" y="1120"/>    
+    <position height="-1" width="-1" x="559" y="1290"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="unibsSWEngineering.analisi.TestSuite" project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/analisi/TestSuite.java" binary="false" 
+  <class id="7" language="java" name="unibsSWEngineering.analisi.Cammino" project="Software Engineering - Version 2" 
+    file="/Software Engineering - Version 2/src/unibsSWEngineering/analisi/Cammino.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="314" width="329" x="178" y="13"/>    
+    <position height="-1" width="-1" x="562" y="1615"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="unibsSWEngineering.CorrettezzaCammino" project="Software Engineering - Version 1" 
-    file="/Software Engineering - Version 1/src/unibsSWEngineering/CorrettezzaCammino.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="886" y="1479"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <association id="9">    
-    <bendpoint x="-145" y="883"/>    
-    <bendpoint x="-143" y="1145"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="10" name="probabilitaM1Ord"/>      
-      <multiplicity id="11" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <association id="12">    
-    <bendpoint x="-166" y="883"/>    
-    <bendpoint x="-174" y="1149"/>    
-    <bendpoint x="-172" y="1275"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="13" name="probabilitaM2Ord"/>      
-      <multiplicity id="14" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <dependency id="15">    
-    <bendpoint x="684" y="367"/>    
-    <bendpoint x="684" y="883"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="5"/>  
+  <dependency id="8">    
+    <bendpoint x="351" y="724"/>    
+    <bendpoint x="351" y="1258"/>    
+    <bendpoint x="351" y="1720"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
   </dependency>  
-  <association id="16">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="17" name="istanzaProva"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <dependency id="19">    
+  <dependency id="9">    
+    <bendpoint x="729" y="1258"/>    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <dependency id="20">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <association id="21">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="22" name="distanzaElenchi"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <dependency id="24">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <association id="25">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="26" name="insiemeCopertura"/>      
-      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="false" multiplicity="true"/>  
-  </association>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="8"/>    
+  <dependency id="10">    
+    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="5"/>  
   </dependency>  
-  <dependency id="29">    
-    <bendpoint x="538" y="367"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <association id="30">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="31" name="testSuite"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
+  <association id="11">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="12" name="insiemeCopertura"/>      
+      <multiplicity id="13" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
-  <dependency id="33">    
-    <bendpoint x="369" y="883"/>    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="34">    
-    <bendpoint x="147" y="367"/>    
-    <end type="SOURCE" refId="7"/>    
+  <association id="14">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="15" name="testSuite"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="17">    
+    <bendpoint x="372" y="724"/>    
+    <bendpoint x="372" y="1258"/>    
+    <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <association id="35">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="36" name="classiEquivalenza"/>      
-      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
+  <association id="18">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="distanzaElenchi"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="21">    
+    <bendpoint x="729" y="334"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="22">    
+    <bendpoint x="750" y="1258"/>    
+    <bendpoint x="750" y="1720"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="23">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <association id="24">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="25" name="istanzaProva"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="28" name="probabilitaM1Ord"/>      
+      <multiplicity id="29" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="30">    
+    <bendpoint x="396" y="724"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="31" name="classiEquivalenza"/>      
+      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="34" name="probabilitaM2Ord"/>      
+      <multiplicity id="35" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="false" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
